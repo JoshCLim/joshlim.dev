@@ -13,6 +13,7 @@ const Home: NextPage = () => {
         <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
           Hello, there.
         </h1>
+        <p className="my-5 text-lg font-bold">go away ronan :)</p>
       </main>
     </>
   );
