@@ -2,22 +2,53 @@ import Link from "next/link";
 
 import { Home, ChatBubble, AngleTool } from "iconoir-react";
 
-export const Navbar = () => {
+const pages = [
+  {
+    href: "/",
+    icon: <Home />,
+  },
+  {
+    href: "/guestbook",
+    icon: <ChatBubble />,
+  },
+  {
+    href: "/projects",
+    icon: <AngleTool />,
+  },
+];
+
+export const Navbar = ({ currPage }: { currPage: string }) => {
   return (
-    <nav className="left-0 top-0 flex w-full flex-row items-center justify-center gap-3 p-4 text-white">
-      <NavLink href={"/"} icon={<Home />} />
-      <NavLink href={"/guestbook"} icon={<ChatBubble />} />
-      <NavLink href={"/projects"} icon={<AngleTool />} />
+    <nav className="left-0 top-0 flex w-full flex-row items-center justify-center gap-3 text-white md:p-4">
+      {pages.map((page) => (
+        <NavLink
+          key={page.href}
+          href={page.href}
+          icon={page.icon}
+          highlight={page.href === `/${currPage}`}
+        />
+      ))}
     </nav>
   );
 };
 
-const NavLink = ({ href, icon }: { href: string; icon: React.ReactNode }) => {
+const NavLink = ({
+  href,
+  icon,
+  highlight,
+}: {
+  href: string;
+  icon: React.ReactNode;
+  highlight: boolean;
+}) => {
+  let classes =
+    "rounded-xl bg-white/10 p-5 transition-colors hover:bg-white/30";
+  if (highlight) {
+    classes += " bg-white/30";
+  }
+
   return (
-    <Link
-      className="rounded-xl bg-white/10 p-5 transition-colors hover:bg-white/30"
-      href={href}
-    >
+    <Link className={classes} href={href}>
       {icon}
     </Link>
   );

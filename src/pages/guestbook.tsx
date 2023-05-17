@@ -29,7 +29,7 @@ const GuestBook: NextPage = () => {
         className="relative flex min-h-screen flex-row flex-wrap items-center justify-center gap-5 overflow-hidden bg-gradient-to-b from-[#00286c] to-[#000328]
         p-5 text-white"
       >
-        <Navbar />
+        <Navbar currPage="guestbook" />
         <Tilt
           tiltReverse={true}
           glareEnable={true}
@@ -43,7 +43,7 @@ const GuestBook: NextPage = () => {
         >
           <div className="container flex flex-col items-center justify-center gap-4 overflow-visible rounded-3xl border-white bg-white/10 px-6 py-10 backdrop-blur transition-all hover:border md:p-12">
             <NamedWelcome />
-            <h1 className="text-center text-4xl font-extrabold text-[#eee]">
+            <h1 className="text-center text-4xl font-extrabold text-[#eee] md:text-5xl">
               share some thoughts.
             </h1>
             <Divider />
