@@ -22,7 +22,7 @@ const createMessage = protectedProcedure
     z.object({
       content: z
         .string()
-        .min(1, "Please enter a message")
+        .min(1, "Your thought looks a little empty...")
         .max(100, "Keep your messages short and sweet :)"),
     })
   )
@@ -48,7 +48,7 @@ const createMessage = protectedProcedure
 
 const getAllMessages = publicProcedure.query(async ({ ctx }) => {
   const messages = await ctx.prisma.post.findMany({
-    take: 100,
+    take: 30,
     orderBy: [{ createdAt: "desc" }],
   });
 
