@@ -23,7 +23,7 @@ const createMessage = protectedProcedure
       content: z
         .string()
         .min(1, "Please enter a message")
-        .max(50, "Keep your messages short and sweet :)"),
+        .max(100, "Keep your messages short and sweet :)"),
     })
   )
   .mutation(async ({ ctx, input }) => {
