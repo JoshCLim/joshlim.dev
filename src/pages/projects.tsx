@@ -1,19 +1,9 @@
 import type { NextPage } from "next";
-import Image from "next/image";
 import Head from "next/head";
-import { signIn, signOut, useSession } from "next-auth/react";
-import Tilt from "react-parallax-tilt";
-
-import { Divider } from "~/components/divider";
-import { useState } from "react";
-import { api } from "~/utils/api";
-import { toast } from "react-hot-toast";
-import { Send } from "iconoir-react";
 
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { Quotebar } from "~/components/quotebar";
-import { LoadingPage, LoadingSpinner } from "~/components/loading";
 import { Navbar } from "~/components/navbar";
 dayjs.extend(relativeTime);
 
@@ -26,7 +16,7 @@ const Projects: NextPage = () => {
         {/* <link rel="icon" href="/favicon.ico" /> */}
       </Head>
       <main
-        className="relative flex min-h-screen flex-row flex-wrap items-center justify-center gap-5 overflow-hidden bg-gradient-to-b from-[#393939] to-[#1c1c1c]
+        className="relative flex min-h-screen flex-row flex-wrap items-center justify-center gap-5 overflow-hidden bg-gradient-to-b from-[#005506] to-[#002d0e]
         p-5 text-white"
       >
         <Navbar currPage="projects" />
@@ -37,61 +27,6 @@ const Projects: NextPage = () => {
         />
       </main>
     </>
-  );
-};
-
-const MessageFeed = () => {
-  const { data: messages, isLoading: messagesLoading } =
-    api.guestbook.getAllMessages.useQuery();
-
-  if (messagesLoading) return <LoadingPage />;
-
-  if (!messages || messages.length === 0)
-    return (
-      <div className="no-scrollbar flex h-96 max-w-sm flex-col items-center justify-center gap-5 overflow-scroll rounded-3xl bg-white/10 p-10">
-        No Posts!
-      </div>
-    );
-
-  return (
-    <div
-      className="no-scrollbar flex h-96 flex-col gap-5 overflow-scroll"
-      style={{
-        WebkitMaskImage:
-          "linear-gradient(to bottom, black 80%, transparent 100%)",
-        maskImage: "linear-gradient(to bottom, black 80%, transparent 100%)",
-      }}
-    >
-      {messages?.map((message) => (
-        <Tilt
-          key={message.id}
-          tiltEnable={false}
-          glareEnable={true}
-          glareBorderRadius={"1.5rem"}
-          glareMaxOpacity={0.3}
-          glarePosition={"all"}
-          glareColor={"#777"}
-        >
-          <div className="text-md flex max-w-sm flex-col  gap-1 rounded-3xl border-[#aaa] bg-white/10 p-5 font-light">
-            <p className="m-0  text-start font-light">
-              {message.content ?? "[your message here]"}
-            </p>
-            <p className="text-gray m-0 text-end text-sm font-light">
-              <Image
-                src={message.authorPic}
-                alt={`${message.authorName}'s profile picture`}
-                width={20}
-                height={20}
-                className="mr-2 inline rounded-full"
-              />
-              <span>{`${message.authorName ?? "Unknown"}`}</span>
-              <span>{" • "}</span>
-              <span>{dayjs(message.createdAt).fromNow()}</span>
-            </p>
-          </div>
-        </Tilt>
-      ))}
-    </div>
   );
 };
 

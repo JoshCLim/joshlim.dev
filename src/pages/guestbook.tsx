@@ -12,10 +12,11 @@ import { Send } from "iconoir-react";
 
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
+
 import { Quotebar } from "~/components/quotebar";
 import { LoadingPage, LoadingSpinner } from "~/components/loading";
 import { Navbar } from "~/components/navbar";
-dayjs.extend(relativeTime);
 
 const GuestBook: NextPage = () => {
   return (
@@ -47,7 +48,7 @@ const GuestBook: NextPage = () => {
         <link rel="manifest" href="/guestbook-site.webmanifest" />
       </Head>
       <main
-        className="relative flex min-h-screen flex-row flex-wrap items-center justify-center gap-5 overflow-hidden bg-gradient-to-b from-[#00286c] to-[#000328]
+        className="fixed left-0 top-0 flex min-h-screen flex-row flex-wrap items-center justify-center gap-5 overflow-hidden bg-gradient-to-b from-[#00286c] to-[#000328]
         p-5 text-white"
       >
         <Navbar currPage="guestbook" />
