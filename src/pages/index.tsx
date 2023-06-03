@@ -125,7 +125,7 @@ const SocialLink = ({
   return (
     <a
       href={href}
-      className="rounded-xl p-1 transition-all hover:bg-white hover:text-black"
+      className="rounded-xl p-1 transition-all hover:scale-110 hover:bg-white hover:text-black"
     >
       {icon}
     </a>

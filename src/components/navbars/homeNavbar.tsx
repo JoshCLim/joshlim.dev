@@ -36,7 +36,13 @@ export const HomeNavbar = ({
 
   return (
     <div className="fixed left-0 top-0 flex w-full flex-row justify-center gap-5 py-7 sm:justify-start sm:px-7">
-      <button onClick={toggleShowNav} className="py-5 sm:ps-5">
+      <button
+        onClick={toggleShowNav}
+        className="py-5 sm:ps-5"
+        data-aos="fade-in"
+        data-aos-delay="1000"
+        data-aos-duration="1000"
+      >
         <Menu />
       </button>
       {!!showNav && <Navbar currPage={currPage} />}
@@ -81,15 +87,11 @@ const NavLink = ({
   highlight: boolean;
   index: number;
 }) => {
-  let classes =
-    "rounded-xl bg-white/10 p-5 transition-colors hover:bg-white/30 flex flex-row gap-3";
-  if (highlight) {
-    classes += " bg-white/30";
-  }
-
   return (
     <Link
-      className={classes}
+      className={`flex flex-row gap-3 rounded-xl bg-white/10 p-5 transition-all hover:bg-white/30 ${
+        highlight ? "bg-white/30" : ""
+      }`}
       href={href}
       data-aos="fade-down"
       data-aos-delay={`${index * 100 + 200}`}
