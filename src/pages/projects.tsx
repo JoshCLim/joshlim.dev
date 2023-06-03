@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { Divider } from "~/components/divider";
-import { ArrowTrSquare } from "iconoir-react";
+import { ArrowTrSquare, Code } from "iconoir-react";
 import { ProjectsNavbar } from "~/components/navbars/projectsNavbar";
 
 interface Project {
@@ -10,32 +10,56 @@ interface Project {
   imageUrl: string;
   tags: string[];
   url: string;
+  codeUrl: string;
 }
 
 const PROJECTS: Project[] = [
   {
+    name: "joshlim.dev",
+    description:
+      "My own portfolio site. Featuring this projects page, a guestbook and a games page (upcoming).",
+    imageUrl: "/projects/joshlimdev.png",
+    tags: ["Next.js", "Tailwind CSS", "tRPC", "Prisma", "NextAuth.js"],
+    url: "https://joshlim.dev",
+    codeUrl: "https://github.com/JoshCLim/joshlim.dev",
+  },
+  {
     name: "IB Expert",
     description:
-      "Website I made for a tutoring company my friends and I were thinking of starting. Currently in the process of adding a bookings feature.",
+      "A website I made for a tutoring company my friends and I were thinking of starting. Currently in the process of adding a bookings feature.",
     imageUrl: "/projects/ibexpert.png",
     tags: ["React.js", "Bootstrap 5"],
     url: "https://ibexpert.web.app",
+    codeUrl: "https://github.com/JoshCLim/ibtutoring",
   },
   {
     name: "Latin Annotation Tool",
     description:
       "A web app I made to annotate Latin texts that we were studying in IB. Users can highlight words based on their tense etc., link related words together and make comments. All changes are applied in real-time and will be seen by all users of the site.",
     imageUrl: "/projects/annotationtool.png",
-    tags: ["HTML", "CSS", "JS", "Firebase"],
+    tags: ["HTML", "CSS", "JS", "jQuery", "Firebase"],
     url: "https://joshclim.github.io/annotationTool/index.html",
+    codeUrl:
+      "https://github.com/JoshCLim/joshclim.github.io/tree/master/annotationTool",
   },
   {
     name: "My Handbook",
     description:
       "A study planner app that I made for my Year 10 personal project. Users can sign in/sign up and add information about their timetable, homework and more.",
     imageUrl: "/projects/myhandbook.png",
-    tags: ["HTML", "CSS", "JS", "Firebase"],
+    tags: ["HTML", "CSS", "JS", "jQuery", "Firebase"],
     url: "https://joshclim.github.io/myHandbook/login.html",
+    codeUrl:
+      "https://github.com/JoshCLim/joshclim.github.io/tree/master/myHandbook",
+  },
+  {
+    name: "Minesweeper",
+    description: "A clone of the classic game minesweeper.",
+    imageUrl: "/projects/minesweeper.png",
+    tags: ["HTML", "CSS", "JS"],
+    url: "https://joshclim.github.io/minesweeper/index.html",
+    codeUrl:
+      "https://github.com/JoshCLim/joshclim.github.io/tree/master/minesweeper",
   },
 ];
 
@@ -50,10 +74,11 @@ const Projects: NextPage = () => {
         />
         {/* <link rel="icon" href="/favicon.ico" /> */}
       </Head>
-      <main className="relative flex min-h-screen flex-col flex-wrap items-center justify-center gap-5 overflow-hidden bg-white bg-gradient-to-b p-5 text-black">
+      <main className="relative flex min-h-screen w-full flex-col items-center justify-center gap-5 overflow-scroll bg-white p-5 text-black">
         <ProjectsNavbar currPage="/projects" />
-        <h2 className="sticky left-0 top-0 z-10 pt-24 text-2xl font-light">
-          A collection of suspicious code I&apos;ve written over the years.
+        <h2 className="sticky left-0 top-0 z-10 mt-28 text-center text-2xl font-light">
+          A collection of <span className="italic text-[#555]">suspicious</span>{" "}
+          code I&apos;ve written over the years.
         </h2>
         <Divider colour="black" />
         <ProjectsContainer />
@@ -64,7 +89,7 @@ const Projects: NextPage = () => {
 
 const ProjectsContainer = () => {
   return (
-    <div className="flex flex-wrap justify-center gap-10 px-10 py-5">
+    <div className="flex w-full flex-wrap justify-center gap-10 px-10 py-5">
       {PROJECTS.map((p) => {
         return <Project {...p} key={p.name} />;
       })}
@@ -72,11 +97,18 @@ const ProjectsContainer = () => {
   );
 };
 
-const Project = ({ name, description, imageUrl, tags, url }: Project) => {
+const Project = ({
+  name,
+  description,
+  imageUrl,
+  tags,
+  url,
+  codeUrl,
+}: Project) => {
   return (
-    <div className="flex w-4/12 flex-col gap-5 border border-black">
+    <div className="flex min-w-[300px] flex-col gap-5 overflow-hidden border border-black sm:w-10/12 md:w-8/12 lg:w-5/12 xl:w-4/12">
       <div
-        className="aspect-{4/3} relative h-[200px]"
+        className="relative h-[200px]"
         style={{
           backgroundImage: `url(${imageUrl})`,
           backgroundOrigin: "content-box",
@@ -89,14 +121,22 @@ const Project = ({ name, description, imageUrl, tags, url }: Project) => {
       <div className="flex flex-col gap-5 p-10">
         <div className="flex w-full flex-row items-center justify-between">
           <h4 className="text-xl">{name}</h4>
-          <a href={url}>
-            <ArrowTrSquare />
-          </a>
+          <div className="flex flex-row gap-3">
+            <a href={codeUrl}>
+              <Code />
+            </a>
+            <a href={url}>
+              <ArrowTrSquare />
+            </a>
+          </div>
         </div>
         <p className="font-light">{description}</p>
-        <div className="flex flex-row gap-3">
+        <div className="flex flex-row gap-3 overflow-scroll">
           {tags.map((t) => (
-            <p key={t} className="inline rounded-xl bg-[#eee] px-3 py-1">
+            <p
+              key={t}
+              className="inline min-w-min whitespace-nowrap rounded-xl bg-[#eee] px-3 py-1"
+            >
               {t}
             </p>
           ))}

@@ -1,8 +1,5 @@
 import Link from "next/link";
 
-import { Menu, Minus } from "iconoir-react";
-import { useState } from "react";
-
 import { PAGES } from "./homeNavbar";
 
 export const ProjectsNavbar = ({
@@ -11,25 +8,9 @@ export const ProjectsNavbar = ({
   currPage: string;
   fixed?: boolean;
 }) => {
-  const [showNav, setShowNav] = useState<boolean>(false);
-
-  const toggleShowNav = () => {
-    setShowNav((curr) => !curr);
-  };
-
   return (
-    <div className="fixed left-0 top-0 flex w-full flex-row justify-center gap-5 py-7 sm:justify-start sm:px-7">
-      <button
-        onClick={toggleShowNav}
-        className="py-5 sm:ps-5"
-        data-aos="fade-in"
-        data-aos-delay="1000"
-        data-aos-duration="1000"
-      >
-        {/* {!!showNav ? <Minus /> : <Menu />} */}
-        <Menu />
-      </button>
-      {!!showNav && <Navbar currPage={currPage} />}
+    <div className="fixed left-0 top-0 z-50 flex w-full flex-row justify-center gap-5 border-b border-black bg-white sm:justify-start">
+      <Navbar currPage={currPage} />
     </div>
   );
 };
@@ -45,7 +26,7 @@ const Navbar = ({
     <nav
       className={`${
         fixed ? "fixed" : ""
-      } left-0 top-0 flex flex-row items-center font-light text-black md:px-4`}
+      } left-0 top-0 flex flex-row items-center font-light text-black`}
     >
       {PAGES.map((page, index) => (
         <NavLink
@@ -73,8 +54,8 @@ const NavLink = ({
 }) => {
   return (
     <Link
-      className={`ms-[-1px] flex flex-row gap-3  bg-white p-5 transition hover:bg-slate-200 ${
-        highlight ? "bg-slate-400" : ""
+      className={`ms-[-1px] flex flex-row gap-3  bg-white p-5 transition-all duration-200 hover:bg-slate-200 ${
+        highlight ? "bg-slate-200" : ""
       }`}
       href={href}
       data-aos="fade-in"
