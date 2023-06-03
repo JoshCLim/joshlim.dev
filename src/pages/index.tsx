@@ -47,6 +47,7 @@ const HeroImage = () => {
           <Image
             src="/pingu.jpeg"
             fill
+            priority
             alt="profile-pic"
             className="rounded-full border-8 border-white transition-all hover:scale-105"
           />
