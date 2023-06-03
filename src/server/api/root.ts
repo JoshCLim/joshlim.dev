@@ -9,9 +9,7 @@ import { chessRouter } from "./routers/games/chess";
  */
 export const appRouter = createTRPCRouter({
   guestbook: guestbookRouter,
-  games: {
-    chess: chessRouter,
-  },
+  chess: chessRouter,
 });
 
 // export type definition of API

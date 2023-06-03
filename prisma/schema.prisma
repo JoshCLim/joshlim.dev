@@ -10,6 +10,7 @@ datasource db {
   relationMode = "prisma"
 }
 
+// guestbook
 model Post {
     id          String @id @default(cuid())
     authorId    String
@@ -20,7 +21,33 @@ model Post {
     @@index([authorId]) 
 }
 
-// Necessary for Next auth
+// chess
+model ChessGame {
+    id          String @id @default(cuid())
+
+    playerId    String
+    player      User @relation(name: "chessGamesOwned", fields: [playerId], references: [id])
+
+    playerWhite Boolean
+
+    opponentId  String?
+    opponent    User? @relation(name: "chessGamesJoined", fields: [opponentId], references: [id])
+
+    public      Boolean @default(true)
+    password    String?
+
+    board       Json // json string with board information
+
+    whiteTurn   Boolean @default(true)
+
+    finished    Boolean @default(false)
+    winnerWhite Boolean?
+
+    @@index([playerId])
+    @@index([opponentId])
+}
+
+// next auth
 model Account {
     id                String  @id @default(cuid())
     userId            String
@@ -58,7 +85,13 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+
+    // guestbook
     posts         Post[]
+
+    // games
+    chessGamesOwned ChessGame[] @relation(name: "chessGamesOwned")
+    chessGamesJoined ChessGame[] @relation(name: "chessGamesJoined")
 }
 
 model VerificationToken {

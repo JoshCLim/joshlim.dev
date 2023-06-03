@@ -49,7 +49,9 @@ const Games = () => {
         <GameTile name="snake" href="snake" complete={false} />
         <GameTile name="sudoku" href="sudoku" complete={false} />
         <GameTile name="2048" href="2048" complete={false} />
-        <GameTile name="tic-tac-toe" href="tic-tac-toe" complete={false} />
+        <GameTile name="tic-tac-toe" href="tictactoe" complete={false} />
+        <GameTile name="minesweeper" href="minesweeper" complete={false} />
+        <GameTile name="quorridor" href="quorridor" complete={false} />
       </div>
     </>
   );
@@ -65,7 +67,7 @@ const GameTile = ({
   complete: boolean;
 }) => {
   return (
-    <Link href={`/games/${href}`}>
+    <Link href={complete ? `/games/${href}` : "/party"}>
       <div
         className={`hard-shadow flex cursor-pointer flex-col items-center justify-center rounded-xl border-2  border-[#000] bg-white  p-5 ${
           !complete ? "blur" : ""
