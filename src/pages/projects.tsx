@@ -4,7 +4,6 @@ import Head from "next/head";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { Quotebar } from "~/components/quotebar";
-import { Navbar } from "~/components/navbar";
 dayjs.extend(relativeTime);
 
 const Projects: NextPage = () => {
@@ -19,7 +18,6 @@ const Projects: NextPage = () => {
         className="relative flex min-h-screen flex-row flex-wrap items-center justify-center gap-5 overflow-hidden bg-gradient-to-b from-[#005506] to-[#002d0e]
         p-5 text-white"
       >
-        <Navbar currPage="projects" />
         <Quotebar
           quote={
             "Within our collective streams of consciousness, lies the power to shape extraordinary realities. — ChatGPT"

@@ -4,7 +4,7 @@ import Head from "next/head";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { Quotebar } from "~/components/quotebar";
-import { NavbarBrutal } from "~/components/navbar";
+import { NavbarBrutal } from "~/components/navbars/partyNavbar";
 import Link from "next/link";
 dayjs.extend(relativeTime);
 

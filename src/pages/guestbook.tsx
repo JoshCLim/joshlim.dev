@@ -16,7 +16,7 @@ dayjs.extend(relativeTime);
 
 import { Quotebar } from "~/components/quotebar";
 import { LoadingPage, LoadingSpinner } from "~/components/loading";
-import { Navbar } from "~/components/navbar";
+import { GuestbookNavbar } from "~/components/navbars/guestbookNavbar";
 
 const GuestBook: NextPage = () => {
   return (
@@ -47,11 +47,8 @@ const GuestBook: NextPage = () => {
         />
         <link rel="manifest" href="/guestbook-site.webmanifest" />
       </Head>
-      <main
-        className="fixed left-0 top-0 flex min-h-screen flex-row flex-wrap items-center justify-center gap-5 overflow-hidden bg-gradient-to-b from-[#00286c] to-[#000328]
-        p-5 text-white"
-      >
-        <Navbar currPage="guestbook" />
+      <main className="fixed left-0 top-0 flex min-h-screen w-full flex-row flex-wrap items-center justify-center gap-5 overflow-hidden bg-gradient-to-b from-[#00286c] to-[#000328] p-5 text-white">
+        <GuestbookNavbar currPage="guestbook" />
         <Tilt
           tiltReverse={true}
           glareEnable={true}
