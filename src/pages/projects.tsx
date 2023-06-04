@@ -94,7 +94,7 @@ const Project = ({
           </div>
         </div>
         <p className="font-light">{description}</p>
-        <div className="flex flex-row gap-3 overflow-scroll">
+        <div className="no-scrollbar flex flex-row gap-3 overflow-scroll">
           {tags.map((t) => (
             <p
               key={t}
