@@ -1,9 +1,7 @@
 import {
   DatabaseScript,
-  Facebook,
   GitHub,
   IconoirProvider,
-  Instagram,
   LinkedIn,
 } from "iconoir-react";
 import { type NextPage } from "next";
@@ -103,14 +101,14 @@ const Socials = () => {
             href="https://www.linkedin.com/in/joshclim/"
             icon={<LinkedIn />}
           />
-          <SocialLink
+          {/* <SocialLink
             href="https://www.instagram.com/joshwa_limmy/"
             icon={<Instagram />}
           />
           <SocialLink
             href="https://www.facebook.com/profile.php?id=100023602025978"
             icon={<Facebook />}
-          />
+          /> */}
           <SocialLink
             href="/230604joshLimCVPublic.pdf"
             icon={<DatabaseScript />}
