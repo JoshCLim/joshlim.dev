@@ -14,7 +14,6 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 
-import { Quotebar } from "~/components/quotebar";
 import { LoadingPage, LoadingSpinner } from "~/components/loading";
 import { GuestbookNavbar } from "~/components/navbars/guestbookNavbar";
 
@@ -70,11 +69,11 @@ const GuestBook: NextPage = () => {
           </div>
         </Tilt>
         <MessageFeed />
-        <Quotebar
+        {/* <Quotebar
           quote={
             "Within our collective streams of consciousness, lies the power to shape extraordinary realities. — ChatGPT"
           }
-        />
+        /> */}
       </main>
     </>
   );
