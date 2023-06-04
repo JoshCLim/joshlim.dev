@@ -44,7 +44,10 @@ const NavLink = ({
 
   return (
     <Link className={classes} href={href}>
-      {icon} {href.substring(1).length > 0 && <span>{href.substring(1)}</span>}
+      {icon}{" "}
+      {href.substring(1).length > 0 && (
+        <span className="hidden sm:inline">{href.substring(1)}</span>
+      )}
     </Link>
   );
 };
