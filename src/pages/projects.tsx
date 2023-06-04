@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import { Divider } from "~/components/divider";
 import { ArrowTrSquare, Code } from "iconoir-react";
@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { api } from "~/utils/api";
 import { LoadingPage } from "~/components/loading";
 import { type Project } from "~/server/api/routers/projects";
+import { generateSSGHelper } from "~/server/helpers/ssgHelper";
 
 const Projects: NextPage = () => {
   return (
@@ -106,6 +107,18 @@ const Project = ({
       </div>
     </div>
   );
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  const ssg = generateSSGHelper();
+
+  await ssg.projects.getProjects.prefetch();
+
+  return {
+    props: {
+      trpcState: ssg.dehydrate(),
+    },
+  };
 };
 
 export default Projects;
