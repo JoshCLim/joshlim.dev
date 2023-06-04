@@ -1,4 +1,5 @@
 import {
+  DatabaseScript,
   Facebook,
   GitHub,
   IconoirProvider,
@@ -10,6 +11,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { AOS } from "~/components/aos";
 import { HomeNavbar } from "~/components/navbars/homeNavbar";
+// import Pdf from "~/230604joshLimCV.pdf";
 
 const Home: NextPage = () => {
   return (
@@ -109,6 +111,10 @@ const Socials = () => {
             href="https://www.facebook.com/profile.php?id=100023602025978"
             icon={<Facebook />}
           />
+          <SocialLink
+            href="/230604joshLimCVPublic.pdf"
+            icon={<DatabaseScript />}
+          />
         </IconoirProvider>
       </div>
     </AOS>
@@ -125,6 +131,7 @@ const SocialLink = ({
   return (
     <a
       href={href}
+      target="_blank"
       className="rounded-xl p-1 transition-all hover:scale-110 hover:bg-white hover:text-black"
     >
       {icon}
