@@ -7,6 +7,7 @@ import { api } from "~/utils/api";
 import { LoadingPage } from "~/components/loading";
 import { type Project } from "~/server/api/routers/projects";
 import { generateSSGHelper } from "~/server/helpers/ssgHelper";
+import { useRouter } from "next/navigation";
 
 const Projects: NextPage = () => {
   return (
@@ -54,14 +55,14 @@ const Project = ({
   url,
   codeUrl,
 }: Project) => {
-  // const router = useRouter();
+  const router = useRouter();
 
-  // const pathname = name.replace(" ", "").replace(".", "").toLowerCase();
+  const pathname = name.replace(" ", "").replace(".", "").toLowerCase();
 
   return (
     <div
       className="flex min-w-[300px] cursor-pointer flex-col overflow-hidden border border-black transition-all hover:scale-105 hover:shadow-xl sm:w-10/12 md:w-8/12 lg:w-5/12 xl:w-4/12"
-      // onClick={() => router.push(`/projects/${pathname}`)}
+      onClick={() => router.push(`/projects/${pathname}`)}
     >
       <div
         className="relative h-[200px]"
@@ -79,12 +80,14 @@ const Project = ({
           <h4 className="text-xl">{name}</h4>
           <div className="flex flex-row gap-3">
             <a
+              onClick={(e) => e.stopPropagation()}
               href={codeUrl}
               className="p-1 transition-all hover:bg-black hover:text-white"
             >
               <Code />
             </a>
             <a
+              onClick={(e) => e.stopPropagation()}
               href={url}
               className="p-1 transition-all hover:bg-black hover:text-white"
             >
