@@ -82,6 +82,7 @@ const Project = ({
             <a
               onClick={(e) => e.stopPropagation()}
               href={codeUrl}
+              target="_blank"
               className="p-1 transition-all hover:bg-black hover:text-white"
             >
               <Code />
@@ -89,6 +90,7 @@ const Project = ({
             <a
               onClick={(e) => e.stopPropagation()}
               href={url}
+              target="_blank"
               className="p-1 transition-all hover:bg-black hover:text-white"
             >
               <ArrowTrSquare />
