@@ -16,6 +16,7 @@ dayjs.extend(relativeTime);
 
 import { LoadingPage, LoadingSpinner } from "~/components/loading";
 import { GuestbookNavbar } from "~/components/navbars/guestbookNavbar";
+import { Quotebar } from "~/components/quotebar";
 
 const GuestBook: NextPage = () => {
   return (
@@ -69,11 +70,9 @@ const GuestBook: NextPage = () => {
           </div>
         </Tilt>
         <MessageFeed />
-        {/* <Quotebar
-          quote={
-            "Within our collective streams of consciousness, lies the power to shape extraordinary realities. — ChatGPT"
-          }
-        /> */}
+        <Quotebar
+          quote={`Sometimes it's the people no one imagines anything of who do the things that no one can imagine -- Alan Turing`}
+        />
       </main>
     </>
   );
