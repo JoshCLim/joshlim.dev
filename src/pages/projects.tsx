@@ -80,7 +80,7 @@ const Projects: NextPage = () => {
           A collection of <span className="italic text-[#555]">suspicious</span>{" "}
           code I&apos;ve written over the years.
         </h2>
-        <Divider colour="black" />
+        <Divider colour="black" height="1px" />
         <ProjectsContainer />
       </main>
     </>

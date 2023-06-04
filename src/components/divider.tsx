@@ -1,9 +1,16 @@
-export const Divider = ({ colour = "white" }: { colour?: string }) => {
+export const Divider = ({
+  colour = "white",
+  height = "4px",
+}: {
+  colour?: string;
+  height?: string;
+}) => {
   return (
     <div
-      className={`my-4 h-1 w-16 rounded-full`}
+      className={`my-4 w-16 rounded-full`}
       style={{
         backgroundColor: colour,
+        height,
       }}
     ></div>
   );
