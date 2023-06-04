@@ -106,7 +106,7 @@ const Project = ({
   codeUrl,
 }: Project) => {
   return (
-    <div className="flex min-w-[300px] flex-col gap-5 overflow-hidden border border-black sm:w-10/12 md:w-8/12 lg:w-5/12 xl:w-4/12">
+    <div className="flex min-w-[300px] flex-col overflow-hidden border border-black transition-all hover:scale-105 hover:shadow-xl sm:w-10/12 md:w-8/12 lg:w-5/12 xl:w-4/12">
       <div
         className="relative h-[200px]"
         style={{
@@ -118,14 +118,20 @@ const Project = ({
       >
         {/* <Image src={imageUrl} fill alt={name} /> */}
       </div>
-      <div className="flex flex-col gap-5 p-10">
+      <div className="flex flex-grow flex-col justify-between gap-5 p-10">
         <div className="flex w-full flex-row items-center justify-between">
           <h4 className="text-xl">{name}</h4>
           <div className="flex flex-row gap-3">
-            <a href={codeUrl}>
+            <a
+              href={codeUrl}
+              className="p-1 transition-all hover:bg-black hover:text-white"
+            >
               <Code />
             </a>
-            <a href={url}>
+            <a
+              href={url}
+              className="p-1 transition-all hover:bg-black hover:text-white"
+            >
               <ArrowTrSquare />
             </a>
           </div>

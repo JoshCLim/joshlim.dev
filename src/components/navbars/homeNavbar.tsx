@@ -93,7 +93,7 @@ const NavLink = ({
         highlight ? "bg-white/30" : ""
       }`}
       href={href}
-      data-aos="fade-down"
+      data-aos="fade-right"
       data-aos-delay={`${index * 100 + 200}`}
       data-aos-offset="50"
     >
