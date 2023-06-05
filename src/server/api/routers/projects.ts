@@ -24,6 +24,16 @@ const PROJECTS: Project[] = [
     codePublic: true,
   },
   {
+    name: "Chirp",
+    description:
+      "A basic Twitter clone that I created while learning the T3 stack.",
+    imageUrl: "/projects/chirp.png",
+    tagsIcons: ["nextjs", "tailwindcss", "trpc", "prisma", "typescript"],
+    url: "https://chirp-iota-six.vercel.app/",
+    codeUrl: "https://github.com/JoshCLim/chirp",
+    codePublic: true,
+  },
+  {
     name: "IB Expert",
     description:
       "A website I made for a tutoring company my friends and I were thinking of starting. Currently in the process of adding a bookings feature.",

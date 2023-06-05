@@ -9,7 +9,6 @@ import Head from "next/head";
 import Image from "next/image";
 import { AOS } from "~/components/aos";
 import { HomeNavbar } from "~/components/navbars/homeNavbar";
-// import Pdf from "~/230604joshLimCV.pdf";
 
 const Home: NextPage = () => {
   return (
@@ -18,7 +17,7 @@ const Home: NextPage = () => {
         <title>joshlim.dev</title>
         <meta
           name="description"
-          content="Hi, my name is Josh Lim. I'm a computer science student at UNSW."
+          content="Hi, my name is Josh C Lim. I'm a computer science student at UNSW, and an aspiring software engineer based in Sydney, NSW. This is my portfolio site, where I share some projects I have made over the years and anything else I might find nerdy / interesting."
         />
         <link rel="icon" href="/home.png" />
       </Head>
@@ -61,9 +60,7 @@ const Greeting = () => {
   return (
     <>
       <AOS aos="fade-down" delay={150} duration={1000}>
-        <h1 className="text-2xl font-light text-white">
-          Hey there! My name is
-        </h1>
+        <p className="text-2xl font-light text-white">Hey there! My name is</p>
       </AOS>
       <AOS aos="fade-down" delay={50} duration={1000}>
         <h1
