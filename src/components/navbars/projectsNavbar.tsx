@@ -33,7 +33,7 @@ const Navbar = ({
           key={page.href}
           href={page.href}
           icon={page.icon}
-          highlight={page.href === `/${currPage}`}
+          highlight={page.href === `${currPage}`}
           index={index}
         />
       ))}
@@ -54,8 +54,8 @@ const NavLink = ({
 }) => {
   return (
     <Link
-      className={`ms-[-1px] flex flex-row gap-3  bg-white p-5 transition-all duration-200 hover:bg-slate-200 ${
-        highlight ? "bg-slate-200" : ""
+      className={`ms-[-1px] flex flex-row gap-3 p-5 transition-all duration-200 hover:bg-slate-200 ${
+        highlight ? "bg-slate-200" : "bg-white"
       }`}
       href={href}
       data-aos="fade-in"
