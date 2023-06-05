@@ -8,6 +8,7 @@ export interface Project {
   tags: string[];
   url: string;
   codeUrl: string;
+  codePublic: boolean;
 }
 
 const PROJECTS: Project[] = [
@@ -19,6 +20,7 @@ const PROJECTS: Project[] = [
     tags: ["Next.js", "Tailwind CSS", "tRPC", "Prisma", "NextAuth.js"],
     url: "https://joshlim.dev",
     codeUrl: "https://github.com/JoshCLim/joshlim.dev",
+    codePublic: true,
   },
   {
     name: "IB Expert",
@@ -28,6 +30,7 @@ const PROJECTS: Project[] = [
     tags: ["React.js", "Bootstrap 5"],
     url: "https://ibexpert.web.app",
     codeUrl: "https://github.com/JoshCLim/ibtutoring",
+    codePublic: false,
   },
   {
     name: "Latin Annotation Tool",
@@ -38,6 +41,7 @@ const PROJECTS: Project[] = [
     url: "https://joshclim.github.io/annotationTool/index.html",
     codeUrl:
       "https://github.com/JoshCLim/joshclim.github.io/tree/master/annotationTool",
+    codePublic: true,
   },
   {
     name: "My Handbook",
@@ -48,6 +52,7 @@ const PROJECTS: Project[] = [
     url: "https://joshclim.github.io/myHandbook/login.html",
     codeUrl:
       "https://github.com/JoshCLim/joshclim.github.io/tree/master/myHandbook",
+    codePublic: true,
   },
   {
     name: "Minesweeper",
@@ -57,6 +62,7 @@ const PROJECTS: Project[] = [
     url: "https://joshclim.github.io/minesweeper/index.html",
     codeUrl:
       "https://github.com/JoshCLim/joshclim.github.io/tree/master/minesweeper",
+    codePublic: true,
   },
 ];
 

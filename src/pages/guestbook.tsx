@@ -27,25 +27,7 @@ const GuestBook: NextPage = () => {
           name="description"
           content="A guestbook for joshlim.dev. Share what's on your mind!"
         />
-        <link rel="icon" href="/guestbook.ico" />
-        <link
-          rel="apple-touch-icon"
-          sizes="180x180"
-          href="/apple-touch-guestbook.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href="/guestbook-32x32.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href="/guestbook-16x16.png"
-        />
-        <link rel="manifest" href="/guestbook-site.webmanifest" />
+        <link rel="icon" href="/mail.png" />
       </Head>
       <main className="fixed left-0 top-0 flex min-h-screen w-full flex-row flex-wrap items-center justify-center gap-5 overflow-hidden bg-gradient-to-b from-[#00286c] to-[#000328] p-5 text-white">
         <GuestbookNavbar currPage="guestbook" />

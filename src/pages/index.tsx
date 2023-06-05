@@ -20,7 +20,7 @@ const Home: NextPage = () => {
           name="description"
           content="Hi, my name is Josh Lim. I'm a computer science student at UNSW."
         />
-        <link rel="icon" href="/pingu.jpeg" />
+        <link rel="icon" href="/home.png" />
       </Head>
       <main className="fixed flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-[#0c102d] to-[#15162c]">
         <HomeNavbar currPage="" fixed />
