@@ -9,7 +9,7 @@ export const ProjectsNavbar = ({
   fixed?: boolean;
 }) => {
   return (
-    <div className="fixed left-0 top-0 z-50 flex w-full flex-row justify-center gap-5 border-b border-black bg-white sm:justify-start">
+    <div className="fixed left-0 top-0 z-50 flex w-full flex-row justify-center gap-5 border-black bg-white shadow-md sm:justify-start">
       <Navbar currPage={currPage} />
     </div>
   );

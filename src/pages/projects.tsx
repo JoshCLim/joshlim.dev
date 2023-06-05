@@ -7,6 +7,7 @@ import { api } from "~/utils/api";
 import { LoadingPage } from "~/components/loading";
 import { type Project } from "~/server/api/routers/projects";
 import { generateSSGHelper } from "~/server/helpers/ssgHelper";
+import { TechIcon } from "~/components/techIcon";
 // import { useRouter } from "next/navigation";
 
 const Projects: NextPage = () => {
@@ -20,7 +21,7 @@ const Projects: NextPage = () => {
         />
         <link rel="icon" href="/project.png" />
       </Head>
-      <main className="no-scrollbars relative flex min-h-screen w-full flex-col items-center justify-center gap-5 overflow-scroll bg-white text-black">
+      <main className="no-scrollbars relative flex min-h-screen w-full flex-col items-center justify-center gap-5  bg-white text-black">
         <ProjectsNavbar currPage="/projects" />
         <h2 className="sticky left-0 top-0 z-10 mt-28 text-center text-2xl font-light">
           A collection of code I&apos;ve written over the years.
@@ -51,7 +52,7 @@ const Project = ({
   name,
   description,
   imageUrl,
-  tags,
+  tagsIcons,
   url,
   codeUrl,
   codePublic,
@@ -62,7 +63,7 @@ const Project = ({
 
   return (
     <div
-      className="flex min-w-[300px] flex-col overflow-hidden border border-black transition-all hover:scale-105 hover:shadow-xl sm:w-10/12 md:w-8/12 lg:w-5/12 xl:w-4/12"
+      className="flex min-w-[300px] flex-col overflow-hidden border border-black transition-all hover:scale-105 hover:shadow-xl sm:w-9/12 md:w-7/12 lg:w-5/12 xl:w-4/12 2xl:w-4/12"
       // onClick={() => router.push(`/projects/${pathname}`)}
     >
       <div
@@ -76,7 +77,7 @@ const Project = ({
       >
         {/* <Image src={imageUrl} fill alt={name} /> */}
       </div>
-      <div className="flex flex-grow flex-col justify-between gap-5 p-10">
+      <div className="flex flex-grow flex-col justify-between gap-3 p-10">
         <div className="flex w-full flex-row items-center justify-between">
           <h4 className="text-xl">{name}</h4>
           <div className="flex flex-row gap-3">
@@ -101,14 +102,17 @@ const Project = ({
           </div>
         </div>
         <p className="font-light">{description}</p>
-        <div className="no-scrollbar flex flex-row gap-3 overflow-scroll">
-          {tags.map((t) => (
+        <div className="no-scrollbar flex flex-row gap-7 overflow-scroll sm:gap-10">
+          {/* {tags.map((t) => (
             <p
               key={t}
               className="inline min-w-min whitespace-nowrap rounded-xl bg-[#eee] px-3 py-1"
             >
               {t}
             </p>
+          ))} */}
+          {tagsIcons.map((t) => (
+            <TechIcon key={t} size={20} name={t} />
           ))}
         </div>
       </div>
