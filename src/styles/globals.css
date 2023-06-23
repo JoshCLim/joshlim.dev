@@ -8,6 +8,21 @@ html {
   user-select: none;
 }
 
+body {
+  overscroll-behavior-y: none;
+}
+
+ol,
+ul {
+  padding-left: 1.5rem;
+}
+ol {
+  list-style: number;
+}
+ul {
+  list-style: circle;
+}
+
 /* Hide scrollbar for Chrome, Safari and Opera */
 .no-scrollbar::-webkit-scrollbar {
   display: none;

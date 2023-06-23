@@ -62,7 +62,7 @@ const CourseBox = ({
   return (
     <div className="flex flex-col gap-3 p-10">
       <h2 className="font-semibold">{course}</h2>
-      <div>
+      <div className="flex flex-col gap-3">
         {notes.map((n) => (
           <NoteBox {...n} key={n.id} />
         ))}

@@ -6,6 +6,8 @@ import { SessionProvider } from "next-auth/react";
 import { api } from "~/utils/api";
 
 import "~/styles/globals.css";
+import "~/styles/note.css";
+import "~/styles/code.css";
 import { Toaster } from "react-hot-toast";
 import AOS from "aos";
 import "aos/dist/aos.css"; // You can also use <link> for styles
