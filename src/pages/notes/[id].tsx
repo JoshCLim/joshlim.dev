@@ -7,9 +7,10 @@ import { LoadingPage } from "~/components/loading";
 import { generateSSGHelper } from "~/server/helpers/ssgHelper";
 import { type RouterOutputs, api } from "~/utils/api";
 
+// import HorizontalScrollTracker from "~/components/horizontalScrollTracker";
+
 import Refractor from "react-refractor";
 import cpp from "refractor/lang/cpp";
-import HorizontalScrollTracker from "~/components/horizontalScrollTracker";
 Refractor.registerLanguage(cpp);
 
 const NotePortableTextComponents = {
@@ -70,7 +71,7 @@ const NotePage: NextPage<{ id: string }> = ({ id }) => {
 const NotesNavBar = ({ nextId }: { nextId: string | undefined }) => {
   return (
     <>
-      <HorizontalScrollTracker />
+      {/* <HorizontalScrollTracker /> */}
       <nav className="fixed left-0 top-0 flex w-full justify-between gap-5 border-b border-[#333] bg-[#1f1f1f] p-5">
         <BackToNotesButton />
         <SearchBar />
