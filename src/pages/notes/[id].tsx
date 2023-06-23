@@ -1,14 +1,16 @@
-import { PortableText } from "@portabletext/react";
-import { LeftRoundArrow, RightRoundArrow } from "iconoir-react";
 import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/navigation";
 import { LoadingPage } from "~/components/loading";
 import { generateSSGHelper } from "~/server/helpers/ssgHelper";
 import { type RouterOutputs, api } from "~/utils/api";
+// import { LeftRoundArrow, RightRoundArrow } from "iconoir-react";
 
+// import LeftRoundArrow from "iconoir-react/dist/LeftRoundArrow";
+// import { RightRoundArrow } from "iconoir-react";
 // import HorizontalScrollTracker from "~/components/horizontalScrollTracker";
 
+import { PortableText } from "@portabletext/react";
 import Refractor from "react-refractor";
 import cpp from "refractor/lang/cpp";
 Refractor.registerLanguage(cpp);
@@ -101,7 +103,7 @@ const BackToNotesButton = () => {
       className="flex gap-3 rounded-md bg-[#ff5959] px-5 py-3 text-white shadow-lg transition-all hover:bg-[#ff3a3a]"
       onClick={() => router.push("/notes")}
     >
-      <LeftRoundArrow />
+      {/* <LeftRoundArrow /> */}
       <span className="hidden sm:inline">Back to all notes</span>
     </button>
   );
@@ -118,7 +120,7 @@ const NextNoteButton = ({ nextId }: { nextId: string }) => {
       onClick={() => router.push(`/notes/${nextId}`)}
     >
       <span className="hidden sm:inline">Next note</span>
-      <RightRoundArrow />
+      {/* <RightRoundArrow /> */}
     </button>
   );
 };
