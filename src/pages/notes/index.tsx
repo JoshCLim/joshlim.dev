@@ -36,10 +36,15 @@ const Notes: NextPage = () => {
   return (
     <>
       <KofiDonateButton />
-      <main className="flex flex-col items-center p-10 text-black">
-        <h1 className="bg-[#cfadff] p-3 text-3xl font-extralight uppercase tracking-wider">
-          My Notes
-        </h1>
+      <main className="flex min-h-[100vh] flex-row items-start justify-start gap-24 bg-[#1f1f1f] p-24 text-white">
+        <div className="flex flex-col items-start justify-start gap-10 sm:max-w-[40%]">
+          <h1 className="font-['Comfortaa'] text-9xl font-extrabold uppercase leading-tight">
+            Course Notes
+          </h1>
+          <p className="text-5xl font-extralight leading-tight">
+            A collection of notes for UNSW courses I&apos;ve taken.
+          </p>
+        </div>
         <div className="flex flex-row gap-3">
           {courses.map((c) => (
             <CourseBox key={c} course={c} allNotes={notesBrief} />

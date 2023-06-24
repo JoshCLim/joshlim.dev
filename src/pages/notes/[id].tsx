@@ -8,7 +8,7 @@ import { type RouterOutputs, api } from "~/utils/api";
 
 // import LeftRoundArrow from "iconoir-react/dist/LeftRoundArrow";
 // import { RightRoundArrow } from "iconoir-react";
-// import HorizontalScrollTracker from "~/components/horizontalScrollTracker";
+import HorizontalScrollTracker from "~/components/horizontalScrollTracker";
 
 import { PortableText } from "@portabletext/react";
 import Refractor from "react-refractor";
@@ -73,7 +73,7 @@ const NotePage: NextPage<{ id: string }> = ({ id }) => {
 const NotesNavBar = ({ nextId }: { nextId: string | undefined }) => {
   return (
     <>
-      {/* <HorizontalScrollTracker /> */}
+      <HorizontalScrollTracker />
       <nav className="fixed left-0 top-0 flex w-full justify-between gap-5 border-b border-[#333] bg-[#1f1f1f] p-5">
         <BackToNotesButton />
         <SearchBar />
