@@ -66,7 +66,7 @@ const CourseBox = ({
 
   return (
     <div className="flex w-screen flex-col gap-3 border-0 border-b border-[#ddd] bg-[#fafafa] xl:py-0">
-      <h2 className="ms-8 mt-7 text-xl font-semibold text-[#000] xl:ms-12 xl:mt-10 xl:text-3xl">
+      <h2 className="ms-8 mt-7 text-lg font-semibold text-[#000] xl:ms-12 xl:mt-10 xl:text-2xl">
         {course}
       </h2>
       <div className="no-scrollbar flex flex-row gap-5 overflow-x-auto px-8 pb-8 xl:px-12 xl:pb-12">
@@ -90,7 +90,7 @@ const NoteBox = ({
       className="flex max-h-32 max-w-[180px] flex-shrink-0 flex-grow cursor-pointer flex-col gap-2 rounded-xl bg-white p-7 text-[#333] shadow-xl transition-all hover:scale-105 hover:bg-[#f5f5f5] hover:shadow-xl md:max-h-none md:max-w-[280px]"
       onClick={() => router.push(`/notes/${id}`)}
     >
-      <h3 className="text-l font-light md:font-normal">{name}</h3>
+      <h3 className="font-light md:font-normal">{name}</h3>
       <p className="hidden text-sm font-light md:block">{description}</p>
     </div>
   );
