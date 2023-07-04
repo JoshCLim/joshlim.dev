@@ -1,4 +1,6 @@
+import { Home } from "iconoir-react";
 import type { GetStaticProps, NextPage } from "next";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { LoadingPage } from "~/components/loading";
 import { generateSSGHelper } from "~/server/helpers/ssgHelper";
@@ -35,6 +37,7 @@ const Notes: NextPage = () => {
 
   return (
     <>
+      <ReturnHomeButton />
       <KofiDonateButton />
       <main className="flex h-[100vh] w-screen flex-col items-start justify-start overflow-x-hidden overscroll-none bg-[#fafafa] text-white xl:flex-row">
         <div className="flex w-full flex-col items-start justify-start gap-4 bg-[#a4ceaf] p-10 xl:h-screen xl:min-w-[40%] xl:max-w-[50%] xl:justify-center xl:gap-10 xl:border-r xl:border-[#ddd] xl:py-24 xl:pe-24 xl:ps-20">
@@ -93,6 +96,17 @@ const NoteBox = ({
       <h3 className="font-light md:font-normal">{name}</h3>
       <p className="hidden text-sm font-light md:block">{description}</p>
     </div>
+  );
+};
+
+const ReturnHomeButton = () => {
+  return (
+    <Link
+      href="/"
+      className="fixed bottom-8 right-8 z-50 rounded-full bg-blue-600 p-7 shadow-xl transition-all hover:scale-105 hover:bg-blue-700 hover:shadow-2xl active:scale-95 active:bg-blue-800"
+    >
+      <Home />
+    </Link>
   );
 };
 

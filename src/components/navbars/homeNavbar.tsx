@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { Home, ChatBubble, AngleTool, Menu } from "iconoir-react";
+import { Home, ChatBubble, AngleTool, Menu, Book } from "iconoir-react";
 import { useState } from "react";
 
 export const PAGES = [
@@ -15,6 +15,10 @@ export const PAGES = [
   {
     href: "/guestbook",
     icon: <ChatBubble />,
+  },
+  {
+    href: "/notes",
+    icon: <Book />,
   },
   // {
   //   href: "/party",
