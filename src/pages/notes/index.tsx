@@ -36,16 +36,16 @@ const Notes: NextPage = () => {
   return (
     <>
       <KofiDonateButton />
-      <main className="flex min-h-[100vh] flex-row items-start justify-start gap-24 bg-[#1f1f1f] p-24 text-white">
-        <div className="flex flex-col items-start justify-start gap-10 sm:max-w-[40%]">
-          <h1 className="font-['Comfortaa'] text-9xl font-extrabold uppercase leading-tight">
+      <main className="flex h-[100vh] w-screen flex-col items-start justify-start overflow-x-hidden overscroll-none bg-[#fafafa] text-white xl:flex-row">
+        <div className="flex w-full flex-col items-start justify-start gap-4 bg-[#a4ceaf] p-10 xl:h-screen xl:min-w-[40%] xl:max-w-[50%] xl:justify-center xl:gap-10 xl:border-r xl:border-[#ddd] xl:py-24 xl:pe-24 xl:ps-20">
+          <h1 className="text-4xl tracking-tight xl:text-7xl xl:font-extrabold xl:uppercase xl:leading-tight 2xl:text-8xl">
             Course Notes
           </h1>
-          <p className="text-5xl font-extralight leading-tight">
+          <p className="text-2xl font-extralight leading-tight xl:text-4xl 2xl:text-5xl">
             A collection of notes for UNSW courses I&apos;ve taken.
           </p>
         </div>
-        <div className="flex flex-row gap-3">
+        <div className="flex flex-col bg-[#fafafa] xl:h-screen">
           {courses.map((c) => (
             <CourseBox key={c} course={c} allNotes={notesBrief} />
           ))}
@@ -65,9 +65,11 @@ const CourseBox = ({
   const notes = allNotes.filter((n) => n.course === course);
 
   return (
-    <div className="flex flex-col gap-3 p-10">
-      <h2 className="font-semibold">{course}</h2>
-      <div className="flex flex-col gap-3">
+    <div className="flex w-screen flex-col gap-3 border-0 border-b border-[#ddd] bg-[#fafafa] xl:py-0">
+      <h2 className="ms-8 mt-7 text-xl font-semibold text-[#000] xl:ms-12 xl:mt-10 xl:text-3xl">
+        {course}
+      </h2>
+      <div className="no-scrollbar flex flex-row gap-5 overflow-x-auto px-8 pb-8 xl:px-12 xl:pb-12">
         {notes.map((n) => (
           <NoteBox {...n} key={n.id} />
         ))}
@@ -85,11 +87,11 @@ const NoteBox = ({
 
   return (
     <div
-      className="flex cursor-pointer flex-col gap-2 rounded-xl bg-white p-7 text-[#333] shadow-lg transition-all hover:scale-105 hover:bg-[#f5f5f5] hover:shadow-xl"
+      className="flex max-h-32 max-w-[180px] flex-shrink-0 flex-grow cursor-pointer flex-col gap-2 rounded-xl bg-white p-7 text-[#333] shadow-xl transition-all hover:scale-105 hover:bg-[#f5f5f5] hover:shadow-xl md:max-h-none md:max-w-[280px]"
       onClick={() => router.push(`/notes/${id}`)}
     >
-      <h3 className="text-l">{name}</h3>
-      <p className="text-sm font-light">{description}</p>
+      <h3 className="text-l font-light md:font-normal">{name}</h3>
+      <p className="hidden text-sm font-light md:block">{description}</p>
     </div>
   );
 };
