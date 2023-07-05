@@ -18,7 +18,7 @@ interface Note {
   _type: "note";
   name: string;
   order: string;
-  content: (NoteBlock | NoteCode)[];
+  content: (NoteBlock | NoteCode | NoteLatex)[];
   description: string;
   next?: Reference;
   course: string;
@@ -29,6 +29,12 @@ interface NoteCode {
   _type: "cpp";
   code: string;
   language: string;
+}
+
+interface NoteLatex {
+  _key: string;
+  _type: "latex";
+  body: string;
 }
 
 interface NoteBlock {
@@ -1529,7 +1535,7 @@ const getIds = publicProcedure.query(async () => {
 });
 
 const getBriefDetails = publicProcedure.query(async () => {
-  console.log(await getSanity());
+  // console.log(await getSanity());
   return (await getSanity()).map((n) => {
     return {
       id: n._id,

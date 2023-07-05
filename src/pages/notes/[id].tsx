@@ -13,6 +13,7 @@ import HorizontalScrollTracker from "~/components/horizontalScrollTracker";
 import { PortableText } from "@portabletext/react";
 import Refractor from "react-refractor";
 import cpp from "refractor/lang/cpp";
+import { MathJax } from "better-react-mathjax";
 Refractor.registerLanguage(cpp);
 
 const NotePortableTextComponents = {
@@ -25,6 +26,15 @@ const NotePortableTextComponents = {
       if (value._type === "cpp")
         return <Refractor language="cpp" value={value.code} />;
       return <div>Error loading code.</div>;
+    },
+    latex: ({
+      value,
+    }: {
+      value: RouterOutputs["notes"]["getNotes"][number]["content"][number];
+    }) => {
+      if (value._type === "latex")
+        return <MathJax inline>{`\\(${value.body}\\)`}</MathJax>;
+      return <span>Error loading math.</span>;
     },
   },
   marks: {
@@ -44,7 +54,7 @@ const NotePortableTextComponents = {
 
 const NotePage: NextPage<{ id: string }> = ({ id }) => {
   const { data: note, isLoading } = api.notes.getNote.useQuery({ id });
-  console.log(note);
+  // console.log(note);
 
   if (isLoading) return <LoadingPage />;
   else if (!note) return <div>an error occured</div>;
@@ -112,7 +122,7 @@ const BackToNotesButton = () => {
 const NextNoteButton = ({ nextId }: { nextId: string }) => {
   const router = useRouter();
 
-  console.log(nextId);
+  // console.log(nextId);
 
   return (
     <button
