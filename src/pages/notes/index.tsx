@@ -39,8 +39,8 @@ const Notes: NextPage = () => {
     <>
       <ReturnHomeButton />
       <KofiDonateButton />
-      <main className="flex h-[100vh] w-screen flex-col items-start justify-start overflow-x-hidden overscroll-none bg-[#fafafa] text-white xl:flex-row">
-        <div className="flex w-full flex-col items-start justify-start gap-4 bg-[#a4ceaf] p-10 xl:h-screen xl:min-w-[40%] xl:max-w-[50%] xl:justify-center xl:gap-10 xl:border-r xl:border-[#ddd] xl:py-24 xl:pe-24 xl:ps-20">
+      <main className="flex h-screen w-screen flex-col items-start justify-start overflow-x-auto overscroll-none bg-[#fafafa] text-white xl:flex-row">
+        <div className="flex w-full flex-col items-start justify-start gap-4 bg-[#a4ceaf] p-10 xl:h-screen xl:min-w-[40%] xl:max-w-[40%] xl:justify-center xl:gap-10 xl:border-r xl:border-[#ddd] xl:py-24 xl:pe-24 xl:ps-20">
           <h1 className="text-4xl tracking-tight xl:text-7xl xl:font-extrabold xl:uppercase xl:leading-tight 2xl:text-8xl">
             Course Notes
           </h1>
@@ -48,7 +48,7 @@ const Notes: NextPage = () => {
             A collection of notes for UNSW courses I&apos;ve taken.
           </p>
         </div>
-        <div className="flex flex-col bg-[#fafafa] xl:h-screen">
+        <div className="flex w-full flex-col bg-[#fafafa] xl:h-screen">
           {courses.map((c) => (
             <CourseBox key={c} course={c} allNotes={notesBrief} />
           ))}
@@ -68,11 +68,11 @@ const CourseBox = ({
   const notes = allNotes.filter((n) => n.course === course);
 
   return (
-    <div className="flex w-screen flex-col gap-3 border-0 border-b border-[#ddd] bg-[#fafafa] xl:py-0">
-      <h2 className="ms-8 mt-7 text-lg font-semibold text-[#000] xl:ms-12 xl:mt-10 xl:text-2xl">
-        {course}
-      </h2>
-      <div className="no-scrollbar flex flex-row gap-5 overflow-x-auto px-8 pb-8 xl:px-12 xl:pb-12">
+    <div className="flex w-screen flex-col gap-3 border-0 border-b border-[#ddd] bg-[#fafafa] xl:w-full xl:py-0">
+      <div className="no-scrollbar flex flex-row gap-5 overflow-x-scroll px-5 py-8 xl:px-8 xl:py-12">
+        <h2 className="my-auto me-3 align-middle text-lg font-semibold text-[#333] xl:text-2xl">
+          {course}
+        </h2>
         {notes.map((n) => (
           <NoteBox {...n} key={n.id} />
         ))}
@@ -90,7 +90,7 @@ const NoteBox = ({
 
   return (
     <div
-      className="flex max-h-32 max-w-[180px] flex-shrink-0 flex-grow cursor-pointer flex-col gap-2 rounded-xl bg-white p-7 text-[#333] shadow-xl transition-all hover:scale-105 hover:bg-[#f5f5f5] hover:shadow-xl md:max-h-none md:max-w-[280px]"
+      className="flex max-h-32 max-w-[180px] flex-shrink-0 flex-grow cursor-pointer flex-col justify-center gap-2 rounded-xl bg-white p-7 text-[#333] shadow-xl transition-all hover:scale-105 hover:bg-[#f5f5f5] hover:shadow-xl md:max-h-none md:max-w-[280px] md:flex-shrink-0 md:justify-start"
       onClick={() => router.push(`/notes/${id}`)}
     >
       <h3 className="font-light md:font-normal">{name}</h3>
