@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,6 +8,24 @@ html {
   background-color: #f5f5f5;
   color: #fff;
   user-select: none;
+  overscroll-behavior-x: none;
+  overscroll-behavior-y: none;
+}
+
+body {
+  overscroll-behavior-x: none;
+  overscroll-behavior-y: none;
+}
+
+ol,
+ul {
+  padding-left: 1.5rem;
+}
+ol {
+  list-style: number;
+}
+ul {
+  list-style: circle;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */

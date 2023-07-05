@@ -1,0 +1,40 @@
+.note {
+  @apply flex flex-col gap-3;
+  line-height: 1.8;
+}
+
+.note h1 {
+  @apply mt-5 text-4xl font-bold tracking-wide;
+}
+
+.note h1.title {
+  @apply mt-10 border-b pb-5 text-5xl font-bold;
+}
+
+.note h2 {
+  @apply mt-3 text-3xl font-bold tracking-wide;
+}
+
+.note h3 {
+  @apply mt-1 text-2xl font-bold tracking-wide;
+}
+
+.note .bubble {
+  @apply me-1 rounded-full border-[1px] border-purple-500 bg-slate-700 px-2 py-1 text-sm text-purple-500;
+  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+}
+
+.note br {
+  @apply mt-3 block;
+  content: " ";
+}
+
+.note li {
+  @apply mb-3;
+}
+
+.note p code,
+.note li code,
+.note h1 code {
+  @apply rounded-md bg-slate-800 px-2 py-1 text-red-500;
+}
