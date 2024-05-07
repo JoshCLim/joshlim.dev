@@ -7,11 +7,13 @@ export default function FadeIn({
   delay = 0, // ms
   duration = 1000, // ms
   ease = "easeInOut",
+  className = "",
 }: {
   children: React.ReactNode;
   delay?: number;
   duration?: number;
   ease?: Easing;
+  className?: string;
 }) {
   return (
     <motion.div
@@ -22,6 +24,7 @@ export default function FadeIn({
         delay: delay / 1000,
         ease: ease,
       }}
+      className={className}
     >
       {children}
     </motion.div>
