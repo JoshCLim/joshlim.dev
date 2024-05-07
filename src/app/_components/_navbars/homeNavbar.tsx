@@ -2,13 +2,17 @@
 
 import Link from "next/link";
 
-import { Menu } from "iconoir-react";
 import { useState } from "react";
-import allPages from "./navbarPages";
-import FadeIn from "../_animations/fadeIn";
+
 import { cn } from "~/app/utils";
-import FadeInOut from "../_animations/fadeInOut";
+
+import FadeIn from "~components/_animations/fadeIn";
+import FadeInOut from "~components/_animations/fadeInOut";
+
+import allPages from "./navbarPages";
+
 import { AnimatePresence } from "framer-motion";
+import { Menu } from "iconoir-react";
 
 export default function HomeNavbar({
   currPage,

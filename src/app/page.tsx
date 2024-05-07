@@ -1,11 +1,15 @@
-import { IconoirProvider } from "iconoir-react";
 import type { Metadata } from "next";
+
 import Image from "next/image";
-import HomeNavbar from "~/app/_components/_navbars/homeNavbar";
-import FadeDown from "./_components/_animations/fadeDown";
-import FadeUp from "./_components/_animations/fadeUp";
-import FadeIn from "./_components/_animations/fadeIn";
+
+import FadeDown from "~components/_animations/fadeDown";
+import FadeIn from "~components/_animations/fadeIn";
+import FadeUp from "~components/_animations/fadeUp";
+import HomeNavbar from "~components/_navbars/homeNavbar";
+
 import { socials } from "./data";
+
+import { IconoirProvider } from "iconoir-react";
 
 export const metadata: Metadata = {
   title: "Home",

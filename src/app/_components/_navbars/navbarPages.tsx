@@ -1,4 +1,4 @@
-import { Home, AngleTool, RubikCube } from "iconoir-react";
+import { AngleTool, Home, RubikCube } from "iconoir-react";
 
 const allPages = [
   {
