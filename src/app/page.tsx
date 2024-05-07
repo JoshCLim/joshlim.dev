@@ -1,82 +1,112 @@
-import Link from "next/link";
+import { IconoirProvider } from "iconoir-react";
+import type { Metadata } from "next";
+import Image from "next/image";
+import HomeNavbar from "~/app/_components/_navbars/homeNavbar";
+import FadeDown from "./_components/_animations/fadeDown";
+import FadeUp from "./_components/_animations/fadeUp";
+import FadeIn from "./_components/_animations/fadeIn";
+import { socials } from "./data";
 
-import { CreatePost } from "~/app/_components/create-post";
-import { getServerAuthSession } from "~/server/auth";
-import { api } from "~/trpc/server";
+export const metadata: Metadata = {
+  title: "Home",
+  description:
+    "Hi, my name is Josh C Lim. I'm a computer science student at UNSW, and an aspiring software engineer based in Sydney, NSW. This is my portfolio site, where I share some projects I have made over the years and anything else I might find nerdy / interesting.",
+};
 
-export default async function Home() {
-  const hello = await api.post.hello({ text: "from tRPC" });
-  const session = await getServerAuthSession();
-
+export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
-        <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-          Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
-        </h1>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
-            href="https://create.t3.gg/en/usage/first-steps"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">First Steps →</h3>
-            <div className="text-lg">
-              Just the basics - Everything you need to know to set up your
-              database and authentication.
-            </div>
-          </Link>
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
-            href="https://create.t3.gg/en/introduction"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">Documentation →</h3>
-            <div className="text-lg">
-              Learn more about Create T3 App, the libraries it uses, and how to
-              deploy it.
-            </div>
-          </Link>
+    <main className="fixed flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-[#0c102d] to-[#15162c]">
+      <HomeNavbar currPage="" fixed />
+      <div className="flex flex-col items-center justify-center gap-10 px-10 sm:flex-row sm:gap-20">
+        <HeroImage />
+        <div className="flex flex-col gap-5 text-center sm:text-right">
+          <Greeting />
+          <Description />
+          <Socials />
         </div>
-        <div className="flex flex-col items-center gap-2">
-          <p className="text-2xl text-white">
-            {hello ? hello.greeting : "Loading tRPC query..."}
-          </p>
-
-          <div className="flex flex-col items-center justify-center gap-4">
-            <p className="text-center text-2xl text-white">
-              {session && <span>Logged in as {session.user?.name}</span>}
-            </p>
-            <Link
-              href={session ? "/api/auth/signout" : "/api/auth/signin"}
-              className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
-            >
-              {session ? "Sign out" : "Sign in"}
-            </Link>
-          </div>
-        </div>
-
-        <CrudShowcase />
       </div>
     </main>
   );
 }
 
-async function CrudShowcase() {
-  const session = await getServerAuthSession();
-  if (!session?.user) return null;
-
-  const latestPost = await api.post.getLatest();
-
+const HeroImage = () => {
   return (
-    <div className="w-full max-w-xs">
-      {latestPost ? (
-        <p className="truncate">Your most recent post: {latestPost.name}</p>
-      ) : (
-        <p>You have no posts yet.</p>
-      )}
+    <FadeIn delay={100} duration={1500}>
+      <div className="relative h-[200px] w-[200px] md:h-[275px] md:w-[275px]">
+        <Image
+          draggable={false}
+          src="/pingu.jpg"
+          sizes="200px"
+          fill
+          priority
+          alt="profile-pic"
+          className="rounded-full border-8 border-white transition-all hover:scale-105"
+        />
+      </div>
+    </FadeIn>
+  );
+};
 
-      <CreatePost />
+const Greeting = () => {
+  return (
+    <div className="flex flex-col gap-2">
+      <FadeDown delay={150} duration={1000}>
+        <p className="text-2xl font-light text-white">Hey there! My name is</p>
+      </FadeDown>
+      <FadeDown delay={50} duration={1000}>
+        <h1
+          className="bg-clip-text text-6xl font-extrabold text-transparent md:text-7xl lg:text-8xl"
+          style={{
+            backgroundImage:
+              "linear-gradient(to left, #BDCBF0, #C5F3FA, #BFE3D1, #CDFAC5, #EBF0B4)",
+          }}
+        >
+          Josh Lim
+        </h1>
+      </FadeDown>
     </div>
+  );
+};
+
+function Description() {
+  return (
+    <FadeUp delay={100} duration={1000}>
+      <p className="m-0 text-lg tracking-wide">
+        I&apos;m a <span className="text-[#aaaaee]">Computer Science</span>{" "}
+        student @ UNSW
+      </p>
+    </FadeUp>
+  );
+}
+
+function Socials() {
+  return (
+    <FadeUp delay={200} duration={1000}>
+      <div className="flex flex-row justify-center gap-3 sm:justify-end">
+        <IconoirProvider iconProps={{ width: "2em", height: "2em" }}>
+          {socials.map(({ href, icon }, index) => (
+            <SocialLink key={index} href={href} icon={icon} />
+          ))}
+        </IconoirProvider>
+      </div>
+    </FadeUp>
+  );
+}
+
+function SocialLink({
+  href,
+  icon,
+}: {
+  href: string;
+  icon: React.ReactElement;
+}) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      className="rounded-xl p-1 transition-all hover:scale-110 hover:bg-white hover:text-black"
+    >
+      {icon}
+    </a>
   );
 }
