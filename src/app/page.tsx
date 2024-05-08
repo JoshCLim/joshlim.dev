@@ -7,6 +7,7 @@ import FadeIn from "~components/_animations/fadeIn";
 import FadeUp from "~components/_animations/fadeUp";
 import HomeNavbar from "~components/_navbars/homeNavbar";
 
+import BounceOnTap from "./_components/_animations/bounceOnTap";
 import { socials } from "./data";
 
 import { IconoirProvider } from "iconoir-react";
@@ -35,19 +36,21 @@ export default function Home() {
 
 const HeroImage = () => {
   return (
-    <FadeIn delay={100} duration={1500}>
-      <div className="relative h-[200px] w-[200px] md:h-[275px] md:w-[275px]">
-        <Image
-          draggable={false}
-          src="/pingu.jpg"
-          sizes="200px"
-          fill
-          priority
-          alt="profile-pic"
-          className="rounded-full border-8 border-white transition-all hover:scale-105"
-        />
-      </div>
-    </FadeIn>
+    <BounceOnTap>
+      <FadeIn delay={100} duration={1500}>
+        <div className="relative h-[200px] w-[200px] md:h-[275px] md:w-[275px]">
+          <Image
+            draggable={false}
+            src="/pingu.jpg"
+            sizes="200px"
+            fill
+            priority
+            alt="profile-pic"
+            className="rounded-full border-8 border-white transition-all"
+          />
+        </div>
+      </FadeIn>
+    </BounceOnTap>
   );
 };
 
