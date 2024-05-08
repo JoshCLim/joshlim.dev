@@ -1,26 +1,73 @@
-import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
-export interface Project {
+import { TRPCError } from "@trpc/server";
+import { z } from "zod";
+
+type Tags =
+  | "html5"
+  | "css3"
+  | "javascript"
+  | "jquery"
+  | "firebase"
+  | "react"
+  | "bootstrap"
+  | "nextjs"
+  | "tailwindcss"
+  | "trpc"
+  | "prisma"
+  | "typescript"
+  | "shadcn"
+  | "expressjs"
+  | "drizzle"
+  | "nextui";
+
+type Project = {
   name: string;
   description: string;
   imageUrl: string;
-  tagsIcons: string[];
-  url: string;
-  codeUrl: string;
+  tagsIcons: Tags[];
+  url?: string;
+  codeUrl?: string;
   codePublic: boolean;
-}
+};
 
-const PROJECTS: Project[] = [
+const allProjects: Project[] = [
   {
     name: "joshlim.dev",
     description:
       "My own portfolio site. Featuring this projects page, a guestbook and a games page (upcoming).",
     imageUrl: "/projects/joshlimdev.png",
     // tags: ["Next.js", "Tailwind CSS", "tRPC", "Prisma", "NextAuth.js"],
-    tagsIcons: ["nextjs", "tailwindcss", "trpc", "prisma", "typescript"],
+    tagsIcons: ["nextjs", "tailwindcss", "trpc", "drizzle", "typescript"],
     url: "https://joshlim.dev",
     codeUrl: "https://github.com/JoshCLim/joshlim.dev",
+    codePublic: true,
+  },
+  {
+    name: "Emailr",
+    description:
+      "A simple mail merge tool I created for the UNSW Data Science Society, sending out many custom emails based on an uploaded CSV file.",
+    imageUrl: "/projects/emailr.png",
+    tagsIcons: ["react", "tailwindcss", "shadcn", "expressjs", "typescript"],
+    url: "https://emails.unswdata.com/",
+    codeUrl: "https://github.com/UNSW-Data-Soc/emailr",
+    codePublic: true,
+  },
+  {
+    name: "Elixir",
+    description:
+      "The official website for the UNSW Data Science Society, allowing internal members to dynamically update content upon logging in.",
+    imageUrl: "/projects/datasoc.png",
+    tagsIcons: [
+      "nextjs",
+      "tailwindcss",
+      "trpc",
+      "drizzle",
+      "nextui",
+      "typescript",
+    ],
+    url: "https://unswdata.com/",
+    codeUrl: "https://github.com/UNSW-Data-Soc/elixir",
     codePublic: true,
   },
   {
@@ -29,7 +76,7 @@ const PROJECTS: Project[] = [
       "A basic Twitter clone that I created while learning the T3 stack.",
     imageUrl: "/projects/chirp.png",
     tagsIcons: ["nextjs", "tailwindcss", "trpc", "prisma", "typescript"],
-    url: "https://chirp-iota-six.vercel.app/",
+    // url: "https://chirp-iota-six.vercel.app/",
     codeUrl: "https://github.com/JoshCLim/chirp",
     codePublic: true,
   },
@@ -47,7 +94,7 @@ const PROJECTS: Project[] = [
   {
     name: "Latin Annotation Tool",
     description:
-      "A web app I made to annotate Latin texts that we were studying in IB. Users can highlight words based on their tense etc., link related words together and make comments. All changes are applied in real-time and will be seen by all users of the site.",
+      "A web app I made to annotate Latin texts that we studied in IB. Users can highlight words based on their tense etc., link related words together and add comments. All changes are applied in real-time.",
     imageUrl: "/projects/annotationtool.png",
     // tags: ["HTML", "CSS", "JS", "jQuery", "Firebase"],
     tagsIcons: ["html5", "css3", "javascript", "jquery", "firebase"],
@@ -59,7 +106,7 @@ const PROJECTS: Project[] = [
   {
     name: "My Handbook",
     description:
-      "A study planner app that I made for my Year 10 personal project. Users can sign in/sign up and add information about their timetable, homework and more.",
+      "A study planner app that I made for my Year 10 personal project. Users can login and add information about their timetable, homework and more.",
     imageUrl: "/projects/myhandbook.png",
     // tags: ["HTML", "CSS", "JS", "jQuery", "Firebase"],
     tagsIcons: ["html5", "css3", "javascript", "jquery", "firebase"],
@@ -89,13 +136,22 @@ const projectNamesEqual = (name1: string, name2: string) => {
 };
 
 const getProjects = publicProcedure.query(() => {
-  return PROJECTS;
+  return allProjects;
 });
 
 const getProject = publicProcedure
   .input(z.object({ name: z.string() }))
   .query(({ input }) => {
-    return PROJECTS.filter((p) => projectNamesEqual(p.name, input.name))[0];
+    const matchingProjects = allProjects.filter((p) =>
+      projectNamesEqual(p.name, input.name),
+    );
+    if (matchingProjects.length === 0) {
+      throw new TRPCError({
+        message: "Project not found",
+        code: "BAD_REQUEST",
+      });
+    }
+    return matchingProjects[0];
   });
 
 export const projectsRouter = createTRPCRouter({
