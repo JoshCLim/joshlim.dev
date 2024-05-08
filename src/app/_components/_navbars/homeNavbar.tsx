@@ -8,11 +8,12 @@ import { cn } from "~/app/utils";
 
 import FadeIn from "~components/_animations/fadeIn";
 import FadeInOut from "~components/_animations/fadeInOut";
+import RotateScaleInOut from "~components/_animations/rotateScaleInOut";
 
 import allPages from "./navbarPages";
 
 import { AnimatePresence } from "framer-motion";
-import { Menu } from "iconoir-react";
+import { Menu, Xmark } from "iconoir-react";
 
 export default function HomeNavbar({
   currPage,
@@ -22,21 +23,32 @@ export default function HomeNavbar({
 }) {
   const [showNav, setShowNav] = useState<boolean>(false);
 
-  const toggleShowNav = () => {
-    setShowNav((curr) => !curr);
-  };
-
   return (
-    <div className="fixed left-0 top-0 flex w-full flex-row justify-center gap-5 py-7 sm:justify-start sm:px-7">
+    <div className="fixed left-0 top-0 flex w-full flex-row justify-center gap-5 py-7 sm:justify-start sm:px-7 sm:py-7">
       <FadeIn delay={1000} duration={1000}>
         <button
-          onClick={toggleShowNav}
-          className="py-5 sm:ps-5"
-          data-aos="fade-in"
-          data-aos-delay="1000"
-          data-aos-duration="1000"
+          onClick={() => setShowNav((curr) => !curr)}
+          className="relative py-5 sm:ps-5"
         >
-          <Menu />
+          <AnimatePresence>
+            {showNav ? (
+              <RotateScaleInOut
+                key={1}
+                className="absolute left-[50%] top-[50%]"
+                duration={300}
+              >
+                <Xmark height={24} width={24} />
+              </RotateScaleInOut>
+            ) : (
+              <RotateScaleInOut
+                key={2}
+                className="absolute left-[50%] top-[50%]"
+                duration={300}
+              >
+                <Menu height={24} width={24} />
+              </RotateScaleInOut>
+            )}
+          </AnimatePresence>
         </button>
       </FadeIn>
       <AnimatePresence>
@@ -93,8 +105,8 @@ const NavLink = ({
     >
       <Link
         className={cn(
-          "flex flex-row gap-3 rounded-xl bg-white/10 p-5 transition-all hover:bg-white/30",
-          highlight && "bg-white/30",
+          "flex flex-row gap-3 rounded-xl p-5 transition-all hover:bg-white/5",
+          highlight && "bg-white/10 hover:bg-white/15",
         )}
         href={href}
       >
