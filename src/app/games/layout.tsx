@@ -1,7 +1,7 @@
 import { type Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Games",
+  title: "Games | joshlim.dev",
   description: "Games :)))",
   icons: [{ rel: "icon", url: "/pingu.jpg" }],
 };
