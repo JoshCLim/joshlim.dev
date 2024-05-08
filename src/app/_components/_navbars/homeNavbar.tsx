@@ -24,11 +24,11 @@ export default function HomeNavbar({
   const [showNav, setShowNav] = useState<boolean>(false);
 
   return (
-    <div className="fixed left-0 top-0 flex w-full flex-row justify-center gap-5 py-7 sm:justify-start sm:px-7 sm:py-7">
+    <div className="fixed left-0 top-0 flex w-full flex-row justify-center gap-5 py-5 sm:justify-start sm:px-7 sm:py-7">
       <FadeIn delay={1000} duration={1000}>
         <button
           onClick={() => setShowNav((curr) => !curr)}
-          className="relative py-5 sm:ps-5"
+          className="relative translate-x-[-50%] px-[20px] py-5 sm:translate-x-0 sm:px-0 sm:ps-8"
         >
           <AnimatePresence>
             {showNav ? (
