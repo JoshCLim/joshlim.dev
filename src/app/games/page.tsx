@@ -33,7 +33,7 @@ const allGames = [
   {
     name: "minesweeper",
     href: "minesweeper",
-    complete: false,
+    complete: true,
   },
 ];
 
