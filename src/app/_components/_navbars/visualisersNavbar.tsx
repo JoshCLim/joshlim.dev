@@ -13,10 +13,16 @@ import allPages from "./navbarPages";
 import { AnimatePresence, motion } from "framer-motion";
 import { IconoirProvider, Lock, LockSlash } from "iconoir-react";
 
-export default function NavbarVisualisers({ currPage }: { currPage: string }) {
+export default function NavbarVisualisers({
+  currPage,
+  showUnlock = true,
+}: {
+  currPage: string;
+  showUnlock?: boolean;
+}) {
   const navRef = useRef<HTMLDivElement>(null);
   const windowSize = useWindowSize();
-  const [locked, setLocked] = useState<boolean>(false);
+  const [locked, setLocked] = useState<boolean>(true);
 
   console.log(windowSize);
 
@@ -28,7 +34,7 @@ export default function NavbarVisualisers({ currPage }: { currPage: string }) {
         right: windowSize.width - (navRef.current?.offsetWidth ?? 0),
       }}
       whileDrag={{ cursor: "grabbing", backgroundColor: "#eeeeeeaa" }}
-      className="fixed left-0 top-0 flex h-screen max-w-56 flex-col items-start justify-start bg-white font-light text-black shadow-2xl"
+      className="fixed left-0 top-0 z-50 flex h-screen max-w-56 flex-col items-start justify-start bg-white font-light text-black shadow-2xl"
       ref={navRef}
     >
       <IconoirProvider iconProps={{ strokeWidth: 1 }}>
@@ -41,25 +47,27 @@ export default function NavbarVisualisers({ currPage }: { currPage: string }) {
           />
         ))}
       </IconoirProvider>
-      <h1 className="flex flex-grow flex-col justify-center text-wrap px-7 pb-24 text-center text-2xl">
+      {/* <h1 className="flex flex-grow flex-col justify-center text-wrap px-7 pb-24 text-center text-2xl">
         Visualising Data Structures + Algorithms
-      </h1>
-      <button
-        className="absolute bottom-0 left-0 right-0 flex w-full items-center justify-center p-7"
-        onClick={() => setLocked((prev) => !prev)}
-      >
-        <AnimatePresence>
-          {locked ? (
-            <LockAnimationWrapper key={"lock"}>
-              <Lock />
-            </LockAnimationWrapper>
-          ) : (
-            <LockAnimationWrapper key={"unlock"}>
-              <LockSlash />
-            </LockAnimationWrapper>
-          )}
-        </AnimatePresence>
-      </button>
+      </h1> */}
+      {showUnlock && (
+        <button
+          className="absolute bottom-0 left-0 right-0 flex w-full items-center justify-center p-7"
+          onClick={() => setLocked((prev) => !prev)}
+        >
+          <AnimatePresence>
+            {locked ? (
+              <LockAnimationWrapper key={"lock"}>
+                <Lock />
+              </LockAnimationWrapper>
+            ) : (
+              <LockAnimationWrapper key={"unlock"}>
+                <LockSlash />
+              </LockAnimationWrapper>
+            )}
+          </AnimatePresence>
+        </button>
+      )}
     </motion.nav>
   );
 }

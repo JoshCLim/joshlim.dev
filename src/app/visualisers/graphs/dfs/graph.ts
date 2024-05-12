@@ -1,0 +1,182 @@
+// graph data structure
+
+// export class Graph {
+//   nV: number;
+//   edges: number[][];
+//   positions: { x: number; y: number }[]; // coordinates for positions of vertices
+//   directed: boolean;
+
+//   constructor({ directed = false }: { directed: boolean }) {
+//     this.nV = 0;
+//     this.edges = [];
+//     this.positions = [];
+//     this.directed = directed;
+//   }
+
+//   getEdge(u: number, v: number) {
+//     if (!this.edges[u] || !this.edges[v]) {
+//       throw new Error(`Invalid edge added between ${u} and ${v}`);
+//     }
+
+//     // @ts-expect-error - not sure why typescript doesnt realise the this.edges[u] cannot be null
+//     return this.edges[u][v];
+//   }
+
+//   addVertex({ x, y }: { x: number; y: number }) {
+//     this.edges.forEach((row) => row.push(0));
+//     this.nV++;
+//     this.edges.push(Array.from({ length: this.nV }, () => 0));
+//     this.positions.push({ x, y });
+//     return this;
+//   }
+
+//   setVertexPosition(v: number, x: number, y: number) {
+//     this.positions[v] = { x, y };
+//     return this;
+//   }
+
+//   setEdge(u: number, v: number, weight: number | boolean) {
+//     if (typeof weight === "boolean") {
+//       weight = weight ? 1 : 0;
+//     }
+
+//     if (!this.edges[u] || !this.edges[v]) {
+//       throw new Error(`Invalid edge added between ${u} and ${v}`);
+//     }
+
+//     // @ts-expect-error - not sure why typescript doesnt realise the this.edges[u] cannot be null
+//     this.edges[u][v] = weight;
+
+//     if (!this.directed) {
+//       // @ts-expect-error - not sure why typescript doesnt realise the this.edges[u] cannot be null
+//       this.edges[v][u] = weight;
+//     }
+
+//     return this;
+//   }
+
+//   removeVertex(v: number) {
+//     if (!this.edges[v]) {
+//       throw new Error(`Invalid vertex removed: ${v}`);
+//     }
+
+//     for (let u = 0; u < this.nV; u++) {
+//       this.edges[u] =
+//         this.edges[u]?.splice(v, 1) ??
+//         Array.from({ length: this.nV - 1 }, () => 0);
+//     }
+
+//     this.edges = this.edges.splice(v, 1);
+
+//     return this;
+//   }
+
+//   print() {
+//     console.log(this.nV);
+//     console.log(this.edges);
+//   }
+
+//   copy() {
+//     const graph = new Graph({ directed: this.directed });
+//     graph.nV = this.nV;
+//     graph.edges = this.edges.map((row) => [...row]);
+//     graph.positions = this.positions.map((pos) => ({ ...pos }));
+//     return graph;
+//   }
+// }
+
+export type Graph = {
+  nV: number;
+  edges: number[][];
+  positions: { x: number; y: number }[]; // coordinates for positions of vertices
+  directed: boolean;
+};
+
+export function graphNew({ directed = false }: { directed: boolean }): Graph {
+  return {
+    nV: 0,
+    edges: [],
+    positions: [],
+    directed,
+  };
+}
+
+export function graphAddVertex(g: Graph, x: number, y: number): Graph {
+  const graph = graphCopy(g);
+  graph.edges.forEach((row) => row.push(0));
+  graph.nV++;
+  graph.edges.push(Array.from({ length: graph.nV }, () => 0));
+  graph.positions.push({ x, y });
+  return graph;
+}
+
+export function graphSetEdge(
+  g: Graph,
+  u: number,
+  v: number,
+  weight: number | boolean,
+): Graph {
+  const graph = graphCopy(g);
+
+  if (typeof weight === "boolean") {
+    weight = weight ? 1 : 0;
+  }
+
+  if (!graph.edges[u] || !graph.edges[v]) {
+    throw new Error(`Invalid edge added between ${u} and ${v}`);
+  }
+
+  // @ts-expect-error - not sure why typescript doesnt realise the graph.edges[u] cannot be null
+  graph.edges[u][v] = weight;
+
+  if (!graph.directed) {
+    // @ts-expect-error - not sure why typescript doesnt realise the graph.edges[u] cannot be null
+    graph.edges[v][u] = weight;
+  }
+
+  return graph;
+}
+
+export function graphRemoveVertex(g: Graph, v: number): Graph {
+  const graph = graphCopy(g);
+
+  if (!graph.edges[v]) {
+    throw new Error(`Invalid vertex removed: ${v}`);
+  }
+
+  for (let u = 0; u < graph.nV; u++) {
+    graph.edges[u] =
+      graph.edges[u]?.splice(v, 1) ??
+      Array.from({ length: graph.nV - 1 }, () => 0);
+  }
+
+  graph.edges = graph.edges.splice(v, 1);
+
+  return graph;
+}
+
+export function graphPrint(graph: Graph) {
+  console.log(graph.nV);
+  console.log(graph.edges);
+}
+
+export function graphCopy(graph: Graph): Graph {
+  const newGraph = {
+    nV: graph.nV,
+    edges: graph.edges.map((row) => [...row]),
+    positions: graph.positions.map((pos) => ({ ...pos })),
+    directed: graph.directed,
+  };
+  return newGraph;
+}
+
+export function graphSetVertexPosition(
+  graph: Graph,
+  v: number,
+  x: number,
+  y: number,
+): Graph {
+  const g = graphCopy(graph);
+  g.positions[v] = { x, y };
+  return g;
+}
