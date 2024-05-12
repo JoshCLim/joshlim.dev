@@ -1,18 +1,27 @@
 // graph data structure
+import { clamp } from "~/app/utils";
 
 export type Graph = {
   nV: number;
   edges: number[][];
   positions: { x: number; y: number }[]; // coordinates for positions of vertices
   directed: boolean;
+  weighted: boolean;
 };
 
-export function graphNew({ directed = false }: { directed: boolean }): Graph {
+export function graphNew({
+  directed = false,
+  weighted = false,
+}: {
+  directed: boolean;
+  weighted: boolean;
+}): Graph {
   return {
     nV: 0,
     edges: [],
     positions: [],
     directed,
+    weighted,
   };
 }
 
@@ -60,12 +69,13 @@ export function graphRemoveVertex(g: Graph, v: number): Graph {
   }
 
   for (let u = 0; u < graph.nV; u++) {
-    graph.edges[u] =
-      graph.edges[u]?.splice(v, 1) ??
-      Array.from({ length: graph.nV - 1 }, () => 0);
+    graph.edges[u]?.splice(v, 1);
   }
 
-  graph.edges = graph.edges.splice(v, 1);
+  graph.edges.splice(v, 1);
+  graph.positions.splice(v, 1);
+
+  graph.nV--;
 
   return graph;
 }
@@ -81,17 +91,59 @@ export function graphCopy(graph: Graph): Graph {
     edges: graph.edges.map((row) => [...row]),
     positions: graph.positions.map((pos) => ({ ...pos })),
     directed: graph.directed,
+    weighted: graph.weighted,
   };
   return newGraph;
 }
 
 export function graphSetVertexPosition(
-  graph: Graph,
+  g: Graph,
   v: number,
   x: number,
   y: number,
 ): Graph {
-  const g = graphCopy(graph);
-  g.positions[v] = { x, y };
-  return g;
+  const graph = graphCopy(g);
+  graph.positions[v] = { x, y };
+  return graph;
+}
+
+export function graphRearrange(g: Graph, width: number, height: number): Graph {
+  const graph = graphCopy(g);
+
+  graph.positions = graph.positions.map((_, v) => ({
+    x: ((Math.floor(v / 2) + 1) * width) / (Math.ceil(graph.nV / 2) + 1),
+    y: v % 2 === 0 ? height / 3 : (2 * height) / 3,
+  }));
+
+  // TODO: run force-directed graph drawing algorithm
+
+  return graph;
+}
+
+export function graphMoveVertical(
+  g: Graph,
+  dy: number,
+  min: number,
+  max: number,
+): Graph {
+  const graph = graphCopy(g);
+  graph.positions = graph.positions.map((pos) => ({
+    x: pos.x,
+    y: clamp(min, pos.y + dy, max),
+  }));
+  return graph;
+}
+
+export function graphMoveHorizontal(
+  g: Graph,
+  dx: number,
+  min: number,
+  max: number,
+): Graph {
+  const graph = graphCopy(g);
+  graph.positions = graph.positions.map((pos) => ({
+    x: clamp(min, pos.x + dx, max),
+    y: pos.y,
+  }));
+  return graph;
 }
