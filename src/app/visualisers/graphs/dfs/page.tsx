@@ -5,9 +5,8 @@ import { useMemo, useRef, useState } from "react";
 import { cn } from "~/app/utils";
 
 import {
-  Graph,
+  type Graph,
   graphAddVertex,
-  graphCopy,
   graphNew,
   graphRemoveVertex,
   graphSetEdge,
@@ -31,23 +30,9 @@ type GraphOperations = {
 export default function Page() {
   const [graph, setGraph] = useLocalStorage<Graph>(
     "dfs-graph",
-    // new Graph({ directed: false }),
     graphNew({ directed: false }),
   );
-  // const [graph, setGraph] = useState<Graph>(new Graph({ directed: false }));
 
-  // const graphOperations: GraphOperations = {
-  //   addVertex: (x: number, y: number) =>
-  //     setGraph((g) => g.copy().addVertex({ x, y })),
-  //   removeVertex: (v: number) => setGraph((g) => g.copy().removeVertex(v)),
-  //   addEdge: (u: number, v: number) =>
-  //     setGraph((g) => g.copy().setEdge(u, v, true)),
-  //   removeEdge: (u: number, v: number) =>
-  //     setGraph((g) => g.copy().setEdge(u, v, false)),
-  //   setVertexPosition: (v: number, x: number, y: number) =>
-  //     setGraph((g) => g.copy().setVertexPosition(v, x, y)),
-  //   setGraph,
-  // };
   const graphOperations: GraphOperations = {
     addVertex: (x: number, y: number) =>
       setGraph((g) => graphAddVertex(g, x, y)),
@@ -162,7 +147,6 @@ function GraphWorkspace({
         <ToolbarButton className="bg-[#c9e0e6]">Rearrange</ToolbarButton>
         <ToolbarButton
           className="bg-[#f8b595]"
-          // onClick={() => setGraph(new Graph({ directed: false }))}
           onClick={() => setGraph(graphNew({ directed: false }))}
         >
           Clear Graph
