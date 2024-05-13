@@ -82,7 +82,10 @@ export default function PresetGraphChooser() {
                   scale: 0.9,
                   transition: { damping: 2, stiffness: 120 },
                 }}
-                onTap={() => graphOperations.setGraph(graph)}
+                onTap={() => {
+                  graphOperations.setGraph(graph);
+                  graphPreset.setShow(false);
+                }}
                 className="rounded-md bg-yellow-200 p-2 px-4 text-gray-700 shadow-sm transition-[filter] hover:shadow-none hover:brightness-95"
               >
                 {name}
