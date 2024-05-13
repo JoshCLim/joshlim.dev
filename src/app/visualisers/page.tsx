@@ -48,23 +48,23 @@ const treeAlgs = [
 const graphAlgs = [
   {
     name: "depth-first search",
-    link: "/visualisers/graphs/dfs",
+    link: "/visualisers/graphs",
   },
   {
     name: "breadth-first search",
-    link: "/visualisers/graphs/bfs",
+    link: "/visualisers/graphs",
   },
   {
     name: "dijkstra's algorithm",
-    link: "/visualisers/graphs/dijkstras",
+    link: "/visualisers/graphs",
   },
   {
     name: "kruskal's algorithm",
-    link: "/visualisers/graphs/kruskals",
+    link: "/visualisers/graphs",
   },
   {
     name: "prim's algorithm",
-    link: "/visualisers/graphs/prims",
+    link: "/visualisers/graphs",
   },
 ];
 
