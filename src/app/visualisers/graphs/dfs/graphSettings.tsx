@@ -2,13 +2,13 @@ import { cn } from "~/app/utils";
 
 import ButtonGroup from "~components/buttonGroup";
 
-import { useDfsContext } from "./dfsContext";
 import { graphSetDirected, graphSetWeighted } from "./graph";
+import { useGraphContext } from "./graphContext";
 
 import { motion } from "framer-motion";
 
 export default function GraphSettings() {
-  const { graph, graphOperations } = useDfsContext();
+  const { graph, graphOperations } = useGraphContext();
 
   return (
     <motion.div

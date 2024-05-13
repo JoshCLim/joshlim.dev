@@ -6,13 +6,13 @@ import AdjacencyMatrix from "./adjacencyMatrix";
 import {
   type GraphRepresentationType,
   graphRepresentations,
-  useDfsContext,
-} from "./dfsContext";
+  useGraphContext,
+} from "./graphContext";
 
 import { LayoutGroup, motion } from "framer-motion";
 
 export default function GraphEditor() {
-  const { graphRep } = useDfsContext();
+  const { graphRep } = useGraphContext();
 
   return (
     <motion.div
@@ -35,7 +35,7 @@ export default function GraphEditor() {
 }
 
 function Button({ graphRep }: { graphRep: GraphRepresentationType }) {
-  const { graphRep: globalGraphRep, setGraphRep } = useDfsContext();
+  const { graphRep: globalGraphRep, setGraphRep } = useGraphContext();
 
   return (
     <button

@@ -4,7 +4,7 @@ import { useEffect, useMemo } from "react";
 
 import { clamp, cn } from "~/app/utils";
 
-import { useDfsContext } from "./dfsContext";
+import { useGraphContext } from "./graphContext";
 
 import { type MotionValue, motion, useSpring } from "framer-motion";
 
@@ -20,7 +20,7 @@ export default function GraphNode({
   v: number;
 }) {
   const { graph, graphOperations, canvasRef, setGraphNodePositions } =
-    useDfsContext();
+    useGraphContext();
 
   const pos = useMemo(() => graph.positions[v], [graph.positions, v]);
 

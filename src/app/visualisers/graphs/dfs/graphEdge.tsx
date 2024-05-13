@@ -1,6 +1,6 @@
 "use client";
 
-import { useDfsContext } from "./dfsContext";
+import { useGraphContext } from "./graphContext";
 
 import {
   AnimatePresence,
@@ -22,7 +22,7 @@ export default function GraphEdge({
   uPos: { x: MotionValue<number>; y: MotionValue<number> };
   vPos: { x: MotionValue<number>; y: MotionValue<number> };
 }) {
-  const { graph } = useDfsContext();
+  const { graph } = useGraphContext();
 
   const { x: uX, y: uY } = uPos;
   const { x: vX, y: vY } = vPos;

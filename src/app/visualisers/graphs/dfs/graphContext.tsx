@@ -38,7 +38,7 @@ export const graphRepresentations = [
 ] as const;
 export type GraphRepresentationType = (typeof graphRepresentations)[number];
 
-type DfsContextType = {
+type GraphContextType = {
   // immutable graph state
   graph: Graph;
   // graph operations
@@ -112,9 +112,9 @@ type GraphOperations = {
   setGraph: React.Dispatch<React.SetStateAction<Graph>>;
 };
 
-const DfsContext = createContext<DfsContextType | null>(null);
+const GraphContext = createContext<GraphContextType | null>(null);
 
-export default function DfsContextProvider({
+export default function GraphContextProvider({
   children,
 }: {
   children?: React.ReactNode;
@@ -190,7 +190,7 @@ export default function DfsContextProvider({
   };
 
   return (
-    <DfsContext.Provider
+    <GraphContext.Provider
       value={{
         graph,
         graphOperations,
@@ -232,15 +232,15 @@ export default function DfsContextProvider({
       }}
     >
       {children}
-    </DfsContext.Provider>
+    </GraphContext.Provider>
   );
 }
 
-export const useDfsContext = () => {
-  const context = useContext(DfsContext);
+export const useGraphContext = () => {
+  const context = useContext(GraphContext);
 
   if (context === null) {
-    throw new Error("useDfsContext must be used within a DfsContextProvider");
+    throw new Error("useGraphContext must be used within a DfsContextProvider");
   }
 
   return context;

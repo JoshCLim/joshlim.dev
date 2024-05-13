@@ -1,6 +1,10 @@
 import { cn } from "~/app/utils";
 
-import { type AlgorithmType, algorithms, useDfsContext } from "./dfsContext";
+import {
+  type AlgorithmType,
+  algorithms,
+  useGraphContext,
+} from "./graphContext";
 
 export default function AlgorithmChooser() {
   return (
@@ -16,7 +20,7 @@ export default function AlgorithmChooser() {
 }
 
 function Button({ algorithm }: { algorithm: AlgorithmType }) {
-  const { algorithm: globalAlgorithm, setAlgorithm } = useDfsContext();
+  const { algorithm: globalAlgorithm, setAlgorithm } = useGraphContext();
 
   return (
     <button

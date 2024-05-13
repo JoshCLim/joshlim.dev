@@ -1,6 +1,6 @@
 import { cn } from "~/app/utils";
 
-import { type AlgorithmType, useDfsContext } from "./dfsContext";
+import { type AlgorithmType, useGraphContext } from "./graphContext";
 
 import { motion } from "framer-motion";
 
@@ -27,7 +27,7 @@ export default function AlgorithmStart() {
     setDijkstraStartingVertex,
     primStartingVertex,
     setPrimStartingVertex,
-  } = useDfsContext();
+  } = useGraphContext();
 
   return (
     <motion.div

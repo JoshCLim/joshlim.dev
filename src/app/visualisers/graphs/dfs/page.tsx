@@ -2,7 +2,11 @@
 
 import AlgorithmChooser from "./algorithmChoose";
 import AlgorithmStart from "./algorithmStart";
-import { type AlgorithmType, MAX_VERTICES, useDfsContext } from "./dfsContext";
+import {
+  type AlgorithmType,
+  MAX_VERTICES,
+  useGraphContext,
+} from "./graphContext";
 import GraphEditor from "./graphEditor";
 import GraphSettings from "./graphSettings";
 import GraphWorkspace from "./graphWorkspace";
@@ -30,7 +34,7 @@ const algorithmToTitle = (algorithm: AlgorithmType | null) => {
 };
 
 export default function Page() {
-  const { algorithm, running, graph } = useDfsContext();
+  const { algorithm, running, graph } = useGraphContext();
 
   return (
     <>

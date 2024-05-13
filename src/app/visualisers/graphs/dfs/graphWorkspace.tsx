@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import { cn } from "~/app/utils";
 
-import { MAX_VERTICES, useDfsContext } from "./dfsContext";
+import { MAX_VERTICES, useGraphContext } from "./graphContext";
 import GraphEdge from "./graphEdge";
 import GraphNode from "./graphNode";
 import Toolbar from "./toolbar";
@@ -13,7 +13,7 @@ import { AnimatePresence, type MotionValue, motion } from "framer-motion";
 
 export default function GraphWorkspace() {
   const { graph, graphOperations, canvasRef, graphNodePositions } =
-    useDfsContext();
+    useGraphContext();
   const [dragging, setDragging] = useState<number | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
 

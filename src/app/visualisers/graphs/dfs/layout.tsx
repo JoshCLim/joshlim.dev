@@ -2,7 +2,7 @@ import { type Metadata } from "next";
 
 import dynamic from "next/dynamic";
 
-import DfsContextProvider from "./dfsContext";
+import DfsContextProvider from "./graphContext";
 
 export const metadata: Metadata = {
   title: "Depth First Search | joshlim.dev",

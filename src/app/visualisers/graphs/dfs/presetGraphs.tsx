@@ -2,8 +2,8 @@
 
 import useClickAway from "~/app/_hooks/useClickAway";
 
-import { useDfsContext } from "./dfsContext";
 import { type Graph } from "./graph";
+import { useGraphContext } from "./graphContext";
 
 import { motion } from "framer-motion";
 import { CurveArray, FastArrowRight } from "iconoir-react";
@@ -40,7 +40,7 @@ const presets: { name: string; graph: Graph }[] = [
 ];
 
 export default function PresetGraphChooser() {
-  const { graphOperations, graphPreset } = useDfsContext();
+  const { graphOperations, graphPreset } = useGraphContext();
 
   const presetChooserRef = useClickAway<HTMLDivElement>(() =>
     graphPreset.setShow(false),

@@ -1,11 +1,11 @@
-import { useDfsContext } from "./dfsContext";
 import { graphClampPositions, graphNew, graphRearrange } from "./graph";
+import { useGraphContext } from "./graphContext";
 import ToolbarButton from "./toolbarButton";
 
 import { Box, PathArrow, Trash } from "iconoir-react";
 
 export default function Toolbar() {
-  const { canvasRef, graphOperations } = useDfsContext();
+  const { canvasRef, graphOperations } = useGraphContext();
 
   return (
     <div className="flex flex-row items-center justify-end gap-4 px-8 py-4 pe-4">

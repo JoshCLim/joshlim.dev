@@ -2,12 +2,12 @@
 
 import { cn } from "~/app/utils";
 
-import { useDfsContext } from "./dfsContext";
+import { useGraphContext } from "./graphContext";
 
 import { AnimatePresence, motion } from "framer-motion";
 
 export default function AdjacencyMatrix() {
-  const { graph } = useDfsContext();
+  const { graph } = useGraphContext();
 
   return (
     <AnimatePresence>
@@ -97,7 +97,7 @@ function UnweightedCell({
   u: number;
   v: number;
 }) {
-  const { graphOperations } = useDfsContext();
+  const { graphOperations } = useGraphContext();
 
   return (
     <input
