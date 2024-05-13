@@ -3,6 +3,7 @@
 import { cn } from "~/app/utils";
 
 import AlgorithmChooser from "./algorithmChoose";
+import AlgorithmRun from "./algorithmRun";
 import AlgorithmStart from "./algorithmStart";
 import DfsAlgorithm from "./dfsAlgorithm";
 import {
@@ -107,6 +108,7 @@ export default function Page() {
               >
                 <GraphSettings />
                 <AlgorithmStart />
+                {running && algorithm === "DFS" && <AlgorithmRun />}
               </motion.div>
             </motion.div>
             <motion.div

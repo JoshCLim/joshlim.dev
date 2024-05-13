@@ -1,7 +1,14 @@
 "use client";
 
-import { createContext, useContext, useRef, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useRef,
+  useState,
+} from "react";
 
+import dfsGenerateSteps, { type DfsStep } from "./dfs";
 import {
   type Graph,
   graphAddVertex,
@@ -80,19 +87,12 @@ type GraphContextType = {
   // dfs: starting vertex
   dfsStartingVertex: number;
   setDfsStartingVertex: React.Dispatch<React.SetStateAction<number>>;
-  dfsVisited: boolean[];
-  setDfsVisited: React.Dispatch<React.SetStateAction<boolean[]>>;
-  dfsPred: number[];
-  setDfsPred: React.Dispatch<React.SetStateAction<number[]>>;
-  dfsLineNumber: number;
-  setDfsLineNumber: React.Dispatch<React.SetStateAction<number>>;
-  dfsVertexV: number;
-  setDfsVertexV: React.Dispatch<React.SetStateAction<number>>;
-  dfsVertexU: number;
-  setDfsVertexU: React.Dispatch<React.SetStateAction<number>>;
-  dfsStack: number[];
-  setDfsStack: React.Dispatch<React.SetStateAction<number[]>>;
   dfsInit: () => void;
+  dfsSteps: DfsStep[] | null;
+  setDfsSteps: React.Dispatch<React.SetStateAction<DfsStep[] | null>>;
+  dfsStepIndex: number;
+  dfsNext: () => void;
+  dfsPrev: () => void;
   // bfs: starting vertex
   bfsStartingVertex: number;
   setBfsStartingVertex: React.Dispatch<React.SetStateAction<number>>;
@@ -174,33 +174,24 @@ export default function GraphContextProvider({
     NaN,
   );
 
-  const [dfsVisited, setDfsVisited] = useLocalStorage<boolean[]>(
-    "dfs-visited",
-    [],
+  const [dfsSteps, setDfsSteps] = useLocalStorage<DfsStep[] | null>(
+    "dfs-steps",
+    null,
   );
-  const [dfsPred, setDfsPred] = useLocalStorage<number[]>("dfs-pred", []);
-  const [dfsLineNumber, setDfsLineNumber] = useLocalStorage<number>(
-    "dfs-line-number",
+  const [dfsStepIndex, setDfsStepIndex] = useLocalStorage<number>(
+    "dfs-step-index",
     0,
   );
-  const [dfsVertexV, setDfsVertexV] = useLocalStorage<number>(
-    "dfs-vertex-v",
-    0,
-  );
-  const [dfsVertexU, setDfsVertexU] = useLocalStorage<number>(
-    "dfs-vertex-u",
-    0,
-  );
-  const [dfsStack, setDfsStack] = useLocalStorage<number[]>("dfs-stack", []);
-
-  const dfsInit = () => {
-    setDfsVisited(new Array(graph.nV).fill(false));
-    setDfsPred(new Array(graph.nV).fill(-1));
-    setDfsLineNumber(0);
-    setDfsVertexU(-1);
-    setDfsVertexV(-1);
-    setDfsStack([]);
-  };
+  const dfsInit = useCallback(() => {
+    setDfsSteps(dfsGenerateSteps(graph, dfsStartingVertex));
+    setDfsStepIndex(0);
+  }, [dfsStartingVertex, graph, setDfsStepIndex, setDfsSteps]);
+  const dfsNext = useCallback(() => {
+    setDfsStepIndex((i) => Math.min(i + 1, (dfsSteps?.length ?? 0) - 1));
+  }, [dfsSteps, setDfsStepIndex]);
+  const dfsPrev = useCallback(() => {
+    setDfsStepIndex((i) => Math.max(i - 1, 0));
+  }, [setDfsStepIndex]);
 
   const graphOperations: GraphOperations = {
     addVertex: (x: number, y: number) =>
@@ -277,19 +268,12 @@ export default function GraphContextProvider({
         // dfs
         dfsStartingVertex,
         setDfsStartingVertex,
-        dfsVisited,
-        setDfsVisited,
-        dfsPred,
-        setDfsPred,
-        dfsLineNumber,
-        setDfsLineNumber,
-        dfsVertexV,
-        setDfsVertexV,
-        dfsVertexU,
-        setDfsVertexU,
-        dfsStack,
-        setDfsStack,
         dfsInit,
+        dfsSteps,
+        setDfsSteps,
+        dfsStepIndex,
+        dfsNext,
+        dfsPrev,
         // bfs: starting vertex
         bfsStartingVertex,
         setBfsStartingVertex,

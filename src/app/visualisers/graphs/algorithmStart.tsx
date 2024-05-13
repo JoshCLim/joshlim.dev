@@ -45,7 +45,7 @@ export default function AlgorithmStart() {
             size={1}
             disabled={running}
             className={cn(
-              "min-w-0 rounded-full border border-black bg-transparent px-4 py-2 text-center outline-transparent transition-all focus:outline-slate-950",
+              "min-w-0 rounded-full border border-black bg-transparent bg-white px-4 py-2 text-center outline-transparent transition-all focus:outline-slate-950",
               running && "bg-slate-500 text-white",
             )}
             value={

@@ -2,39 +2,25 @@
 
 import { cn } from "~/app/utils";
 
+import { dfsCode } from "./dfs";
 import { useGraphContext } from "./graphContext";
 
-const dfsCode = [
-  { tab: 0, code: "initialise visited, pred and stack s" },
-  { tab: 0, code: "StackPush(s, src)" },
-  { tab: 0, code: "while (!StackEmpty(s)):" },
-  { tab: 1, code: "Vertex v = StackPop(s);" },
-  { tab: 2, code: "if (visited[v]) continue;" },
-  { tab: 3, code: "visited[v] = true;" },
-  { tab: 4, code: "for (int u = 0; u < graph.nV; u++) {" },
-  { tab: 5, code: "if (!visited[u] && graph.edges[v][u]) {" },
-  { tab: 6, code: "StackPush(s, u);" },
-  { tab: 6, code: "pred[u] = v;" },
-  { tab: 5, code: "}" },
-  { tab: 4, code: "}" },
-  { tab: 0, code: "}" },
-];
+import { motion } from "framer-motion";
 
 export default function DfsAlgorithm() {
-  const {
-    dfsVisited,
-    dfsPred,
-    dfsLineNumber,
-    dfsStartingVertex,
-    dfsVertexU,
-    dfsVertexV,
-  } = useGraphContext();
+  const { dfsStartingVertex, dfsSteps, dfsStepIndex } = useGraphContext();
+
+  if (!dfsSteps) return <></>;
 
   return (
     <div className="flex flex-grow flex-row gap-10">
       <div className="flex-grow rounded-2xl border border-slate-600 bg-white p-3 px-4 text-left text-sm">
         {dfsCode.map(({ tab, code }, i) => (
-          <Code key={i} tab={tab} selected={dfsLineNumber === i}>
+          <Code
+            key={i}
+            tab={tab}
+            selected={dfsSteps[dfsStepIndex]!.lineNumber === i}
+          >
             {code}
           </Code>
         ))}
@@ -45,16 +31,16 @@ export default function DfsAlgorithm() {
             src: {dfsStartingVertex}
           </code>
           <code className="bg-teal-500 px-3 py-1 shadow-sm">
-            u: {dfsVertexU}
+            v: {dfsSteps[dfsStepIndex]!.vertexV}
           </code>
           <code className="rounded-r-full border-l border-white bg-teal-500 px-3 py-1 shadow-sm">
-            v: {dfsVertexV}
+            u: {dfsSteps[dfsStepIndex]!.vertexU}
           </code>
         </div>
         <div>
           <div className="flex flex-row border-b border-black">
             <RowHeader>vertices</RowHeader>
-            {dfsVisited.map((_, v) => (
+            {dfsSteps[dfsStepIndex]!.visited.map((_, v) => (
               <div
                 className={cn(
                   "flex aspect-square h-10 items-center justify-center",
@@ -68,7 +54,7 @@ export default function DfsAlgorithm() {
           </div>
           <div className="flex flex-row border-b border-black">
             <RowHeader>visited</RowHeader>
-            {dfsVisited.map((visited, v) => (
+            {dfsSteps[dfsStepIndex]!.visited.map((visited, v) => (
               <div
                 className={cn(
                   "flex aspect-square h-10 items-center justify-center",
@@ -82,7 +68,7 @@ export default function DfsAlgorithm() {
           </div>
           <div className="flex flex-row">
             <RowHeader>pred</RowHeader>
-            {dfsPred.map((pred, v) => (
+            {dfsSteps[dfsStepIndex]!.pred.map((pred, v) => (
               <div
                 className={cn(
                   "flex aspect-square h-10 items-center justify-center",
@@ -95,8 +81,31 @@ export default function DfsAlgorithm() {
             ))}
           </div>
         </div>
+        <DfsStack />
       </div>
     </div>
+  );
+}
+
+function DfsStack() {
+  const { dfsSteps, dfsStepIndex } = useGraphContext();
+
+  if (!dfsSteps) return <></>;
+
+  return (
+    <motion.div
+      layout
+      className="flex flex-row items-center justify-start border border-black"
+    >
+      <p className="bg-black px-2 py-1 text-white">Stack</p>
+      <p className="bg-slate-700 px-2 py-1 text-white">Bottom</p>
+      {dfsSteps[dfsStepIndex]!.stack.map((vertex, i) => (
+        <p className={cn("px-3 py-1", i % 2 === 0 && "bg-white")} key={i}>
+          {vertex}
+        </p>
+      ))}
+      <p className="bg-slate-700 px-2 py-1 text-white">Top</p>
+    </motion.div>
   );
 }
 
