@@ -45,6 +45,12 @@ type DfsContextType = {
     setShow: React.Dispatch<React.SetStateAction<boolean>>;
   };
 
+  // graph preset show
+  graphPreset: {
+    show: boolean;
+    setShow: React.Dispatch<React.SetStateAction<boolean>>;
+  };
+
   // motion values: positions
   graphNodePositions: GraphNodePositionsType;
   setGraphNodePositions: React.Dispatch<
@@ -85,6 +91,8 @@ export default function DfsContextProvider({
   children?: React.ReactNode;
 }) {
   const [showAdjMatrix, setShowAdjMatrix] = useState<boolean>(false);
+
+  const [showGraphPreset, setShowGraphPreset] = useState<boolean>(false);
 
   const [graph, setGraph] = useLocalStorage<Graph>(
     "dfs-graph",
@@ -151,6 +159,11 @@ export default function DfsContextProvider({
         adjMatrix: {
           show: showAdjMatrix,
           setShow: setShowAdjMatrix,
+        },
+        // graph preset show/hide
+        graphPreset: {
+          show: showGraphPreset,
+          setShow: setShowGraphPreset,
         },
         // node positions
         graphNodePositions,

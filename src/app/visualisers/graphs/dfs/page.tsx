@@ -15,6 +15,9 @@ const GraphWorkspace = dynamic(() => import("./graphWorkspace"), {
 const AdjacencyMatrix = dynamic(() => import("./adjacencyMatrix"), {
   ssr: false,
 });
+const PresetGraphChooser = dynamic(() => import("./presetGraphs"), {
+  ssr: false,
+});
 
 const algorithmToTitle = (algorithm: AlgorithmType | null) => {
   if (!algorithm) return "select an algorithm...";
@@ -39,6 +42,7 @@ export default function Page() {
   return (
     <>
       <PageNavbar />
+      <PresetGraphChooser />
       <PanelGroup direction="horizontal" className="w-screen flex-grow">
         <Panel
           defaultSize={70}
