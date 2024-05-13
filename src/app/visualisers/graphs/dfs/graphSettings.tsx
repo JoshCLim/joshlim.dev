@@ -5,11 +5,16 @@ import ButtonGroup from "~components/buttonGroup";
 import { useDfsContext } from "./dfsContext";
 import { graphSetDirected, graphSetWeighted } from "./graph";
 
+import { motion } from "framer-motion";
+
 export default function GraphSettings() {
   const { graph, graphOperations } = useDfsContext();
 
   return (
-    <div className="flex flex-col items-center justify-center gap-3 p-3">
+    <motion.div
+      layout
+      className="flex flex-col items-center justify-center gap-3 p-3"
+    >
       <h3 className="font-light text-black">Graph settings:</h3>
       <ButtonGroup>
         <button
@@ -59,6 +64,6 @@ export default function GraphSettings() {
           Unweighted
         </button>
       </ButtonGroup>
-    </div>
+    </motion.div>
   );
 }

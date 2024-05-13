@@ -2,7 +2,9 @@
 
 import { useEffect, useMemo, useState } from "react";
 
-import { useDfsContext } from "./dfsContext";
+import { cn } from "~/app/utils";
+
+import { MAX_VERTICES, useDfsContext } from "./dfsContext";
 import GraphEdge from "./graphEdge";
 import GraphNode from "./graphNode";
 import Toolbar from "./toolbar";
@@ -80,18 +82,25 @@ export default function GraphWorkspace() {
             <motion.p
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.6, type: "spring", ease: "easeInOut" }}
+              transition={{ delay: 0.4, type: "spring", ease: "easeInOut" }}
               className="rounded-full bg-slate-500 p-2 px-4"
             >
               total edge weight: {totalWeight}
             </motion.p>
           )}
         </div>
+        {/* canvas */}
         <div
-          className="relative z-0 flex-grow-[2] cursor-pointer"
+          className={cn(
+            "relative z-0 flex-grow-[2] cursor-pointer",
+            graph.nV >= MAX_VERTICES && "cursor-not-allowed",
+          )}
           ref={canvasRef}
           onClick={(e) => {
             if (dragging !== null) return;
+
+            if (graph.nV >= MAX_VERTICES) return;
+
             const rect = canvasRef.current?.getBoundingClientRect() ?? {
               x: 0,
               y: 0,
@@ -104,9 +113,8 @@ export default function GraphWorkspace() {
           }}
         >
           <AnimatePresence>
-            {graph.positions.map((pos, v) => (
+            {graph.positions.map((_, v) => (
               <GraphNode
-                //   key={`${v}-${pos.x}-${pos.y}`}
                 key={v}
                 setDragging={setDragging}
                 selected={selected}

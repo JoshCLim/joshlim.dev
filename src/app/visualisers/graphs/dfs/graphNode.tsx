@@ -115,7 +115,7 @@ export default function GraphNode({
         delay: 0,
       }}
       className={cn(
-        "absolute left-0 top-0 flex aspect-square h-12 w-12 items-center justify-center rounded-full bg-slate-700 text-lg text-white shadow-lg  outline outline-2 outline-offset-0 outline-transparent transition-[outline-offset,outline-color] hover:outline-gray-950",
+        "absolute left-0 top-0 flex aspect-square h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-slate-700 text-lg text-white  shadow-lg outline outline-2 outline-offset-0 outline-transparent transition-[outline-offset,outline-color] hover:outline-gray-950",
         selected === v &&
           "z-10 outline-offset-1 outline-gray-950 hover:outline-gray-950",
       )}

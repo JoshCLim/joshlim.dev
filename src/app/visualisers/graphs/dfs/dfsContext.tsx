@@ -21,6 +21,8 @@ type GraphNodePositionsType = ({
   y: MotionValue<number>;
 } | null)[];
 
+export const MAX_VERTICES = 8;
+
 export const algorithms = [
   "DFS",
   "BFS",
@@ -70,6 +72,25 @@ type DfsContextType = {
   // graph representation
   graphRep: GraphRepresentationType;
   setGraphRep: React.Dispatch<React.SetStateAction<GraphRepresentationType>>;
+
+  // running
+  running: boolean;
+  setRunning: React.Dispatch<React.SetStateAction<boolean>>;
+
+  // dfs: starting vertex
+  dfsStartingVertex: number | null;
+  setDfsStartingVertex: React.Dispatch<React.SetStateAction<number | null>>;
+  // bfs: starting vertex
+  bfsStartingVertex: number | null;
+  setBfsStartingVertex: React.Dispatch<React.SetStateAction<number | null>>;
+  // dijkstra's: starting vertex
+  dijkstraStartingVertex: number | null;
+  setDijkstraStartingVertex: React.Dispatch<
+    React.SetStateAction<number | null>
+  >;
+  // prims's: starting vertex
+  primStartingVertex: number | null;
+  setPrimStartingVertex: React.Dispatch<React.SetStateAction<number | null>>;
 };
 
 // facade pattern
@@ -117,6 +138,21 @@ export default function DfsContextProvider({
 
   const [graphRep, setGraphRep] =
     useState<GraphRepresentationType>("Adjacency Matrix");
+
+  const [running, setRunning] = useState<boolean>(false);
+
+  const [dfsStartingVertex, setDfsStartingVertex] = useState<number | null>(
+    null,
+  );
+  const [bfsStartingVertex, setBfsStartingVertex] = useState<number | null>(
+    null,
+  );
+  const [dijkstraStartingVertex, setDijkstraStartingVertex] = useState<
+    number | null
+  >(null);
+  const [primStartingVertex, setPrimStartingVertex] = useState<number | null>(
+    null,
+  );
 
   const graphOperations: GraphOperations = {
     addVertex: (x: number, y: number) =>
@@ -187,6 +223,21 @@ export default function DfsContextProvider({
         // graph representation
         graphRep,
         setGraphRep,
+        // running
+        running,
+        setRunning,
+        // dfs: starting vertex
+        dfsStartingVertex,
+        setDfsStartingVertex,
+        // bfs: starting vertex
+        bfsStartingVertex,
+        setBfsStartingVertex,
+        // dijkstra's: starting vertex
+        dijkstraStartingVertex,
+        setDijkstraStartingVertex,
+        // prim's: starting vertex
+        primStartingVertex,
+        setPrimStartingVertex,
       }}
     >
       {children}

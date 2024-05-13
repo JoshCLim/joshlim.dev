@@ -24,7 +24,10 @@ function Button({ algorithm }: { algorithm: AlgorithmType }) {
         "bg-purple-300 px-3 py-1 transition-colors hover:bg-purple-400",
         globalAlgorithm === algorithm && "bg-pink-400 hover:bg-pink-400",
       )}
-      onClick={() => setAlgorithm(algorithm)}
+      onClick={() => {
+        if (algorithm === globalAlgorithm) setAlgorithm(null);
+        else setAlgorithm(algorithm);
+      }}
     >
       {algorithm}
     </button>

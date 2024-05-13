@@ -1,36 +1,36 @@
 "use client";
 
-import dynamic from "next/dynamic";
-
 import { cn } from "~/app/utils";
 
+import AdjacencyMatrix from "./adjacencyMatrix";
 import {
   type GraphRepresentationType,
   graphRepresentations,
   useDfsContext,
 } from "./dfsContext";
 
-const AdjacencyMatrix = dynamic(() => import("./adjacencyMatrix"), {
-  ssr: false,
-});
+import { LayoutGroup, motion } from "framer-motion";
 
 export default function GraphEditor() {
   const { graphRep } = useDfsContext();
 
   return (
-    <div className="flex flex-col items-center justify-center gap-5 py-10 text-center text-black">
-      <div className="flex flex-col items-center gap-3">
-        <h3 className="font-light">Choose a graph representation:</h3>
-        <div className="flex flex-row items-center justify-center overflow-hidden rounded-2xl text-white shadow-sm">
-          {graphRepresentations.map((representation) => (
-            <Button key={representation} graphRep={representation} />
-          ))}
-        </div>
-      </div>
-      <div className="flex items-center justify-center">
+    <motion.div
+      layout
+      className="flex flex-1 flex-col items-center justify-center gap-5 py-10 text-center text-black"
+    >
+      <LayoutGroup>
+        <motion.div layout className="flex flex-col items-center gap-3">
+          <h3 className="font-light">Choose a graph representation:</h3>
+          <div className="flex flex-row items-center justify-center overflow-hidden rounded-2xl text-white shadow-sm">
+            {graphRepresentations.map((representation) => (
+              <Button key={representation} graphRep={representation} />
+            ))}
+          </div>
+        </motion.div>
         {graphRep === "Adjacency Matrix" && <AdjacencyMatrix />}
-      </div>
-    </div>
+      </LayoutGroup>
+    </motion.div>
   );
 }
 
