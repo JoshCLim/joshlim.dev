@@ -64,6 +64,18 @@ export default function GraphEdge({
           </motion.span>
         </>
       )}
+      {graph.directed && (
+        <>
+          <div
+            className="absolute left-[75%] top-[100%] h-[1px] w-4 rotate-[150deg] bg-slate-400"
+            style={{ transformOrigin: "0 0" }}
+          ></div>
+          <div
+            className="absolute left-[75%] top-[100%] h-[1px] w-4 rotate-[-150deg] bg-slate-400"
+            style={{ transformOrigin: "0 0" }}
+          ></div>
+        </>
+      )}
     </motion.div>
   );
 }
