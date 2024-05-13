@@ -126,9 +126,13 @@ export function graphClampPositions(
   height: number,
 ): Graph {
   const graph = graphCopy(g);
+  const maxX = Math.max(...graph.positions.map((pos) => pos.x));
+  const maxY = Math.max(...graph.positions.map((pos) => pos.y));
+  const overshootFactorX = maxX > width ? maxX / width : 1;
+  const overshootFactorY = maxY > height ? maxY / height : 1;
   graph.positions = graph.positions.map((pos) => ({
-    x: clamp(0, pos.x, width),
-    y: clamp(0, pos.y, height),
+    x: clamp(0, pos.x / overshootFactorX, width),
+    y: clamp(0, pos.y / overshootFactorY, height),
   }));
   return graph;
 }
