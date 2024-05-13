@@ -19,6 +19,7 @@ export default function AdjacencyMatrix() {
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0 }}
+          style={{ transformOrigin: "top center" }}
           transition={{ duration: 0.5, ease: "easeOut", type: "spring" }}
         >
           <div className="overflow-hidden rounded-2xl border border-black bg-gray-50 ">
