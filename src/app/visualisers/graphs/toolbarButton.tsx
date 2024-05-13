@@ -11,11 +11,13 @@ export default function ToolbarButton({
   children,
   onClick,
   confirmation = false,
+  disabled = false,
 }: {
   className: string;
   children: React.ReactNode;
   onClick?: () => void;
   confirmation?: boolean;
+  disabled?: boolean;
 }) {
   const [showConfirmation, setShowConfirmation] = useState<boolean>(false);
 
@@ -38,6 +40,7 @@ export default function ToolbarButton({
         onClick={
           confirmation ? () => setShowConfirmation((prev) => !prev) : onClick
         }
+        disabled={disabled}
       >
         {children}
       </motion.button>

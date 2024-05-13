@@ -40,7 +40,7 @@ const presets: { name: string; graph: Graph }[] = [
 ];
 
 export default function PresetGraphChooser() {
-  const { graphOperations, graphPreset } = useGraphContext();
+  const { graphOperations, graphPreset, running } = useGraphContext();
 
   const presetChooserRef = useClickAway<HTMLDivElement>(() =>
     graphPreset.setShow(false),
@@ -52,7 +52,7 @@ export default function PresetGraphChooser() {
       key="adj-matrix"
       className="fixed right-0 top-16 z-infinity aspect-square text-slate-800"
       initial={{ x: "130%" }}
-      animate={{ x: graphPreset.show ? "40px" : "100%" }}
+      animate={{ x: running ? "200%" : graphPreset.show ? "40px" : "100%" }}
       exit={{ x: "130%" }}
       transition={{ duration: 0.5, ease: "easeOut", type: "spring" }}
     >
