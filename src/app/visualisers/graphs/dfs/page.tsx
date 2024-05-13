@@ -4,15 +4,13 @@ import dynamic from "next/dynamic";
 
 import AlgorithmChooser from "./algorithmChoose";
 import { type AlgorithmType, useDfsContext } from "./dfsContext";
+import GraphEditor from "./graphEditor";
 import PageNavbar from "./navbar";
 
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 
 // disable ssr for graph workspace since it gets the graph from localStorage
 const GraphWorkspace = dynamic(() => import("./graphWorkspace"), {
-  ssr: false,
-});
-const AdjacencyMatrix = dynamic(() => import("./adjacencyMatrix"), {
   ssr: false,
 });
 const PresetGraphChooser = dynamic(() => import("./presetGraphs"), {
@@ -73,8 +71,7 @@ export default function Page() {
             </Panel>
             <PanelResizeHandle />
             <Panel defaultSize={70} minSize={40} className="bg-slate-200">
-              <h3>depth-first search</h3>
-              <AdjacencyMatrix />
+              <GraphEditor />
             </Panel>
           </PanelGroup>
         </Panel>

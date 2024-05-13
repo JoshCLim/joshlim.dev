@@ -30,6 +30,12 @@ export const algorithms = [
 ] as const;
 export type AlgorithmType = (typeof algorithms)[number];
 
+export const graphRepresentations = [
+  "Adjacency Matrix",
+  "Adjacency List",
+] as const;
+export type GraphRepresentationType = (typeof graphRepresentations)[number];
+
 type DfsContextType = {
   // immutable graph state
   graph: Graph;
@@ -60,6 +66,10 @@ type DfsContextType = {
   // algorithm
   algorithm: AlgorithmType | null;
   setAlgorithm: React.Dispatch<React.SetStateAction<AlgorithmType | null>>;
+
+  // graph representation
+  graphRep: GraphRepresentationType;
+  setGraphRep: React.Dispatch<React.SetStateAction<GraphRepresentationType>>;
 };
 
 // facade pattern
@@ -104,6 +114,9 @@ export default function DfsContextProvider({
     useState<GraphNodePositionsType>(Array(graph.nV).fill(null));
 
   const [algorithm, setAlgorithm] = useState<AlgorithmType | null>(null);
+
+  const [graphRep, setGraphRep] =
+    useState<GraphRepresentationType>("Adjacency Matrix");
 
   const graphOperations: GraphOperations = {
     addVertex: (x: number, y: number) =>
@@ -171,6 +184,9 @@ export default function DfsContextProvider({
         // algorithm
         algorithm,
         setAlgorithm,
+        // graph representation
+        graphRep,
+        setGraphRep,
       }}
     >
       {children}

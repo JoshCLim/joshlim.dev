@@ -5,34 +5,23 @@ import { cn } from "~/app/utils";
 import { useDfsContext } from "./dfsContext";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { EditPencil, FastArrowRight } from "iconoir-react";
 
 export default function AdjacencyMatrix() {
-  const { graph, adjMatrix } = useDfsContext();
+  const { graph } = useDfsContext();
 
   return (
     <AnimatePresence>
       {graph.nV > 1 && (
         <motion.div
           key="adj-matrix"
-          className="fixed right-0 top-16 aspect-square text-slate-800"
-          initial={{ x: "130%" }}
-          animate={{ x: adjMatrix.show ? "40px" : "100%" }}
-          exit={{ x: "130%" }}
+          className="relative aspect-square text-slate-800"
+          layout
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0 }}
           transition={{ duration: 0.5, ease: "easeOut", type: "spring" }}
         >
-          <button
-            className="z-infinity absolute left-0 top-12 translate-x-[-100%] rounded-l-2xl border-b border-l border-t border-black bg-gray-50 px-2 py-5 shadow-2xl transition-colors hover:bg-gray-200"
-            onClick={() => adjMatrix.setShow((prev) => !prev)}
-            title="Edit Graph Edges"
-          >
-            {adjMatrix.show ? (
-              <FastArrowRight height={24} />
-            ) : (
-              <EditPencil height={24} />
-            )}
-          </button>
-          <div className="overflow-hidden rounded-l-2xl border-b border-l border-t border-black bg-gray-50 pe-10 shadow-2xl">
+          <div className="overflow-hidden rounded-2xl border border-black bg-gray-50 ">
             <Row>
               <HeaderCell className="border-b border-r border-black text-center text-xs">
                 Adj Matrix
