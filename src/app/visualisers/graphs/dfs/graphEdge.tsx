@@ -2,7 +2,12 @@
 
 import { useDfsContext } from "./dfsContext";
 
-import { type MotionValue, motion, useTransform } from "framer-motion";
+import {
+  AnimatePresence,
+  type MotionValue,
+  motion,
+  useTransform,
+} from "framer-motion";
 
 export default function GraphEdge({
   u,
@@ -52,30 +57,46 @@ export default function GraphEdge({
       }}
       className="absolute left-0 top-0 -z-20 flex h-[1px] items-center justify-center bg-slate-400 text-blue-600"
     >
-      {graph.weighted && (
-        <>
-          <div className="absolute left-[50%] top-[50%] -z-10 h-[150%] w-5 translate-x-[-50%] translate-y-[-50%] bg-slate-50"></div>
-          <motion.span
-            style={{
-              rotate: negAngle,
-            }}
-          >
-            {weight}
-          </motion.span>
-        </>
-      )}
-      {graph.directed && (
-        <>
-          <div
-            className="absolute left-[75%] top-[100%] h-[1px] w-4 rotate-[150deg] bg-slate-400"
-            style={{ transformOrigin: "0 0" }}
-          ></div>
-          <div
-            className="absolute left-[75%] top-[100%] h-[1px] w-4 rotate-[-150deg] bg-slate-400"
-            style={{ transformOrigin: "0 0" }}
-          ></div>
-        </>
-      )}
+      <AnimatePresence>
+        {graph.weighted && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute left-[50%] top-[50%] -z-10 h-[150%] w-5 translate-x-[-50%] translate-y-[-50%] bg-slate-50"
+            ></motion.div>
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              style={{
+                rotate: negAngle,
+              }}
+            >
+              {weight}
+            </motion.span>
+          </>
+        )}
+        {graph.directed && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute left-[75%] top-[100%] h-[1px] w-4 rotate-[150deg] bg-slate-400"
+              style={{ transformOrigin: "0 0" }}
+            ></motion.div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute left-[75%] top-[100%] h-[1px] w-4 rotate-[-150deg] bg-slate-400"
+              style={{ transformOrigin: "0 0" }}
+            ></motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }
