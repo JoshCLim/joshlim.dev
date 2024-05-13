@@ -11,8 +11,11 @@ const startingVertexAlgorithms: AlgorithmType[] = [
   "Prim's",
 ];
 
+const validVertex = (v: number, nV: number) => !isNaN(v) && v >= 0 && v < nV;
+
 export default function AlgorithmStart() {
   const {
+    graph,
     running,
     setRunning,
     algorithm,
@@ -79,6 +82,22 @@ export default function AlgorithmStart() {
         }
         onTap={() => {
           if (!algorithm) return; // TODO: show error message
+
+          switch (algorithm) {
+            case "DFS":
+              if (!validVertex(dfsStartingVertex, graph.nV)) return; // TODO: show error message
+              break;
+            case "BFS":
+              if (!validVertex(bfsStartingVertex, graph.nV)) return; // TODO: show error message
+              break;
+            case "Dijkstra's":
+              if (!validVertex(dijkstraStartingVertex, graph.nV)) return; // TODO: show error message
+              break;
+            case "Prim's":
+              if (!validVertex(primStartingVertex, graph.nV)) return; // TODO: show error message
+              break;
+          }
+
           setRunning((prev) => !prev);
         }}
       >

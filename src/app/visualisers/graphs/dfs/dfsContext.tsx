@@ -78,19 +78,17 @@ type DfsContextType = {
   setRunning: React.Dispatch<React.SetStateAction<boolean>>;
 
   // dfs: starting vertex
-  dfsStartingVertex: number | null;
-  setDfsStartingVertex: React.Dispatch<React.SetStateAction<number | null>>;
+  dfsStartingVertex: number;
+  setDfsStartingVertex: React.Dispatch<React.SetStateAction<number>>;
   // bfs: starting vertex
-  bfsStartingVertex: number | null;
-  setBfsStartingVertex: React.Dispatch<React.SetStateAction<number | null>>;
+  bfsStartingVertex: number;
+  setBfsStartingVertex: React.Dispatch<React.SetStateAction<number>>;
   // dijkstra's: starting vertex
-  dijkstraStartingVertex: number | null;
-  setDijkstraStartingVertex: React.Dispatch<
-    React.SetStateAction<number | null>
-  >;
+  dijkstraStartingVertex: number;
+  setDijkstraStartingVertex: React.Dispatch<React.SetStateAction<number>>;
   // prims's: starting vertex
-  primStartingVertex: number | null;
-  setPrimStartingVertex: React.Dispatch<React.SetStateAction<number | null>>;
+  primStartingVertex: number;
+  setPrimStartingVertex: React.Dispatch<React.SetStateAction<number>>;
 };
 
 // facade pattern
@@ -141,18 +139,11 @@ export default function DfsContextProvider({
 
   const [running, setRunning] = useState<boolean>(false);
 
-  const [dfsStartingVertex, setDfsStartingVertex] = useState<number | null>(
-    null,
-  );
-  const [bfsStartingVertex, setBfsStartingVertex] = useState<number | null>(
-    null,
-  );
-  const [dijkstraStartingVertex, setDijkstraStartingVertex] = useState<
-    number | null
-  >(null);
-  const [primStartingVertex, setPrimStartingVertex] = useState<number | null>(
-    null,
-  );
+  const [dfsStartingVertex, setDfsStartingVertex] = useState<number>(NaN);
+  const [bfsStartingVertex, setBfsStartingVertex] = useState<number>(NaN);
+  const [dijkstraStartingVertex, setDijkstraStartingVertex] =
+    useState<number>(NaN);
+  const [primStartingVertex, setPrimStartingVertex] = useState<number>(NaN);
 
   const graphOperations: GraphOperations = {
     addVertex: (x: number, y: number) =>
