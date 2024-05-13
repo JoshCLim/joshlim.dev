@@ -41,15 +41,18 @@ export default function AdjacencyMatrix() {
                 <HeaderCell className="border-r border-slate-900 font-bold">
                   {u}
                 </HeaderCell>
-                {row.map((weight, v) => (
-                  <UnweightedCell
-                    u={u}
-                    v={v}
-                    key={v}
-                    weight={weight}
-                    disabled={u === v}
-                  />
-                ))}
+                {row.map(
+                  (weight, v) =>
+                    !graph.weighted && (
+                      <UnweightedCell
+                        u={u}
+                        v={v}
+                        key={v}
+                        weight={weight}
+                        disabled={u === v}
+                      />
+                    ),
+                )}
               </Row>
             ))}
           </div>

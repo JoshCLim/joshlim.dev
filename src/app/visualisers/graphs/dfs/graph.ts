@@ -164,3 +164,15 @@ export function graphMoveHorizontal(
   }));
   return graph;
 }
+
+export function graphSetWeighted(g: Graph, weighted: boolean): Graph {
+  const graph = graphCopy(g);
+  graph.weighted = weighted;
+  return graph;
+}
+
+export function graphSetDirected(g: Graph, directed: boolean): Graph {
+  const graph = graphCopy(g);
+  graph.directed = directed;
+  return graph;
+}

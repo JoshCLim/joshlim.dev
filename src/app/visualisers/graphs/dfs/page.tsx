@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import AlgorithmChooser from "./algorithmChoose";
 import { type AlgorithmType, useDfsContext } from "./dfsContext";
 import GraphEditor from "./graphEditor";
+import GraphSettings from "./graphSettings";
 import PageNavbar from "./navbar";
 
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
@@ -70,8 +71,13 @@ export default function Page() {
               <AlgorithmChooser />
             </Panel>
             <PanelResizeHandle />
-            <Panel defaultSize={70} minSize={40} className="bg-slate-200">
+            <Panel
+              defaultSize={60}
+              minSize={40}
+              className="flex flex-row justify-around bg-slate-200"
+            >
               <GraphEditor />
+              <GraphSettings />
             </Panel>
           </PanelGroup>
         </Panel>
