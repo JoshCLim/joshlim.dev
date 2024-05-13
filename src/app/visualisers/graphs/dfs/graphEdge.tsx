@@ -32,6 +32,8 @@ export default function GraphEdge({
     ),
   );
 
+  const negAngle = useTransform(() => -angle.get());
+
   return (
     <motion.div
       key={`${u}-${v}`}
@@ -52,15 +54,10 @@ export default function GraphEdge({
     >
       {graph.weighted && (
         <>
-          <div className="absolute left-[50%] top-[50%] -z-10 h-[150%] w-5 translate-x-[-50%] translate-y-[-50%] bg-[#eee]"></div>
+          <div className="absolute left-[50%] top-[50%] -z-10 h-[150%] w-5 translate-x-[-50%] translate-y-[-50%] bg-slate-50"></div>
           <motion.span
             style={{
-              rotate:
-                -Math.atan2(
-                  (graph.positions[v]?.y ?? 0) - (graph.positions[u]?.y ?? 0),
-                  (graph.positions[v]?.x ?? 0) - (graph.positions[u]?.x ?? 0),
-                ) *
-                (180 / Math.PI),
+              rotate: negAngle,
             }}
           >
             {weight}
