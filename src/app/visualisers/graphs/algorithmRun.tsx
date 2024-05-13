@@ -31,7 +31,7 @@ export default function AlgorithmRun() {
             algorithm === "DFS" &&
               dfsSteps &&
               dfsStepIndex <= 0 &&
-              "bg-gray-400 hover:bg-gray-400",
+              "cursor-not-allowed bg-gray-400 hover:bg-gray-400",
           )}
           onClick={() => {
             if (algorithm === "DFS") dfsStart();
@@ -45,7 +45,7 @@ export default function AlgorithmRun() {
             algorithm === "DFS" &&
               dfsSteps &&
               dfsStepIndex <= 0 &&
-              "bg-gray-400 hover:bg-gray-400",
+              "cursor-not-allowed bg-gray-400 hover:bg-gray-400",
           )}
           onClick={() => {
             if (algorithm === "DFS") dfsPrev();
@@ -62,7 +62,7 @@ export default function AlgorithmRun() {
             algorithm === "DFS" &&
               dfsSteps &&
               dfsStepIndex >= dfsSteps.length - 1 &&
-              "bg-gray-400 hover:bg-gray-400",
+              "cursor-not-allowed bg-gray-400 hover:bg-gray-400",
           )}
           onClick={() => {
             if (algorithm === "DFS") dfsNext();
@@ -76,7 +76,7 @@ export default function AlgorithmRun() {
             algorithm === "DFS" &&
               dfsSteps &&
               dfsStepIndex >= dfsSteps.length - 1 &&
-              "bg-gray-400 hover:bg-gray-400",
+              "cursor-not-allowed bg-gray-400 hover:bg-gray-400",
           )}
           onClick={() => {
             if (algorithm === "DFS") dfsEnd();
