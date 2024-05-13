@@ -80,6 +80,19 @@ type GraphContextType = {
   // dfs: starting vertex
   dfsStartingVertex: number;
   setDfsStartingVertex: React.Dispatch<React.SetStateAction<number>>;
+  dfsVisited: boolean[];
+  setDfsVisited: React.Dispatch<React.SetStateAction<boolean[]>>;
+  dfsPred: number[];
+  setDfsPred: React.Dispatch<React.SetStateAction<number[]>>;
+  dfsLineNumber: number;
+  setDfsLineNumber: React.Dispatch<React.SetStateAction<number>>;
+  dfsVertexV: number;
+  setDfsVertexV: React.Dispatch<React.SetStateAction<number>>;
+  dfsVertexU: number;
+  setDfsVertexU: React.Dispatch<React.SetStateAction<number>>;
+  dfsStack: number[];
+  setDfsStack: React.Dispatch<React.SetStateAction<number[]>>;
+  dfsInit: () => void;
   // bfs: starting vertex
   bfsStartingVertex: number;
   setBfsStartingVertex: React.Dispatch<React.SetStateAction<number>>;
@@ -120,11 +133,10 @@ export default function GraphContextProvider({
   children?: React.ReactNode;
 }) {
   const [showAdjMatrix, setShowAdjMatrix] = useState<boolean>(false);
-
   const [showGraphPreset, setShowGraphPreset] = useState<boolean>(false);
 
   const [graph, setGraph] = useLocalStorage<Graph>(
-    "dfs-graph",
+    "graph",
     graphNew({ directed: false, weighted: false }),
   );
   const canvasRef = useRef<HTMLDivElement>(null);
@@ -132,18 +144,63 @@ export default function GraphContextProvider({
   const [graphNodePositions, setGraphNodePositions] =
     useState<GraphNodePositionsType>(Array(graph.nV).fill(null));
 
-  const [algorithm, setAlgorithm] = useState<AlgorithmType | null>(null);
+  const [algorithm, setAlgorithm] = useLocalStorage<AlgorithmType | null>(
+    "graph-algorithm-type",
+    null,
+  );
 
-  const [graphRep, setGraphRep] =
-    useState<GraphRepresentationType>("Adjacency Matrix");
+  const [graphRep, setGraphRep] = useLocalStorage<GraphRepresentationType>(
+    "graph-representation",
+    "Adjacency Matrix",
+  );
 
-  const [running, setRunning] = useState<boolean>(false);
+  const [running, setRunning] = useLocalStorage<boolean>(
+    "graph-running",
+    false,
+  );
 
-  const [dfsStartingVertex, setDfsStartingVertex] = useState<number>(NaN);
-  const [bfsStartingVertex, setBfsStartingVertex] = useState<number>(NaN);
+  const [dfsStartingVertex, setDfsStartingVertex] = useLocalStorage<number>(
+    "dfs-start-vertex",
+    NaN,
+  );
+  const [bfsStartingVertex, setBfsStartingVertex] = useLocalStorage<number>(
+    "bfs-start-vertex",
+    NaN,
+  );
   const [dijkstraStartingVertex, setDijkstraStartingVertex] =
-    useState<number>(NaN);
-  const [primStartingVertex, setPrimStartingVertex] = useState<number>(NaN);
+    useLocalStorage<number>("dijkstra-start-vertex", NaN);
+  const [primStartingVertex, setPrimStartingVertex] = useLocalStorage<number>(
+    "prim-start-vertex",
+    NaN,
+  );
+
+  const [dfsVisited, setDfsVisited] = useLocalStorage<boolean[]>(
+    "dfs-visited",
+    [],
+  );
+  const [dfsPred, setDfsPred] = useLocalStorage<number[]>("dfs-pred", []);
+  const [dfsLineNumber, setDfsLineNumber] = useLocalStorage<number>(
+    "dfs-line-number",
+    0,
+  );
+  const [dfsVertexV, setDfsVertexV] = useLocalStorage<number>(
+    "dfs-vertex-v",
+    0,
+  );
+  const [dfsVertexU, setDfsVertexU] = useLocalStorage<number>(
+    "dfs-vertex-u",
+    0,
+  );
+  const [dfsStack, setDfsStack] = useLocalStorage<number[]>("dfs-stack", []);
+
+  const dfsInit = () => {
+    setDfsVisited(new Array(graph.nV).fill(false));
+    setDfsPred(new Array(graph.nV).fill(-1));
+    setDfsLineNumber(0);
+    setDfsVertexU(-1);
+    setDfsVertexV(-1);
+    setDfsStack([]);
+  };
 
   const graphOperations: GraphOperations = {
     addVertex: (x: number, y: number) =>
@@ -217,9 +274,22 @@ export default function GraphContextProvider({
         // running
         running,
         setRunning,
-        // dfs: starting vertex
+        // dfs
         dfsStartingVertex,
         setDfsStartingVertex,
+        dfsVisited,
+        setDfsVisited,
+        dfsPred,
+        setDfsPred,
+        dfsLineNumber,
+        setDfsLineNumber,
+        dfsVertexV,
+        setDfsVertexV,
+        dfsVertexU,
+        setDfsVertexU,
+        dfsStack,
+        setDfsStack,
+        dfsInit,
         // bfs: starting vertex
         bfsStartingVertex,
         setBfsStartingVertex,

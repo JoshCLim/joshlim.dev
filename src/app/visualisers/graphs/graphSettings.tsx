@@ -8,7 +8,7 @@ import { useGraphContext } from "./graphContext";
 import { motion } from "framer-motion";
 
 export default function GraphSettings() {
-  const { graph, graphOperations } = useGraphContext();
+  const { graph, graphOperations, running } = useGraphContext();
 
   return (
     <motion.div
@@ -18,9 +18,11 @@ export default function GraphSettings() {
       <h3 className="font-light text-black">Graph settings:</h3>
       <ButtonGroup>
         <button
+          disabled={running}
           className={cn(
             "bg-red-300 px-3 py-1 transition-colors hover:bg-red-400",
-            graph.directed && "bg-red-400",
+            running && "hover:bg-red-300",
+            graph.directed && "bg-red-400 hover:bg-red-400",
           )}
           onClick={() =>
             graphOperations.setGraph((g) => graphSetDirected(g, true))
@@ -29,9 +31,11 @@ export default function GraphSettings() {
           Directed
         </button>
         <button
+          disabled={running}
           className={cn(
             "bg-red-300 px-3 py-1 transition-colors hover:bg-red-400",
-            !graph.directed && "bg-red-400",
+            running && "hover:bg-red-300",
+            !graph.directed && "bg-red-400 hover:bg-red-400",
           )}
           onClick={() =>
             graphOperations.setGraph((g) => graphSetDirected(g, false))
@@ -42,9 +46,11 @@ export default function GraphSettings() {
       </ButtonGroup>
       <ButtonGroup>
         <button
+          disabled={running}
           className={cn(
             "bg-orange-300 px-3 py-1 transition-colors hover:bg-orange-400",
-            graph.weighted && "bg-orange-400",
+            running && "hover:bg-orange-300",
+            graph.weighted && "bg-orange-400 hover:bg-orange-400",
           )}
           onClick={() =>
             graphOperations.setGraph((g) => graphSetWeighted(g, true))
@@ -53,9 +59,11 @@ export default function GraphSettings() {
           Weighted
         </button>
         <button
+          disabled={running}
           className={cn(
             "bg-orange-300 px-3 py-1 transition-colors hover:bg-orange-400",
-            !graph.weighted && "bg-orange-400",
+            running && "hover:bg-orange-300",
+            !graph.weighted && "bg-orange-400 hover:bg-orange-400",
           )}
           onClick={() =>
             graphOperations.setGraph((g) => graphSetWeighted(g, false))

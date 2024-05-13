@@ -19,8 +19,11 @@ export default function AlgorithmStart() {
     running,
     setRunning,
     algorithm,
+    // dfs
     dfsStartingVertex,
     setDfsStartingVertex,
+    dfsInit,
+
     bfsStartingVertex,
     setBfsStartingVertex,
     dijkstraStartingVertex,
@@ -86,6 +89,7 @@ export default function AlgorithmStart() {
           switch (algorithm) {
             case "DFS":
               if (!validVertex(dfsStartingVertex, graph.nV)) return; // TODO: show error message
+              dfsInit();
               break;
             case "BFS":
               if (!validVertex(bfsStartingVertex, graph.nV)) return; // TODO: show error message
@@ -118,7 +122,7 @@ function Button({
 }) {
   return (
     <motion.button
-      layout
+      layout="position"
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
       transition={{

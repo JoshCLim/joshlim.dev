@@ -97,21 +97,23 @@ function UnweightedCell({
   u: number;
   v: number;
 }) {
-  const { graphOperations } = useGraphContext();
+  const { graphOperations, running } = useGraphContext();
 
   return (
     <input
       type="number"
-      disabled={disabled}
+      disabled={disabled || running}
       className={cn(
         "flex aspect-square h-12 cursor-pointer items-center justify-center text-center outline-none transition-colors hover:bg-gray-100",
         disabled &&
           "cursor-not-allowed bg-gray-200 text-gray-500 hover:bg-gray-200",
+        running && "cursor-not-allowed",
         className,
       )}
       value={weight}
       readOnly={true}
       onClick={() => {
+        if (disabled || running) return;
         if (weight === 0) graphOperations.addEdge(u, v);
         else graphOperations.removeEdge(u, v);
       }}

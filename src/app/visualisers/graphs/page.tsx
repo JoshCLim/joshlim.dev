@@ -1,7 +1,10 @@
 "use client";
 
+import { cn } from "~/app/utils";
+
 import AlgorithmChooser from "./algorithmChoose";
 import AlgorithmStart from "./algorithmStart";
+import DfsAlgorithm from "./dfsAlgorithm";
 import {
   type AlgorithmType,
   MAX_VERTICES,
@@ -107,16 +110,22 @@ export default function Page() {
               </motion.div>
             </motion.div>
             <motion.div
-              layout
-              className="flex flex-row items-center justify-center gap-5 bg-slate-100 p-5 text-center text-black"
+              layout="position"
+              className={cn(
+                "flex flex-row items-center justify-center gap-5 bg-slate-100 p-5 text-center text-black",
+                running && "flex-1",
+              )}
             >
-              <p className="font-light">
-                Select an algorithm and press{" "}
-                <span className="rounded-2xl bg-green-400 px-4 py-2 text-white">
-                  Run
-                </span>{" "}
-                to get started.
-              </p>
+              {!running && (
+                <p className="font-light">
+                  Select an algorithm and press{" "}
+                  <span className="rounded-2xl bg-green-400 px-4 py-2 text-white">
+                    Run
+                  </span>{" "}
+                  to get started.
+                </p>
+              )}
+              {running && algorithm === "DFS" && <DfsAlgorithm />}
             </motion.div>
           </LayoutGroup>
         </Panel>
