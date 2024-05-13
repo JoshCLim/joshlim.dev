@@ -5,7 +5,7 @@ import { cn } from "~/app/utils";
 import AlgorithmChooser from "./algorithmChoose";
 import AlgorithmRun from "./algorithmRun";
 import AlgorithmStart from "./algorithmStart";
-import DfsAlgorithm from "./dfsAlgorithm";
+import DfsAlgorithm from "./dfsState";
 import {
   type AlgorithmType,
   MAX_VERTICES,

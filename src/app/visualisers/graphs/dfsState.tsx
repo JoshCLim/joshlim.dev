@@ -7,7 +7,7 @@ import { useGraphContext } from "./graphContext";
 
 import { motion } from "framer-motion";
 
-export default function DfsAlgorithm() {
+export default function DfsState() {
   const { dfsStartingVertex, dfsSteps, dfsStepIndex } = useGraphContext();
 
   if (!dfsSteps) return <></>;
