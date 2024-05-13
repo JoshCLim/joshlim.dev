@@ -118,7 +118,7 @@ export default function GraphWorkspace() {
             {graph.edges.map((row, u) =>
               row.map(
                 (edge, v) =>
-                  u < v &&
+                  (graph.directed || (!graph.directed && u < v)) &&
                   edge !== 0 &&
                   graphNodePositions[u] &&
                   graphNodePositions[v] && (
