@@ -14,7 +14,12 @@ export default function DfsState() {
 
   return (
     <div className="flex flex-grow flex-row gap-10">
-      <div className="flex-grow rounded-2xl border border-slate-600 bg-white p-3 px-4 text-left text-sm">
+      <motion.div
+        className="flex-grow rounded-2xl border border-slate-600 bg-slate-800 p-3 px-4 text-left text-sm text-slate-400"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
         {dfsCode.map(({ tab, code }, i) => (
           <Code
             key={i}
@@ -24,21 +29,21 @@ export default function DfsState() {
             {code}
           </Code>
         ))}
-      </div>
-      <div className="flex flex-grow flex-col items-center justify-center gap-10">
-        <div className="flex flex-row justify-center text-white">
-          <code className="rounded-l-full border-r border-white bg-teal-500 px-3 py-1 shadow-sm">
+      </motion.div>
+      <div className="flex flex-grow flex-col items-center justify-center gap-8 font-mono">
+        <div className="flex flex-row justify-center text-xl text-white">
+          <code className="rounded-l-full border-r border-white bg-teal-500 px-5 py-2 shadow-sm">
             src: {dfsStartingVertex}
           </code>
-          <code className="bg-teal-500 px-3 py-1 shadow-sm">
+          <code className="bg-teal-500 px-5 py-2 shadow-sm">
             v: {dfsSteps[dfsStepIndex]!.vertexV}
           </code>
-          <code className="rounded-r-full border-l border-white bg-teal-500 px-3 py-1 shadow-sm">
+          <code className="rounded-r-full border-l border-white bg-teal-500 px-5 py-2 shadow-sm">
             u: {dfsSteps[dfsStepIndex]!.vertexU}
           </code>
         </div>
-        <div>
-          <div className="flex flex-row border-b border-black">
+        <div className="font-light">
+          <div className="flex flex-row border-b border-r border-t border-black">
             <RowHeader>vertices</RowHeader>
             {dfsSteps[dfsStepIndex]!.visited.map((_, v) => (
               <div
@@ -52,7 +57,7 @@ export default function DfsState() {
               </div>
             ))}
           </div>
-          <div className="flex flex-row border-b border-black">
+          <div className="flex flex-row border-b border-r border-black">
             <RowHeader>visited</RowHeader>
             {dfsSteps[dfsStepIndex]!.visited.map((visited, v) => (
               <div
@@ -66,7 +71,7 @@ export default function DfsState() {
               </div>
             ))}
           </div>
-          <div className="flex flex-row">
+          <div className="flex flex-row border-b border-r border-black">
             <RowHeader>pred</RowHeader>
             {dfsSteps[dfsStepIndex]!.pred.map((pred, v) => (
               <div
@@ -95,7 +100,7 @@ function DfsStack() {
   return (
     <motion.div
       layout
-      className="flex flex-row items-center justify-start border border-black"
+      className="text-md flex flex-row items-center justify-start overflow-hidden rounded-full border border-black"
     >
       <p className="bg-black px-2 py-1 text-white">Stack</p>
       <p className="bg-slate-700 px-2 py-1 text-white">Bottom</p>
@@ -111,7 +116,7 @@ function DfsStack() {
 
 function RowHeader({ children }: { children?: React.ReactNode }) {
   return (
-    <div className="flex w-20 items-center justify-center border-r border-black px-4">
+    <div className="flex w-24 items-center justify-center border-l border-r border-black px-4">
       {children}
     </div>
   );
@@ -130,7 +135,7 @@ function Code({
     <code
       className={cn(
         "block rounded-lg p-[1px] px-1 transition-colors",
-        selected && "bg-slate-200",
+        selected && "bg-slate-600 bg-opacity-70",
       )}
       style={{ marginLeft: `${tab * 20}px` }}
     >

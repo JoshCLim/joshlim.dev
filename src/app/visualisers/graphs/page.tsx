@@ -114,7 +114,7 @@ export default function Page() {
             <motion.div
               layout="position"
               className={cn(
-                "flex flex-row items-center justify-center gap-5 bg-slate-100 p-5 text-center text-black",
+                "flex flex-row items-center justify-center bg-slate-100 p-5 px-7 text-center text-black",
                 running && "flex-1",
               )}
             >

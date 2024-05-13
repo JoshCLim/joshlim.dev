@@ -93,6 +93,8 @@ type GraphContextType = {
   dfsStepIndex: number;
   dfsNext: () => void;
   dfsPrev: () => void;
+  dfsStart: () => void;
+  dfsEnd: () => void;
   // bfs: starting vertex
   bfsStartingVertex: number;
   setBfsStartingVertex: React.Dispatch<React.SetStateAction<number>>;
@@ -192,6 +194,12 @@ export default function GraphContextProvider({
   const dfsPrev = useCallback(() => {
     setDfsStepIndex((i) => Math.max(i - 1, 0));
   }, [setDfsStepIndex]);
+  const dfsStart = useCallback(() => {
+    setDfsStepIndex(0);
+  }, [setDfsStepIndex]);
+  const dfsEnd = useCallback(() => {
+    if (dfsSteps) setDfsStepIndex(dfsSteps.length - 1);
+  }, [dfsSteps, setDfsStepIndex]);
 
   const graphOperations: GraphOperations = {
     addVertex: (x: number, y: number) =>
@@ -274,6 +282,8 @@ export default function GraphContextProvider({
         dfsStepIndex,
         dfsNext,
         dfsPrev,
+        dfsStart,
+        dfsEnd,
         // bfs: starting vertex
         bfsStartingVertex,
         setBfsStartingVertex,

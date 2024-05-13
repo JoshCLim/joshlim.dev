@@ -33,50 +33,53 @@ export default function AlgorithmStart() {
   } = useGraphContext();
 
   return (
-    <motion.div
-      layout
-      className="flex flex-col items-center justify-center gap-10 py-5 text-black"
-    >
-      {!!algorithm && startingVertexAlgorithms.includes(algorithm) && (
-        <form className="flex flex-col items-center justify-center gap-2">
-          <h3 className="font-light ">Choose a starting vertex:</h3>
-          <input
-            type="number"
-            size={1}
-            disabled={running}
-            className={cn(
-              "min-w-0 rounded-full border border-black bg-transparent bg-white px-4 py-2 text-center outline-transparent transition-all focus:outline-slate-950",
-              running && "bg-slate-500 text-white",
-            )}
-            value={
-              (algorithm === "DFS"
-                ? dfsStartingVertex
-                : algorithm === "BFS"
-                  ? bfsStartingVertex
-                  : algorithm === "Dijkstra's"
-                    ? dijkstraStartingVertex
-                    : primStartingVertex) ?? ""
-            }
-            onChange={(e) => {
-              switch (algorithm) {
-                case "DFS":
-                  setDfsStartingVertex(parseInt(e.target.value));
-                  break;
-                case "BFS":
-                  setBfsStartingVertex(parseInt(e.target.value));
-                  break;
-                case "Dijkstra's":
-                  setDijkstraStartingVertex(parseInt(e.target.value));
-                  break;
-                case "Prim's":
-                  setPrimStartingVertex(parseInt(e.target.value));
-                  break;
-              }
-            }}
-          />
-        </form>
-      )}
-
+    <>
+      <motion.div
+        layout
+        className="flex flex-col items-center justify-center gap-10 py-5 text-black"
+      >
+        {!!algorithm &&
+          startingVertexAlgorithms.includes(algorithm) &&
+          !running && (
+            <form className="flex flex-col items-center justify-center gap-2">
+              <h3 className="font-light ">Choose a starting vertex:</h3>
+              <input
+                type="number"
+                size={1}
+                disabled={running}
+                className={cn(
+                  "min-w-0 rounded-full border border-black bg-transparent bg-white px-4 py-2 text-center outline-transparent transition-all focus:outline-slate-950",
+                  running && "bg-slate-500 text-white",
+                )}
+                value={
+                  (algorithm === "DFS"
+                    ? dfsStartingVertex
+                    : algorithm === "BFS"
+                      ? bfsStartingVertex
+                      : algorithm === "Dijkstra's"
+                        ? dijkstraStartingVertex
+                        : primStartingVertex) ?? ""
+                }
+                onChange={(e) => {
+                  switch (algorithm) {
+                    case "DFS":
+                      setDfsStartingVertex(parseInt(e.target.value));
+                      break;
+                    case "BFS":
+                      setBfsStartingVertex(parseInt(e.target.value));
+                      break;
+                    case "Dijkstra's":
+                      setDijkstraStartingVertex(parseInt(e.target.value));
+                      break;
+                    case "Prim's":
+                      setPrimStartingVertex(parseInt(e.target.value));
+                      break;
+                  }
+                }}
+              />
+            </form>
+          )}
+      </motion.div>
       <Button
         className={
           running
@@ -107,7 +110,7 @@ export default function AlgorithmStart() {
       >
         {running ? <span>Running...</span> : <span>Run</span>}
       </Button>
-    </motion.div>
+    </>
   );
 }
 
