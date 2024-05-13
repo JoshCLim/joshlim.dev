@@ -36,6 +36,7 @@ export default function ToolbarButton({
         className={cn(
           "rounded-md bg-green-700 p-2 px-4 shadow-sm transition-[filter] hover:brightness-95",
           className,
+          disabled && "cursor-not-allowed bg-gray-400",
         )}
         onClick={
           confirmation ? () => setShowConfirmation((prev) => !prev) : onClick
