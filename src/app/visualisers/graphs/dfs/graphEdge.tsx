@@ -38,8 +38,9 @@ export default function GraphEdge({
       initial={{ scale: 0 }}
       animate={{
         scale: 1,
-        transition: { delay: 0.3, damping: 30, duration: 0.7 },
+        transition: { damping: 30, duration: 0.4 },
       }}
+      exit={{ scale: 0, transition: { damping: 30, duration: 0.4 } }}
       style={{
         x: uX,
         y: uY,

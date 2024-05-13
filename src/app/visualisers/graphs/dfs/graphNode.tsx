@@ -103,6 +103,10 @@ export default function GraphNode({
         scale: 1,
         transition: { type: "spring", damping: 15, stiffness: 100 },
       }}
+      exit={{
+        scale: 0,
+        transition: { type: "spring", damping: 15, stiffness: 100 },
+      }}
       style={{ x, y, translateX: "-50%", translateY: "-50%" }}
       transition={{
         ease: "easeOut",

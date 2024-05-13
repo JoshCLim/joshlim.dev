@@ -47,14 +47,14 @@ export default function ToolbarButton({
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0 }}
-            style={{ transformOrigin: "top center" }}
+            style={{ transformOrigin: "top right" }}
             transition={{
               type: "spring",
               ease: "easeInOut",
               stiffness: 110,
               damping: 15,
             }}
-            className=" absolute left-0 right-0 top-[120%] space-y-2 rounded-md bg-white p-3 text-sm text-black shadow-sm"
+            className=" absolute right-0 top-[120%] z-infinity space-y-2 rounded-md bg-white p-3 text-sm text-black shadow-sm"
             onClick={(e) => e.stopPropagation()}
           >
             <p className="text-center">Are you sure?</p>

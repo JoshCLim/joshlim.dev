@@ -120,6 +120,19 @@ export function graphRearrange(g: Graph, width: number, height: number): Graph {
   return graph;
 }
 
+export function graphClampPositions(
+  g: Graph,
+  width: number,
+  height: number,
+): Graph {
+  const graph = graphCopy(g);
+  graph.positions = graph.positions.map((pos) => ({
+    x: clamp(0, pos.x, width),
+    y: clamp(0, pos.y, height),
+  }));
+  return graph;
+}
+
 export function graphMoveVertical(
   g: Graph,
   dy: number,

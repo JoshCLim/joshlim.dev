@@ -8,7 +8,7 @@ import GraphEdge from "./graphEdge";
 import GraphNode from "./graphNode";
 import Toolbar from "./toolbar";
 
-import { type MotionValue, motion } from "framer-motion";
+import { AnimatePresence, type MotionValue, motion } from "framer-motion";
 
 export default function GraphWorkspace() {
   const { graph, graphOperations, canvasRef, graphNodePositions } =
@@ -104,45 +104,47 @@ export default function GraphWorkspace() {
             setSelected(graph.nV);
           }}
         >
-          {graph.positions.map((pos, v) => (
-            <GraphNode
-              //   key={`${v}-${pos.x}-${pos.y}`}
-              key={v}
-              setDragging={setDragging}
-              selected={selected}
-              setSelected={setSelected}
-              v={v}
-            />
-          ))}
-          {/* <p className="text-red-400">{JSON.stringify(graph)}</p> */}
-          {graph.edges.map((row, u) =>
-            row.map(
-              (edge, v) =>
-                u < v &&
-                edge !== 0 &&
-                graphNodePositions[u] &&
-                graphNodePositions[v] && (
-                  <GraphEdge
-                    key={`${u}-${v}`}
-                    u={u}
-                    v={v}
-                    weight={edge}
-                    uPos={
-                      graphNodePositions[u] as {
-                        x: MotionValue<number>;
-                        y: MotionValue<number>;
+          <AnimatePresence>
+            {graph.positions.map((pos, v) => (
+              <GraphNode
+                //   key={`${v}-${pos.x}-${pos.y}`}
+                key={v}
+                setDragging={setDragging}
+                selected={selected}
+                setSelected={setSelected}
+                v={v}
+              />
+            ))}
+            {/* <p className="text-red-400">{JSON.stringify(graph)}</p> */}
+            {graph.edges.map((row, u) =>
+              row.map(
+                (edge, v) =>
+                  u < v &&
+                  edge !== 0 &&
+                  graphNodePositions[u] &&
+                  graphNodePositions[v] && (
+                    <GraphEdge
+                      key={`${u}-${v}`}
+                      u={u}
+                      v={v}
+                      weight={edge}
+                      uPos={
+                        graphNodePositions[u] as {
+                          x: MotionValue<number>;
+                          y: MotionValue<number>;
+                        }
                       }
-                    }
-                    vPos={
-                      graphNodePositions[v] as {
-                        x: MotionValue<number>;
-                        y: MotionValue<number>;
+                      vPos={
+                        graphNodePositions[v] as {
+                          x: MotionValue<number>;
+                          y: MotionValue<number>;
+                        }
                       }
-                    }
-                  />
-                ),
-            ),
-          )}
+                    />
+                  ),
+              ),
+            )}
+          </AnimatePresence>
         </div>
         <AdjacencyMatrix />
       </div>
