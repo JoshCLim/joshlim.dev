@@ -1,5 +1,7 @@
 import { type Metadata } from "next";
 
+import DfsContextProvider from "./dfsContext";
+
 export const metadata: Metadata = {
   title: "Depth First Search | joshlim.dev",
   description: "Depth First Search",
@@ -7,5 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default function Layout({ children }: { children?: React.ReactNode }) {
-  return <>{children}</>;
+  return <DfsContextProvider>{children}</DfsContextProvider>;
 }

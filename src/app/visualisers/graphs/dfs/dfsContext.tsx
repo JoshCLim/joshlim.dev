@@ -21,6 +21,15 @@ type GraphNodePositionsType = ({
   y: MotionValue<number>;
 } | null)[];
 
+export const algorithms = [
+  "DFS",
+  "BFS",
+  "Dijkstra's",
+  "Kruskal's",
+  "Prim's",
+] as const;
+export type AlgorithmType = (typeof algorithms)[number];
+
 type DfsContextType = {
   // immutable graph state
   graph: Graph;
@@ -41,9 +50,13 @@ type DfsContextType = {
   setGraphNodePositions: React.Dispatch<
     React.SetStateAction<GraphNodePositionsType>
   >;
-  //{ x: MotionValue<number>; y: MotionValue<number> }[];
+
+  // algorithm
+  algorithm: AlgorithmType | null;
+  setAlgorithm: React.Dispatch<React.SetStateAction<AlgorithmType | null>>;
 };
 
+// facade pattern
 type GraphOperations = {
   // add a vertex
   addVertex: (x: number, y: number) => void;
@@ -81,6 +94,8 @@ export default function DfsContextProvider({
 
   const [graphNodePositions, setGraphNodePositions] =
     useState<GraphNodePositionsType>(Array(graph.nV).fill(null));
+
+  const [algorithm, setAlgorithm] = useState<AlgorithmType | null>(null);
 
   const graphOperations: GraphOperations = {
     addVertex: (x: number, y: number) =>
@@ -132,12 +147,17 @@ export default function DfsContextProvider({
         graph,
         graphOperations,
         canvasRef,
+        // adj matrix show/hide
         adjMatrix: {
           show: showAdjMatrix,
           setShow: setShowAdjMatrix,
         },
+        // node positions
         graphNodePositions,
         setGraphNodePositions,
+        // algorithm
+        algorithm,
+        setAlgorithm,
       }}
     >
       {children}

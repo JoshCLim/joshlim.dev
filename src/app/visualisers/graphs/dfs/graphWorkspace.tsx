@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState } from "react";
 
-import AdjacencyMatrix from "./adjacencyMatrix";
 import { useDfsContext } from "./dfsContext";
 import GraphEdge from "./graphEdge";
 import GraphNode from "./graphNode";
@@ -146,7 +145,6 @@ export default function GraphWorkspace() {
             )}
           </AnimatePresence>
         </div>
-        <AdjacencyMatrix />
       </div>
     </>
   );
