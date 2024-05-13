@@ -18,7 +18,7 @@ export default function GraphEditor() {
   const { graphRep } = useDfsContext();
 
   return (
-    <div className="flex flex-col items-center justify-center gap-5 p-10 text-center text-black ">
+    <div className="flex flex-col items-center justify-center gap-5 py-10 text-center text-black">
       <div className="flex flex-col items-center gap-3">
         <h3 className="font-light">Choose a graph representation:</h3>
         <div className="flex flex-row items-center justify-center overflow-hidden rounded-2xl text-white shadow-sm">
