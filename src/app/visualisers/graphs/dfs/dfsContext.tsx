@@ -13,7 +13,13 @@ import {
   graphSetVertexPosition,
 } from "./graph";
 
+import { type MotionValue } from "framer-motion";
 import { useLocalStorage } from "usehooks-ts";
+
+type GraphNodePositionsType = ({
+  x: MotionValue<number>;
+  y: MotionValue<number>;
+} | null)[];
 
 type DfsContextType = {
   // immutable graph state
@@ -29,6 +35,13 @@ type DfsContextType = {
     show: boolean;
     setShow: React.Dispatch<React.SetStateAction<boolean>>;
   };
+
+  // motion values: positions
+  graphNodePositions: GraphNodePositionsType;
+  setGraphNodePositions: React.Dispatch<
+    React.SetStateAction<GraphNodePositionsType>
+  >;
+  //{ x: MotionValue<number>; y: MotionValue<number> }[];
 };
 
 type GraphOperations = {
@@ -65,6 +78,9 @@ export default function DfsContextProvider({
     graphNew({ directed: false, weighted: false }),
   );
   const canvasRef = useRef<HTMLDivElement>(null);
+
+  const [graphNodePositions, setGraphNodePositions] =
+    useState<GraphNodePositionsType>(Array(graph.nV).fill(null));
 
   const graphOperations: GraphOperations = {
     addVertex: (x: number, y: number) =>
@@ -120,6 +136,8 @@ export default function DfsContextProvider({
           show: showAdjMatrix,
           setShow: setShowAdjMatrix,
         },
+        graphNodePositions,
+        setGraphNodePositions,
       }}
     >
       {children}

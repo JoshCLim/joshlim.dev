@@ -8,10 +8,11 @@ import GraphEdge from "./graphEdge";
 import GraphNode from "./graphNode";
 import Toolbar from "./toolbar";
 
-import { motion } from "framer-motion";
+import { type MotionValue, motion } from "framer-motion";
 
 export default function GraphWorkspace() {
-  const { graph, graphOperations, canvasRef } = useDfsContext();
+  const { graph, graphOperations, canvasRef, graphNodePositions } =
+    useDfsContext();
   const [dragging, setDragging] = useState<number | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
 
@@ -58,7 +59,7 @@ export default function GraphWorkspace() {
   return (
     <>
       <Toolbar />
-      <div className="flex flex-grow flex-col gap-3 p-5 pt-0">
+      <div className="flex flex-grow flex-col gap-3 p-5 py-0">
         <div className="flex flex-row gap-3">
           <motion.p
             initial={{ opacity: 0, scale: 0 }}
@@ -118,8 +119,27 @@ export default function GraphWorkspace() {
             row.map(
               (edge, v) =>
                 u < v &&
-                edge !== 0 && (
-                  <GraphEdge key={`${u}-${v}`} u={u} v={v} weight={edge} />
+                edge !== 0 &&
+                graphNodePositions[u] &&
+                graphNodePositions[v] && (
+                  <GraphEdge
+                    key={`${u}-${v}`}
+                    u={u}
+                    v={v}
+                    weight={edge}
+                    uPos={
+                      graphNodePositions[u] as {
+                        x: MotionValue<number>;
+                        y: MotionValue<number>;
+                      }
+                    }
+                    vPos={
+                      graphNodePositions[v] as {
+                        x: MotionValue<number>;
+                        y: MotionValue<number>;
+                      }
+                    }
+                  />
                 ),
             ),
           )}
