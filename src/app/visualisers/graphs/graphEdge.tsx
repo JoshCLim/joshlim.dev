@@ -1,5 +1,7 @@
 "use client";
 
+import { cn } from "~/app/utils";
+
 import { useGraphContext } from "./graphContext";
 
 import {
@@ -9,18 +11,23 @@ import {
   useTransform,
 } from "framer-motion";
 
+const edgesHighlights = [0, 1] as const;
+export type EdgesHighlight = (typeof edgesHighlights)[number];
+
 export default function GraphEdge({
   u,
   v,
   weight,
   uPos,
   vPos,
+  highlight,
 }: {
   u: number;
   v: number;
   weight: number;
   uPos: { x: MotionValue<number>; y: MotionValue<number> };
   vPos: { x: MotionValue<number>; y: MotionValue<number> };
+  highlight?: EdgesHighlight;
 }) {
   const { graph } = useGraphContext();
 
@@ -55,7 +62,10 @@ export default function GraphEdge({
         width: length,
         transformOrigin: "0 0",
       }}
-      className="absolute left-0 top-0 -z-20 flex h-[1px] items-center justify-center bg-slate-400 text-blue-600"
+      className={cn(
+        "absolute left-0 top-0 -z-20 flex h-[2px] items-center justify-center bg-slate-400 text-blue-600",
+        highlight === 1 && "bg-amber-500",
+      )}
     >
       <AnimatePresence>
         {graph.weighted && (

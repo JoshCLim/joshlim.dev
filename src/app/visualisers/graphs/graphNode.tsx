@@ -8,12 +8,17 @@ import { useGraphContext } from "./graphContext";
 
 import { type MotionValue, motion, useSpring } from "framer-motion";
 
+const verticesHighlights = [0, 1, 2] as const;
+export type VerticesHighlight = (typeof verticesHighlights)[number];
+
 export default function GraphNode({
+  highlight,
   selected,
   setSelected,
   setDragging,
   v,
 }: {
+  highlight?: VerticesHighlight;
   selected: number | null;
   setSelected: React.Dispatch<React.SetStateAction<number | null>>;
   setDragging: React.Dispatch<React.SetStateAction<number | null>>;
@@ -118,6 +123,10 @@ export default function GraphNode({
         "absolute left-0 top-0 flex aspect-square h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-slate-700 text-lg text-white  shadow-lg outline outline-2 outline-offset-0 outline-transparent transition-[outline-offset,outline-color] hover:outline-gray-950",
         selected === v &&
           "z-10 outline-offset-1 outline-gray-950 hover:outline-gray-950",
+        highlight === 1 &&
+          "bg-green-500 shadow-md shadow-green-200 hover:outline-green-800",
+        highlight === 2 &&
+          "bg-red-500 shadow-md shadow-red-200 hover:outline-red-800",
       )}
       onClick={(e) => {
         e.preventDefault();

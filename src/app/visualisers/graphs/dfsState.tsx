@@ -1,5 +1,6 @@
 "use client";
 
+import usePrevious from "~/app/_hooks/usePrevious";
 import { cn } from "~/app/utils";
 
 import { dfsCode } from "./dfs";
@@ -20,9 +21,10 @@ export default function DfsState() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        {dfsCode.map(({ tab, code }, i) => (
+        {dfsCode.map(({ tab, code, line }, i) => (
           <Code
             key={i}
+            line={line + 1}
             tab={tab}
             selected={dfsSteps[dfsStepIndex]!.lineNumber === i}
           >
@@ -60,29 +62,13 @@ export default function DfsState() {
           <div className="flex flex-row border-b border-r border-black">
             <RowHeader>visited</RowHeader>
             {dfsSteps[dfsStepIndex]!.visited.map((visited, v) => (
-              <div
-                className={cn(
-                  "flex aspect-square h-10 items-center justify-center",
-                  v % 2 === 0 && "bg-slate-200",
-                )}
-                key={v}
-              >
-                {visited ? 1 : 0}
-              </div>
+              <VisitedCell visited={visited} v={v} key={v} />
             ))}
           </div>
           <div className="flex flex-row border-b border-r border-black">
             <RowHeader>pred</RowHeader>
             {dfsSteps[dfsStepIndex]!.pred.map((pred, v) => (
-              <div
-                className={cn(
-                  "flex aspect-square h-10 items-center justify-center",
-                  v % 2 === 1 && "bg-slate-200",
-                )}
-                key={v}
-              >
-                {pred}
-              </div>
+              <PredCell pred={pred} v={v} key={v} />
             ))}
           </div>
         </div>
@@ -126,20 +112,59 @@ function Code({
   tab = 0,
   children,
   selected = false,
+  line,
 }: {
   children?: React.ReactNode;
   tab?: number;
   selected?: boolean;
+  line: number;
 }) {
   return (
-    <code
+    <div className="flex flex-row items-center gap-2">
+      <code className="block w-4 text-right font-mono">{line}</code>
+      <code
+        className={cn(
+          "block flex-grow rounded-lg p-[1px] px-1 font-mono transition-colors",
+          selected && "bg-slate-600 bg-opacity-70",
+        )}
+        style={{ marginLeft: `${tab * 20}px` }}
+      >
+        {children}
+      </code>
+    </div>
+  );
+}
+
+function PredCell({ pred, v }: { pred: number; v: number }) {
+  const prevPred = usePrevious(pred);
+
+  return (
+    <div
       className={cn(
-        "block rounded-lg p-[1px] px-1 transition-colors",
-        selected && "bg-slate-600 bg-opacity-70",
+        "flex aspect-square h-10 items-center justify-center transition-all",
+        v % 2 === 1 && "bg-slate-200",
+        pred !== prevPred && v % 2 === 1 && "bg-red-300",
+        pred !== prevPred && v % 2 === 0 && "bg-red-200",
       )}
-      style={{ marginLeft: `${tab * 20}px` }}
     >
-      {children}
-    </code>
+      {pred}
+    </div>
+  );
+}
+
+function VisitedCell({ visited, v }: { visited: boolean; v: number }) {
+  const prevVisited = usePrevious(visited);
+
+  return (
+    <div
+      className={cn(
+        "flex aspect-square h-10 items-center justify-center transition-all",
+        v % 2 === 0 && "bg-slate-200",
+        visited !== prevVisited && v % 2 === 0 && "bg-red-300",
+        visited !== prevVisited && v % 2 === 1 && "bg-red-200",
+      )}
+    >
+      {visited ? 1 : 0}
+    </div>
   );
 }

@@ -23,10 +23,12 @@ import {
 import { type MotionValue } from "framer-motion";
 import { useLocalStorage } from "usehooks-ts";
 
-type GraphNodePositionsType = ({
+type GraphNodePositionType = {
   x: MotionValue<number>;
   y: MotionValue<number>;
-} | null)[];
+};
+
+type GraphNodePositionsType = (GraphNodePositionType | null)[];
 
 export const MAX_VERTICES = 8;
 

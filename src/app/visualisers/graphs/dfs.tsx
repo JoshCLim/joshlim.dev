@@ -1,4 +1,4 @@
-import { array2DCreate, arrayCreate, arrayDeepCopy } from "~/app/utils";
+import { arrayCreate } from "~/app/utils";
 
 import {
   CodeBracket,
@@ -19,8 +19,6 @@ export type DfsStep = {
   visited: boolean[];
   stack: number[];
   pred: number[];
-  verticesHighlight: number[];
-  edgesHighlight: number[][];
 };
 
 export const dfsCode = [
@@ -211,8 +209,6 @@ export default function dfsGenerateSteps(
       visited: arrayCreate<boolean>(graph.nV, false),
       stack: [],
       pred: arrayCreate<number>(graph.nV, -1),
-      verticesHighlight: arrayCreate<number>(graph.nV, 0),
-      edgesHighlight: array2DCreate<number>(graph.nV, graph.nV, 0),
     },
   ];
   let stepNum = 0;
@@ -228,13 +224,17 @@ export default function dfsGenerateSteps(
         );
         break;
       case 1:
-        res.push(dfsStepCopy(res[stepNum]!, { lineNumber: 2 }));
+        res.push(
+          dfsStepCopy(res[stepNum]!, {
+            lineNumber: 2,
+          }),
+        );
         break;
       case 2:
         if (res[stepNum]!.stack.length === 0) {
           res.push(dfsStepCopy(res[stepNum]!, { lineNumber: 12 }));
         } else {
-          const v = res[stepNum]!.stack[res[stepNum]!.stack.length - 1];
+          const v = res[stepNum]!.stack[res[stepNum]!.stack.length - 1]!;
           res.push(
             dfsStepCopy(res[stepNum]!, {
               lineNumber: 3,
@@ -253,7 +253,11 @@ export default function dfsGenerateSteps(
         break;
       case 4:
         if (res[stepNum]!.visited[res[stepNum]!.vertexV]) {
-          res.push(dfsStepCopy(res[stepNum]!, { lineNumber: 2 }));
+          res.push(
+            dfsStepCopy(res[stepNum]!, {
+              lineNumber: 2,
+            }),
+          );
         } else {
           res.push(
             dfsStepCopy(res[stepNum]!, {
@@ -325,7 +329,11 @@ export default function dfsGenerateSteps(
         );
         break;
       case 11:
-        res.push(dfsStepCopy(res[stepNum]!, { lineNumber: 2 }));
+        res.push(
+          dfsStepCopy(res[stepNum]!, {
+            lineNumber: 2,
+          }),
+        );
         break;
       case 12:
         return res;
@@ -346,8 +354,6 @@ function dfsStepCopy(
     visited,
     stack,
     pred,
-    verticesHighlight,
-    edgesHighlight,
   }: {
     lineNumber?: number;
     vertexV?: number;
@@ -355,8 +361,6 @@ function dfsStepCopy(
     visited?: boolean[];
     stack?: number[];
     pred?: number[];
-    verticesHighlight?: number[];
-    edgesHighlight?: number[][];
   },
 ): DfsStep {
   return {
@@ -366,7 +370,5 @@ function dfsStepCopy(
     visited: visited ?? [...step.visited],
     stack: stack ?? [...step.stack],
     pred: pred ?? [...step.pred],
-    verticesHighlight: verticesHighlight ?? [...step.verticesHighlight],
-    edgesHighlight: edgesHighlight ?? arrayDeepCopy(step.edgesHighlight),
   };
 }

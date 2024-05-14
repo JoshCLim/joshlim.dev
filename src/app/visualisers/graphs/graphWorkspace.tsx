@@ -2,18 +2,25 @@
 
 import { useEffect, useMemo, useState } from "react";
 
-import { cn } from "~/app/utils";
+import { cn, pairMatch } from "~/app/utils";
 
 import { MAX_VERTICES, useGraphContext } from "./graphContext";
 import GraphEdge from "./graphEdge";
 import GraphNode from "./graphNode";
 import Toolbar from "./toolbar";
 
-import { AnimatePresence, type MotionValue, motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function GraphWorkspace() {
-  const { graph, graphOperations, canvasRef, graphNodePositions } =
-    useGraphContext();
+  const {
+    graph,
+    graphOperations,
+    canvasRef,
+    graphNodePositions,
+    dfsSteps,
+    dfsStepIndex,
+    algorithm,
+  } = useGraphContext();
   const [dragging, setDragging] = useState<number | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
 
@@ -119,6 +126,15 @@ export default function GraphWorkspace() {
                 setDragging={setDragging}
                 selected={selected}
                 setSelected={setSelected}
+                highlight={
+                  algorithm === "DFS" && dfsSteps
+                    ? dfsSteps[dfsStepIndex]!.vertexV === v
+                      ? 1
+                      : dfsSteps[dfsStepIndex]!.visited[v]
+                        ? 2
+                        : 0
+                    : 0
+                }
                 v={v}
               />
             ))}
@@ -135,17 +151,19 @@ export default function GraphWorkspace() {
                       u={u}
                       v={v}
                       weight={edge}
-                      uPos={
-                        graphNodePositions[u] as {
-                          x: MotionValue<number>;
-                          y: MotionValue<number>;
-                        }
-                      }
-                      vPos={
-                        graphNodePositions[v] as {
-                          x: MotionValue<number>;
-                          y: MotionValue<number>;
-                        }
+                      uPos={graphNodePositions[u]!}
+                      vPos={graphNodePositions[v]!}
+                      highlight={
+                        algorithm === "DFS" && dfsSteps
+                          ? pairMatch(
+                              dfsSteps[dfsStepIndex]!.vertexV,
+                              dfsSteps[dfsStepIndex]!.vertexU,
+                              v,
+                              u,
+                            )
+                            ? 1
+                            : 0
+                          : 0
                       }
                     />
                   ),

@@ -11,18 +11,10 @@ export function clamp(min: number, actual: number, max: number) {
   return actual;
 }
 
-export function arrayDeepCopy<T>(items: T[]): T[] {
-  return items.flatMap((item) =>
-    Array.isArray(item) ? arrayDeepCopy(item) : item,
-  ) as T[];
-}
-
-export function array2DCreate<T>(rows: number, cols: number, fill: T) {
-  return Array.from({ length: rows }, () =>
-    Array.from({ length: cols }, () => fill),
-  );
-}
-
 export function arrayCreate<T>(length: number, fill: T) {
   return Array.from({ length }, () => fill);
+}
+
+export function pairMatch<T>(a1: T, a2: T, b1: T, b2: T): boolean {
+  return (a1 == b1 && a2 == b2) || (a1 == b2 && a2 == b1);
 }
