@@ -1,3 +1,13 @@
+import {
+  CodeBracket,
+  CodeBracket2,
+  CodeFunction,
+  CodeKeyword,
+  CodeName,
+  CodeNumber,
+  CodeType,
+} from "~components/code";
+
 import { type Graph } from "./graph";
 
 export type DfsStep = {
@@ -8,28 +18,6 @@ export type DfsStep = {
   stack: number[];
   pred: number[];
 };
-
-function CodeName({ children }: { children?: React.ReactNode }) {
-  return <span className="text-white">{children}</span>;
-}
-function CodeFunction({ children }: { children?: React.ReactNode }) {
-  return <span className="text-lime-300">{children}</span>;
-}
-function CodeBracket({ children }: { children?: React.ReactNode }) {
-  return <span className="text-yellow-300">{children}</span>;
-}
-function CodeBracket2({ children }: { children?: React.ReactNode }) {
-  return <span className="text-pink-400">{children}</span>;
-}
-function CodeKeyword({ children }: { children?: React.ReactNode }) {
-  return <span className="text-red-400">{children}</span>;
-}
-function CodeType({ children }: { children?: React.ReactNode }) {
-  return <span className="text-blue-300">{children}</span>;
-}
-function CodeNumber({ children }: { children?: React.ReactNode }) {
-  return <span className="text-pink-300">{children}</span>;
-}
 
 export const dfsCode = [
   {
