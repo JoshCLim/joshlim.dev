@@ -34,7 +34,7 @@ export default function ToolbarButton({
         whileHover={{ scale: 1.05, transition: { delay: 0 } }}
         whileTap={{ scale: 0.95, transition: { delay: 0 } }}
         className={cn(
-          "rounded-md bg-green-700 p-2 px-4 shadow-sm transition-[filter] hover:brightness-95",
+          "rounded-md bg-green-700 p-2 px-4 shadow-sm transition-[filter,background-color] hover:brightness-95",
           className,
           disabled && "cursor-not-allowed bg-gray-400",
         )}
