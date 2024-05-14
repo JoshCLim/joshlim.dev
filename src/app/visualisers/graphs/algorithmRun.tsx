@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { clamp, cn } from "~/app/utils";
 
@@ -112,27 +112,35 @@ function RunSlider() {
     }
   }, [dfsStepIndex, dfsSteps, algorithm, x]);
 
-  if (!dfsSteps) return <></>;
+  const dfsUpdateStep = useCallback(
+    (x: number) => {
+      const len = dfsSteps?.length ?? 0;
+      setDfsStepIndex(
+        clamp(
+          0,
+          Math.floor((x / (sliderRef.current?.clientWidth ?? Infinity)) * len),
+          len - 1,
+        ),
+      );
+    },
+    [dfsSteps?.length, setDfsStepIndex],
+  );
 
-  const dfsUpdateStep = (x: number) => {
-    const len = dfsSteps.length;
-    setDfsStepIndex(
-      clamp(
-        0,
-        Math.floor((x / (sliderRef.current?.clientWidth ?? Infinity)) * len),
-        len - 1,
-      ),
-    );
-  };
+  // don't render if the steps have not been calculated
+  if (!dfsSteps && algorithm === "DFS") return <></>;
 
   return (
     <motion.div
       className="relative h-2 w-full cursor-pointer rounded-full bg-slate-800"
       onClick={(e) => {
-        dfsUpdateStep(
-          e.clientX -
-            (sliderRef.current?.getBoundingClientRect().x ?? e.clientX),
-        );
+        switch (algorithm) {
+          case "DFS":
+            dfsUpdateStep(
+              e.clientX -
+                (sliderRef.current?.getBoundingClientRect().x ?? e.clientX),
+            );
+            break;
+        }
       }}
       ref={sliderRef}
       onHoverStart={() => setShowStepOf(true)}
@@ -153,6 +161,7 @@ function RunSlider() {
           switch (algorithm) {
             case "DFS":
               dfsUpdateStep(x.get());
+              break;
           }
         }}
         onClick={(e) => e.stopPropagation()}
@@ -166,7 +175,11 @@ function RunSlider() {
               exit={{ opacity: 0 }}
               className="absolute left-[50%] top-[100%] min-w-24 translate-x-[-50%] text-xs text-black"
             >
-              Step {dfsStepIndex + 1} of {dfsSteps.length}
+              {dfsSteps && algorithm === "DFS" && (
+                <>
+                  Step {dfsStepIndex + 1} of {dfsSteps.length}
+                </>
+              )}
             </motion.p>
           )}
         </AnimatePresence>
