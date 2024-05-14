@@ -1,5 +1,5 @@
 // graph data structure
-import { clamp } from "~/app/utils";
+import { arrayCreate, clamp } from "~/app/utils";
 
 export type Graph = {
   nV: number;
@@ -29,7 +29,7 @@ export function graphAddVertex(g: Graph, x: number, y: number): Graph {
   const graph = graphCopy(g);
   graph.edges.forEach((row) => row.push(0));
   graph.nV++;
-  graph.edges.push(Array.from({ length: graph.nV }, () => 0));
+  graph.edges.push(arrayCreate<number>(graph.nV, 0));
   graph.positions.push({ x, y });
   return graph;
 }

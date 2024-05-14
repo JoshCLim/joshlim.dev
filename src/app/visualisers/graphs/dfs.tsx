@@ -1,3 +1,5 @@
+import { array2DCreate, arrayCreate, arrayDeepCopy } from "~/app/utils";
+
 import {
   CodeBracket,
   CodeBracket2,
@@ -17,6 +19,8 @@ export type DfsStep = {
   visited: boolean[];
   stack: number[];
   pred: number[];
+  verticesHighlight: number[];
+  edgesHighlight: number[][];
 };
 
 export const dfsCode = [
@@ -204,9 +208,11 @@ export default function dfsGenerateSteps(
       lineNumber: 0,
       vertexV: -1,
       vertexU: -1,
-      visited: new Array(graph.nV).fill(false) as boolean[],
+      visited: arrayCreate<boolean>(graph.nV, false),
       stack: [],
-      pred: new Array(graph.nV).fill(-1) as number[],
+      pred: arrayCreate<number>(graph.nV, -1),
+      verticesHighlight: arrayCreate<number>(graph.nV, 0),
+      edgesHighlight: array2DCreate<number>(graph.nV, graph.nV, 0),
     },
   ];
   let stepNum = 0;
@@ -340,6 +346,8 @@ function dfsStepCopy(
     visited,
     stack,
     pred,
+    verticesHighlight,
+    edgesHighlight,
   }: {
     lineNumber?: number;
     vertexV?: number;
@@ -347,6 +355,8 @@ function dfsStepCopy(
     visited?: boolean[];
     stack?: number[];
     pred?: number[];
+    verticesHighlight?: number[];
+    edgesHighlight?: number[][];
   },
 ): DfsStep {
   return {
@@ -356,5 +366,7 @@ function dfsStepCopy(
     visited: visited ?? [...step.visited],
     stack: stack ?? [...step.stack],
     pred: pred ?? [...step.pred],
+    verticesHighlight: verticesHighlight ?? [...step.verticesHighlight],
+    edgesHighlight: edgesHighlight ?? arrayDeepCopy(step.edgesHighlight),
   };
 }
