@@ -91,6 +91,7 @@ type GraphContextType = {
   dfsSteps: DfsStep[] | null;
   setDfsSteps: React.Dispatch<React.SetStateAction<DfsStep[] | null>>;
   dfsStepIndex: number;
+  setDfsStepIndex: React.Dispatch<React.SetStateAction<number>>;
   dfsNext: () => void;
   dfsPrev: () => void;
   dfsStart: () => void;
@@ -284,6 +285,7 @@ export default function GraphContextProvider({
         dfsPrev,
         dfsStart,
         dfsEnd,
+        setDfsStepIndex,
         // bfs: starting vertex
         bfsStartingVertex,
         setBfsStartingVertex,
