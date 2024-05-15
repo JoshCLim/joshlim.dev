@@ -1,6 +1,7 @@
 import { cn } from "~/app/utils";
 
 import { startingVertexAlgorithms } from "./algorithms";
+import { useDfsContext } from "./dfs/dfsContext";
 import { useGraphContext } from "./graphContext";
 
 import { motion } from "framer-motion";
@@ -13,10 +14,6 @@ export default function AlgorithmStart() {
     running,
     setRunning,
     algorithm,
-    // dfs
-    dfsStartingVertex,
-    setDfsStartingVertex,
-    dfsInit,
 
     bfsStartingVertex,
     setBfsStartingVertex,
@@ -25,6 +22,8 @@ export default function AlgorithmStart() {
     primStartingVertex,
     setPrimStartingVertex,
   } = useGraphContext();
+
+  const { dfsStartingVertex, setDfsStartingVertex, dfsInit } = useDfsContext();
 
   return (
     <>
@@ -86,7 +85,7 @@ export default function AlgorithmStart() {
           switch (algorithm) {
             case "DFS":
               if (!validVertex(dfsStartingVertex, graph.nV)) return; // TODO: show error message
-              dfsInit();
+              dfsInit(graph);
               break;
             case "BFS":
               if (!validVertex(bfsStartingVertex, graph.nV)) return; // TODO: show error message

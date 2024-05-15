@@ -4,12 +4,12 @@ import usePrevious from "~/app/_hooks/usePrevious";
 import { cn } from "~/app/utils";
 
 import dfsCode from "./dfsCode";
-import { useGraphContext } from "./graphContext";
+import { useDfsContext } from "./dfsContext";
 
 import { motion } from "framer-motion";
 
 export default function DfsState() {
-  const { dfsStartingVertex, dfsSteps, dfsStepIndex } = useGraphContext();
+  const { dfsStartingVertex, dfsSteps, dfsStepIndex } = useDfsContext();
 
   if (!dfsSteps) return <></>;
 
@@ -79,7 +79,7 @@ export default function DfsState() {
 }
 
 function DfsStack() {
-  const { dfsSteps, dfsStepIndex } = useGraphContext();
+  const { dfsSteps, dfsStepIndex } = useDfsContext();
 
   if (!dfsSteps) return <></>;
 

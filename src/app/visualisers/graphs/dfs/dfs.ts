@@ -1,9 +1,9 @@
 import { arrayCreate, pairMatch } from "~/app/utils";
 
+import { type Graph } from "../graph";
+import { type EdgesHighlight } from "../graphEdge";
+import { type VerticesHighlight } from "../graphNode";
 import dfsCode from "./dfsCode";
-import { type Graph } from "./graph";
-import { type EdgesHighlight } from "./graphEdge";
-import { type VerticesHighlight } from "./graphNode";
 
 export type DfsStep = {
   lineNumber: number;

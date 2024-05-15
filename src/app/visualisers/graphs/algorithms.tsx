@@ -1,4 +1,4 @@
-import DfsState from "./dfsState";
+import DfsState from "./dfs/dfsState";
 
 // list of algorithms available
 export const algorithms = [

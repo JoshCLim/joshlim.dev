@@ -2,6 +2,7 @@ import { type Metadata } from "next";
 
 import dynamic from "next/dynamic";
 
+import AlgorithmContexts from "./algorithmContexts";
 import GraphContextProvider from "./graphContext";
 
 export const metadata: Metadata = {
@@ -11,7 +12,11 @@ export const metadata: Metadata = {
 };
 
 function Layout({ children }: { children?: React.ReactNode }) {
-  return <GraphContextProvider>{children}</GraphContextProvider>;
+  return (
+    <GraphContextProvider>
+      <AlgorithmContexts>{children}</AlgorithmContexts>
+    </GraphContextProvider>
+  );
 }
 
 // disable ssr for the whole page?

@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { clamp, cn } from "~/app/utils";
 
+import { useDfsContext } from "./dfs/dfsContext";
 import { useGraphContext } from "./graphContext";
 
 import { motion, useMotionValue, useMotionValueEvent } from "framer-motion";
@@ -15,15 +16,10 @@ import {
 } from "iconoir-react";
 
 export default function AlgorithmRun() {
-  const {
-    algorithm,
-    dfsNext,
-    dfsPrev,
-    dfsSteps,
-    dfsStepIndex,
-    dfsStart,
-    dfsEnd,
-  } = useGraphContext();
+  const { algorithm } = useGraphContext();
+
+  const { dfsNext, dfsPrev, dfsSteps, dfsStepIndex, dfsStart, dfsEnd } =
+    useDfsContext();
 
   return (
     <div className="space-y-5 py-10">
@@ -102,8 +98,9 @@ function RunSlider() {
     useState<NodeJS.Timeout | null>(null);
   const [dragging, setDragging] = useState(false);
 
-  const { algorithm, dfsStepIndex, dfsSteps, setDfsStepIndex } =
-    useGraphContext();
+  const { algorithm } = useGraphContext();
+
+  const { dfsStepIndex, dfsSteps, setDfsStepIndex } = useDfsContext();
 
   const x = useMotionValue(0);
 

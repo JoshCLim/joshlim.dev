@@ -4,7 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 
 import { cn } from "~/app/utils";
 
-import { dfsEdgeHighlight, dfsVerticesHighlight } from "./dfs";
+import { dfsEdgeHighlight, dfsVerticesHighlight } from "./dfs/dfs";
+import { useDfsContext } from "./dfs/dfsContext";
 import { MAX_VERTICES, useGraphContext } from "./graphContext";
 import GraphEdge from "./graphEdge";
 import GraphNode from "./graphNode";
@@ -18,12 +19,11 @@ export default function GraphWorkspace() {
     graphOperations,
     canvasRef,
     graphNodePositions,
-    dfsSteps,
-    dfsStepIndex,
     algorithm,
     running,
-    dfsSimple,
   } = useGraphContext();
+
+  const { dfsSteps, dfsStepIndex } = useDfsContext();
 
   // whether a node is being dragged. prevents click-to-create-new-node from firing when dragging
   const [dragging, setDragging] = useState<number | null>(null);
@@ -121,7 +121,7 @@ export default function GraphWorkspace() {
                 selected={selected}
                 setSelected={setSelected}
                 highlight={
-                  algorithm === "DFS" && !dfsSimple && dfsSteps
+                  algorithm === "DFS" && dfsSteps
                     ? dfsVerticesHighlight(graph, dfsSteps[dfsStepIndex]!, v)
                     : 0
                 }
