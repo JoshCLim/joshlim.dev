@@ -4,8 +4,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { clamp, cn } from "~/app/utils";
 
-import { useDfsContext } from "../dfs/dfsContext";
-import { useGraphContext } from "../graphContext";
+import { type UseAlgorithmNotNull } from "./algorithmTypes";
+import useAlgorithm from "./useAlgorithm";
 
 import { motion, useMotionValue, useMotionValueEvent } from "framer-motion";
 import {
@@ -16,10 +16,9 @@ import {
 } from "iconoir-react";
 
 export default function AlgorithmRun() {
-  const { algorithm } = useGraphContext();
+  const alg = useAlgorithm();
 
-  const { dfsNext, dfsPrev, dfsSteps, dfsStepIndex, dfsStart, dfsEnd } =
-    useDfsContext();
+  if (!alg.algorithm) return <></>;
 
   return (
     <div className="space-y-5 py-10">
@@ -27,28 +26,20 @@ export default function AlgorithmRun() {
         <button
           className={cn(
             "flex flex-row gap-1 border-r border-white bg-green-500 px-5 py-3 text-lg transition-colors hover:bg-green-600",
-            algorithm === "DFS" &&
-              dfsSteps &&
-              dfsStepIndex <= 0 &&
+            alg.stepIndex <= 0 &&
               "cursor-not-allowed bg-gray-400 hover:bg-gray-400",
           )}
-          onClick={() => {
-            if (algorithm === "DFS") dfsStart();
-          }}
+          onClick={alg.start}
         >
           <FastArrowLeft />
         </button>
         <button
           className={cn(
             "flex flex-row gap-1 border-r border-white bg-green-500 px-5 py-3 text-lg transition-colors hover:bg-green-600",
-            algorithm === "DFS" &&
-              dfsSteps &&
-              dfsStepIndex <= 0 &&
+            alg.stepIndex <= 0 &&
               "cursor-not-allowed bg-gray-400 hover:bg-gray-400",
           )}
-          onClick={() => {
-            if (algorithm === "DFS") dfsPrev();
-          }}
+          onClick={alg.prev}
         >
           <NavArrowLeft />
         </button>
@@ -58,38 +49,32 @@ export default function AlgorithmRun() {
         <button
           className={cn(
             "flex flex-row gap-1 border-l border-white bg-green-500 px-5 py-3 text-lg transition-colors hover:bg-green-600",
-            algorithm === "DFS" &&
-              dfsSteps &&
-              dfsStepIndex >= dfsSteps.length - 1 &&
+            alg.steps &&
+              alg.stepIndex >= alg.steps.length - 1 &&
               "cursor-not-allowed bg-gray-400 hover:bg-gray-400",
           )}
-          onClick={() => {
-            if (algorithm === "DFS") dfsNext();
-          }}
+          onClick={alg.next}
         >
           <NavArrowRight />
         </button>
         <button
           className={cn(
             "flex flex-row gap-1 border-l border-white bg-green-500 px-5 py-3 text-lg transition-colors hover:bg-green-600",
-            algorithm === "DFS" &&
-              dfsSteps &&
-              dfsStepIndex >= dfsSteps.length - 1 &&
+            alg.steps &&
+              alg.stepIndex >= alg.steps.length - 1 &&
               "cursor-not-allowed bg-gray-400 hover:bg-gray-400",
           )}
-          onClick={() => {
-            if (algorithm === "DFS") dfsEnd();
-          }}
+          onClick={alg.end}
         >
           <FastArrowRight />
         </button>
       </div>
-      {dfsSteps && <RunSlider />}
+      {alg.steps && <RunSlider alg={alg} />}
     </div>
   );
 }
 
-function RunSlider() {
+function RunSlider({ alg }: { alg: UseAlgorithmNotNull }) {
   const showStepOfMilliseconds = 1000;
   const sliderRef = useRef<HTMLDivElement>(null);
 
@@ -98,33 +83,25 @@ function RunSlider() {
     useState<NodeJS.Timeout | null>(null);
   const [dragging, setDragging] = useState(false);
 
-  const { algorithm } = useGraphContext();
-
-  const { dfsStepIndex, dfsSteps, setDfsStepIndex } = useDfsContext();
-
   const x = useMotionValue(0);
 
   useEffect(() => {
-    switch (algorithm) {
-      case "DFS":
-        if (!dfsSteps || !sliderRef.current) return;
-        x.set((dfsStepIndex / dfsSteps.length) * sliderRef.current.clientWidth);
-        break;
-    }
-  }, [dfsStepIndex, dfsSteps, algorithm, x]);
+    if (!alg.steps || !sliderRef.current) return;
+    x.set((alg.stepIndex / alg.steps.length) * sliderRef.current.clientWidth);
+  }, [alg.algorithm, alg.stepIndex, alg.steps, x]);
 
-  const dfsUpdateStep = useCallback(
+  const algUpdateStep = useCallback(
     (xVal: number) => {
-      const len = dfsSteps?.length ?? Infinity;
+      const len = alg.steps?.length ?? Infinity;
       const newIndex = clamp(
         0,
         Math.floor((xVal / (sliderRef.current?.clientWidth ?? Infinity)) * len),
         len - 1,
       );
-      setDfsStepIndex(newIndex);
+      alg.setStepIndex(newIndex);
       x.set((newIndex / len) * (sliderRef.current?.clientWidth ?? 0));
     },
-    [dfsSteps?.length, setDfsStepIndex, x],
+    [alg, x],
   );
 
   useMotionValueEvent(x, "change", (latest) => {
@@ -136,34 +113,30 @@ function RunSlider() {
 
     if (!dragging) return;
 
-    const len = dfsSteps?.length ?? Infinity;
+    const len = alg.steps?.length ?? Infinity;
     const newIndex = clamp(
       0,
       Math.floor(
         (latest / (sliderRef.current?.clientWidth ?? Infinity)) *
-          (dfsSteps?.length ?? 0),
+          (alg.steps?.length ?? 0),
       ),
-      (dfsSteps?.length ?? 0) - 1,
+      (alg.steps?.length ?? 0) - 1,
     );
-    setDfsStepIndex(newIndex);
+    alg.setStepIndex(newIndex);
     x.set((newIndex / len) * (sliderRef.current?.clientWidth ?? 0));
   });
 
   // don't render if the steps have not been calculated
-  if (!dfsSteps && algorithm === "DFS") return <></>;
+  if (!alg.steps) return <></>;
 
   return (
     <motion.div
       className="relative h-2 w-full cursor-pointer rounded-full bg-slate-800"
       onClick={(e) => {
-        switch (algorithm) {
-          case "DFS":
-            dfsUpdateStep(
-              e.clientX -
-                (sliderRef.current?.getBoundingClientRect().x ?? e.clientX),
-            );
-            break;
-        }
+        algUpdateStep(
+          e.clientX -
+            (sliderRef.current?.getBoundingClientRect().x ?? e.clientX),
+        );
       }}
       ref={sliderRef}
       onHoverStart={() => {
@@ -200,11 +173,7 @@ function RunSlider() {
             showStepOf ? "opacity-100" : "opacity-0",
           )}
         >
-          {dfsSteps && algorithm === "DFS" && (
-            <>
-              Step {dfsStepIndex + 1} of {dfsSteps.length}
-            </>
-          )}
+          Step {alg.stepIndex + 1} of {alg.steps.length}
         </p>
       </motion.button>
     </motion.div>

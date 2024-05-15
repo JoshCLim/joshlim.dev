@@ -3,6 +3,7 @@
 import { createContext, useCallback, useContext } from "react";
 
 import { type Graph } from "../graph";
+import { validVertex } from "../utils";
 import { type DfsStep, dfsGenerateSteps } from "./dfs";
 
 import { useLocalStorage } from "usehooks-ts";
@@ -13,11 +14,11 @@ type DfsContextType = {
   setDfsStartingVertex: React.Dispatch<React.SetStateAction<number>>;
 
   // function to initialise algorithm
+  dfsReady: (graph: Graph) => boolean;
   dfsInit: (graph: Graph) => void;
 
   // array of steps
   dfsSteps: DfsStep[] | null;
-  setDfsSteps: React.Dispatch<React.SetStateAction<DfsStep[] | null>>;
 
   // current step index we are up to
   dfsStepIndex: number;
@@ -50,6 +51,15 @@ export default function DfsContextProvider({
     "dfs-step-index",
     0,
   );
+  const dfsReady = useCallback(
+    (graph: Graph) => {
+      if (!validVertex(dfsStartingVertex, graph.nV)) {
+        return false;
+      }
+      return true;
+    },
+    [dfsStartingVertex],
+  );
   const dfsInit = useCallback(
     (graph: Graph) => {
       setDfsSteps(dfsGenerateSteps(graph, dfsStartingVertex));
@@ -75,9 +85,9 @@ export default function DfsContextProvider({
       value={{
         dfsStartingVertex,
         setDfsStartingVertex,
+        dfsReady,
         dfsInit,
         dfsSteps,
-        setDfsSteps,
         dfsStepIndex,
         setDfsStepIndex,
         dfsNext,

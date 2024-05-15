@@ -2,7 +2,6 @@
 
 import { createContext, useContext, useRef, useState } from "react";
 
-import { type AlgorithmType } from "./algorithms/algorithms";
 import {
   type Graph,
   graphAddVertex,
@@ -60,8 +59,8 @@ type GraphContextType = {
   >;
 
   // algorithm
-  algorithm: AlgorithmType | null;
-  setAlgorithm: React.Dispatch<React.SetStateAction<AlgorithmType | null>>;
+  // algorithm: AlgorithmType | null;
+  // setAlgorithm: React.Dispatch<React.SetStateAction<AlgorithmType | null>>;
 
   // graph representation
   graphRep: GraphRepresentationType;
@@ -112,10 +111,10 @@ export default function GraphContextProvider({
   const [graphNodePositions, setGraphNodePositions] =
     useState<GraphNodePositionsType>(Array(graph.nV).fill(null));
 
-  const [algorithm, setAlgorithm] = useLocalStorage<AlgorithmType | null>(
-    "graph-algorithm-type",
-    null,
-  );
+  // const [algorithm, setAlgorithm] = useLocalStorage<AlgorithmType | null>(
+  //   "graph-algorithm-type",
+  //   null,
+  // );
 
   const [graphRep, setGraphRep] = useLocalStorage<GraphRepresentationType>(
     "graph-representation",
@@ -191,8 +190,8 @@ export default function GraphContextProvider({
         graphNodePositions,
         setGraphNodePositions,
         // algorithm
-        algorithm,
-        setAlgorithm,
+        // algorithm,
+        // setAlgorithm,
         // graph representation
         graphRep,
         setGraphRep,

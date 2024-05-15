@@ -2,8 +2,8 @@ import { cn } from "~/app/utils";
 
 import ButtonGroup from "~components/buttonGroup";
 
-import { useGraphContext } from "../graphContext";
-import { type AlgorithmType, algorithms } from "./algorithms";
+import { type AlgorithmType, algorithms } from "./algorithmTypes";
+import useAlgorithm from "./useAlgorithm";
 
 export default function AlgorithmChooser() {
   return (
@@ -19,7 +19,7 @@ export default function AlgorithmChooser() {
 }
 
 function Button({ algorithm }: { algorithm: AlgorithmType }) {
-  const { algorithm: globalAlgorithm, setAlgorithm } = useGraphContext();
+  const { algorithm: globalAlgorithm, setAlgorithm } = useAlgorithm();
 
   return (
     <button

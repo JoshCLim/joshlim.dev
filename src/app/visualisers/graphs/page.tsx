@@ -5,10 +5,7 @@ import { cn } from "~/app/utils";
 import AlgorithmChooser from "./algorithms/algorithmChoose";
 import AlgorithmRun from "./algorithms/algorithmRun";
 import AlgorithmStart from "./algorithms/algorithmStart";
-import {
-  algorithmStateComponent,
-  algorithmToTitle,
-} from "./algorithms/algorithms";
+import useAlgorithm from "./algorithms/useAlgorithm";
 import { MAX_VERTICES, useGraphContext } from "./graphContext";
 import GraphEditor from "./graphEditor";
 import GraphSettings from "./graphSettings";
@@ -20,7 +17,8 @@ import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 
 export default function Page() {
-  const { algorithm, running, graph } = useGraphContext();
+  const { running, graph } = useGraphContext();
+  const alg = useAlgorithm();
 
   return (
     <>
@@ -45,7 +43,7 @@ export default function Page() {
                 layout="position"
                 className="text-lg font-light"
               >
-                {algorithmToTitle(algorithm)}
+                {alg.title}
               </motion.h3>
               {!running && graph.nV < MAX_VERTICES && (
                 <motion.p
@@ -90,7 +88,7 @@ export default function Page() {
               >
                 <GraphSettings />
                 <AlgorithmStart />
-                {running && algorithm === "DFS" && <AlgorithmRun />}
+                {running && <AlgorithmRun />}
               </motion.div>
             </motion.div>
             <motion.div
@@ -100,7 +98,7 @@ export default function Page() {
                 running && "flex-1",
               )}
             >
-              {(!running || !algorithm) && (
+              {(!running || !alg.algorithm) && (
                 <p className="font-light">
                   Select an algorithm and press{" "}
                   <span className="rounded-2xl bg-green-400 px-4 py-2 text-white">
@@ -109,7 +107,7 @@ export default function Page() {
                   to get started.
                 </p>
               )}
-              {running && algorithm && algorithmStateComponent(algorithm)}
+              {running && alg.algorithm && alg.stateComponent}
             </motion.div>
           </LayoutGroup>
         </Panel>

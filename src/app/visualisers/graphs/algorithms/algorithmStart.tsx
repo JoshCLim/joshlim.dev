@@ -1,24 +1,14 @@
 import { cn } from "~/app/utils";
 
-import { useBfsContext } from "../bfs/bfsContext";
-import { useDfsContext } from "../dfs/dfsContext";
-import { useDijkstraContext } from "../dijkstra/dijkstraContext";
 import { useGraphContext } from "../graphContext";
-import { usePrimsContext } from "../prims/primsContext";
-import { startingVertexAlgorithms } from "./algorithms";
+import AlgorithmSetStartVertex from "./algorithmSetStartVertex";
+import useAlgorithm from "./useAlgorithm";
 
 import { motion } from "framer-motion";
 
-const validVertex = (v: number, nV: number) => !isNaN(v) && v >= 0 && v < nV;
-
 export default function AlgorithmStart() {
-  const { graph, running, setRunning, algorithm } = useGraphContext();
-
-  const { dfsStartingVertex, setDfsStartingVertex, dfsInit } = useDfsContext();
-  const { bfsStartingVertex, setBfsStartingVertex } = useBfsContext();
-  const { dijkstraStartingVertex, setDijkstraStartingVertex } =
-    useDijkstraContext();
-  const { primStartingVertex, setPrimStartingVertex } = usePrimsContext();
+  const { graph, running, setRunning } = useGraphContext();
+  const alg = useAlgorithm();
 
   return (
     <>
@@ -26,47 +16,7 @@ export default function AlgorithmStart() {
         layout
         className="flex flex-col items-center justify-center gap-10 py-5 text-black"
       >
-        {!!algorithm &&
-          startingVertexAlgorithms.includes(algorithm) &&
-          !running && (
-            <form className="flex flex-col items-center justify-center gap-2">
-              <h3 className="font-light ">Choose a starting vertex:</h3>
-              <input
-                type="number"
-                size={1}
-                disabled={running}
-                className={cn(
-                  "min-w-0 rounded-full border border-black bg-transparent bg-white px-4 py-2 text-center outline-transparent transition-all focus:outline-slate-950",
-                  running && "bg-slate-500 text-white",
-                )}
-                value={
-                  (algorithm === "DFS"
-                    ? dfsStartingVertex
-                    : algorithm === "BFS"
-                      ? bfsStartingVertex
-                      : algorithm === "Dijkstra's"
-                        ? dijkstraStartingVertex
-                        : primStartingVertex) ?? ""
-                }
-                onChange={(e) => {
-                  switch (algorithm) {
-                    case "DFS":
-                      setDfsStartingVertex(parseInt(e.target.value));
-                      break;
-                    case "BFS":
-                      setBfsStartingVertex(parseInt(e.target.value));
-                      break;
-                    case "Dijkstra's":
-                      setDijkstraStartingVertex(parseInt(e.target.value));
-                      break;
-                    case "Prim's":
-                      setPrimStartingVertex(parseInt(e.target.value));
-                      break;
-                  }
-                }}
-              />
-            </form>
-          )}
+        <AlgorithmSetStartVertex />
       </motion.div>
       <Button
         className={
@@ -75,23 +25,11 @@ export default function AlgorithmStart() {
             : "bg-green-400 hover:bg-green-500"
         }
         onTap={() => {
-          if (!algorithm) return; // TODO: show error message
+          if (!alg.algorithm) return; // TODO: show error message
 
-          switch (algorithm) {
-            case "DFS":
-              if (!validVertex(dfsStartingVertex, graph.nV)) return; // TODO: show error message
-              dfsInit(graph);
-              break;
-            case "BFS":
-              if (!validVertex(bfsStartingVertex, graph.nV)) return; // TODO: show error message
-              break;
-            case "Dijkstra's":
-              if (!validVertex(dijkstraStartingVertex, graph.nV)) return; // TODO: show error message
-              break;
-            case "Prim's":
-              if (!validVertex(primStartingVertex, graph.nV)) return; // TODO: show error message
-              break;
-          }
+          if (!alg.ready(graph)) return;
+
+          alg.init(graph);
 
           setRunning((prev) => !prev);
         }}

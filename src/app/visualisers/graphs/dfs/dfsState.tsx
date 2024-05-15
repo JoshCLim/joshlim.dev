@@ -4,14 +4,22 @@ import usePrevious from "~/app/_hooks/usePrevious";
 import { cn } from "~/app/utils";
 
 import dfsCode from "./dfsCode";
-import { useDfsContext } from "./dfsContext";
+import useDfs from "./useDfs";
 
 import { motion } from "framer-motion";
 
 export default function DfsState() {
-  const { dfsStartingVertex, dfsSteps, dfsStepIndex } = useDfsContext();
+  const alg = useDfs();
 
-  if (!dfsSteps) return <></>;
+  if (!alg) return <></>;
+
+  if (!alg.steps) return <></>;
+
+  const {
+    startingVertex: dfsStartingVertex,
+    steps: dfsSteps,
+    stepIndex: dfsStepIndex,
+  } = alg;
 
   return (
     <div className="flex flex-grow flex-row gap-10">
@@ -79,9 +87,9 @@ export default function DfsState() {
 }
 
 function DfsStack() {
-  const { dfsSteps, dfsStepIndex } = useDfsContext();
+  const alg = useDfs();
 
-  if (!dfsSteps) return <></>;
+  if (!alg || !alg.steps) return <></>;
 
   return (
     <motion.div
@@ -90,7 +98,7 @@ function DfsStack() {
     >
       <p className="bg-black px-2 py-1 text-white">Stack</p>
       <p className="bg-slate-700 px-2 py-1 text-white">Bottom</p>
-      {dfsSteps[dfsStepIndex]!.stack.map((vertex, i) => (
+      {alg.steps[alg.stepIndex]!.stack.map((vertex, i) => (
         <p className={cn("px-3 py-1", i % 2 === 0 && "bg-white")} key={i}>
           {vertex}
         </p>

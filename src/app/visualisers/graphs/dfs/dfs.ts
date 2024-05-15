@@ -217,6 +217,7 @@ export function dfsVerticesHighlight(
  * what colour to highlight an edge (u,v) based on the current step
  */
 export function dfsEdgeHighlight(
+  _: Graph,
   step: DfsStep,
   u: number,
   v: number,

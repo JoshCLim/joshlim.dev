@@ -4,8 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import { cn } from "~/app/utils";
 
-import { dfsEdgeHighlight, dfsVerticesHighlight } from "./dfs/dfs";
-import { useDfsContext } from "./dfs/dfsContext";
+import useAlgorithm from "./algorithms/useAlgorithm";
 import { MAX_VERTICES, useGraphContext } from "./graphContext";
 import GraphEdge from "./graphEdge";
 import GraphNode from "./graphNode";
@@ -14,16 +13,9 @@ import Toolbar from "./toolbar";
 import { AnimatePresence, motion } from "framer-motion";
 
 export default function GraphWorkspace() {
-  const {
-    graph,
-    graphOperations,
-    canvasRef,
-    graphNodePositions,
-    algorithm,
-    running,
-  } = useGraphContext();
-
-  const { dfsSteps, dfsStepIndex } = useDfsContext();
+  const { graph, graphOperations, canvasRef, graphNodePositions, running } =
+    useGraphContext();
+  const alg = useAlgorithm();
 
   // whether a node is being dragged. prevents click-to-create-new-node from firing when dragging
   const [dragging, setDragging] = useState<number | null>(null);
@@ -121,8 +113,13 @@ export default function GraphWorkspace() {
                 selected={selected}
                 setSelected={setSelected}
                 highlight={
-                  algorithm === "DFS" && dfsSteps
-                    ? dfsVerticesHighlight(graph, dfsSteps[dfsStepIndex]!, v)
+                  alg.algorithm && alg.steps
+                    ? alg.verticesHighlight(
+                        graph,
+                        // @ts-expect-error -- typescript too dumb to understand generics
+                        alg.steps[alg.stepIndex],
+                        v,
+                      )
                     : 0
                 }
                 v={v}
@@ -144,8 +141,14 @@ export default function GraphWorkspace() {
                       uPos={graphNodePositions[u]!}
                       vPos={graphNodePositions[v]!}
                       highlight={
-                        algorithm === "DFS" && dfsSteps
-                          ? dfsEdgeHighlight(dfsSteps[dfsStepIndex]!, u, v)
+                        alg.algorithm && alg.steps
+                          ? alg.edgeHighlight(
+                              graph,
+                              // @ts-expect-error -- typescript too dumb to understand generics idk
+                              alg.steps[alg.stepIndex]!,
+                              u,
+                              v,
+                            )
                           : 0
                       }
                     />
