@@ -2,8 +2,9 @@
 
 import { useEffect, useMemo, useState } from "react";
 
-import { cn, pairMatch } from "~/app/utils";
+import { cn } from "~/app/utils";
 
+import { dfsEdgeHighlight, dfsVerticesHighlight } from "./dfs";
 import { MAX_VERTICES, useGraphContext } from "./graphContext";
 import GraphEdge from "./graphEdge";
 import GraphNode from "./graphNode";
@@ -20,14 +21,24 @@ export default function GraphWorkspace() {
     dfsSteps,
     dfsStepIndex,
     algorithm,
+    running,
+    dfsSimple,
   } = useGraphContext();
+
+  // whether a node is being dragged. prevents click-to-create-new-node from firing when dragging
   const [dragging, setDragging] = useState<number | null>(null);
+  // currently selected node
   const [selected, setSelected] = useState<number | null>(null);
 
+  // handle keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       console.log(e.key);
-      if ((e.key === "Backspace" || e.key === "Delete") && selected !== null) {
+      if (
+        !running &&
+        (e.key === "Backspace" || e.key === "Delete") &&
+        selected !== null
+      ) {
         graphOperations.removeVertex(selected);
         setSelected(null);
       } else if (e.key === "ArrowUp") {
@@ -44,8 +55,9 @@ export default function GraphWorkspace() {
     document.addEventListener("keydown", handleKeyDown);
 
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [graphOperations, selected]);
+  }, [graphOperations, running, selected]);
 
+  // calculate total weight of edges
   const totalWeight = useMemo(
     () =>
       graph.edges.reduce(
@@ -54,6 +66,7 @@ export default function GraphWorkspace() {
       ) / (graph.directed ? 1 : 2),
     [graph.directed, graph.edges],
   );
+  // calculate number of edges
   const nE = useMemo(
     () =>
       graph.edges.reduce(
@@ -68,34 +81,15 @@ export default function GraphWorkspace() {
     <>
       <Toolbar />
       <div className="flex flex-grow flex-col gap-3 p-5 py-0">
-        <div className="flex flex-row gap-3">
-          <motion.p
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0, type: "spring", ease: "easeInOut" }}
-            className="rounded-full bg-slate-500 p-2 px-4"
-          >
-            nV: {graph.nV}
-          </motion.p>
-          <motion.p
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2, type: "spring", ease: "easeInOut" }}
-            className="rounded-full bg-slate-500 p-2 px-4"
-          >
-            nE: {nE}
-          </motion.p>
+        <GraphInfoBar>
+          <GraphInfoChip delay={0}>nV: {graph.nV}</GraphInfoChip>
+          <GraphInfoChip delay={0.2}>nE: {nE}</GraphInfoChip>
           {graph.weighted && (
-            <motion.p
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.4, type: "spring", ease: "easeInOut" }}
-              className="rounded-full bg-slate-500 p-2 px-4"
-            >
+            <GraphInfoChip delay={0.4}>
               total edge weight: {totalWeight}
-            </motion.p>
+            </GraphInfoChip>
           )}
-        </div>
+        </GraphInfoBar>
         {/* canvas */}
         <div
           className={cn(
@@ -127,12 +121,8 @@ export default function GraphWorkspace() {
                 selected={selected}
                 setSelected={setSelected}
                 highlight={
-                  algorithm === "DFS" && dfsSteps
-                    ? dfsSteps[dfsStepIndex]!.vertexV === v
-                      ? 1
-                      : dfsSteps[dfsStepIndex]!.visited[v]
-                        ? 2
-                        : 0
+                  algorithm === "DFS" && !dfsSimple && dfsSteps
+                    ? dfsVerticesHighlight(graph, dfsSteps[dfsStepIndex]!, v)
                     : 0
                 }
                 v={v}
@@ -155,14 +145,7 @@ export default function GraphWorkspace() {
                       vPos={graphNodePositions[v]!}
                       highlight={
                         algorithm === "DFS" && dfsSteps
-                          ? pairMatch(
-                              dfsSteps[dfsStepIndex]!.vertexV,
-                              dfsSteps[dfsStepIndex]!.vertexU,
-                              v,
-                              u,
-                            )
-                            ? 1
-                            : 0
+                          ? dfsEdgeHighlight(dfsSteps[dfsStepIndex]!, u, v)
                           : 0
                       }
                     />
@@ -173,5 +156,31 @@ export default function GraphWorkspace() {
         </div>
       </div>
     </>
+  );
+}
+
+// wrapper div to hold graph info chips
+function GraphInfoBar({ children }: { children?: React.ReactNode }) {
+  return <div className="flex flex-row gap-3">{children}</div>;
+}
+
+// individual graph info chip
+function GraphInfoChip({
+  delay = 0,
+  children,
+}: {
+  delay?: number;
+  children?: React.ReactNode;
+}) {
+  return (
+    <motion.p
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0 }}
+      transition={{ delay, type: "spring", ease: "easeInOut", damping: 12 }}
+      className="rounded-full bg-slate-500 p-2 px-4"
+    >
+      {children}
+    </motion.p>
   );
 }
