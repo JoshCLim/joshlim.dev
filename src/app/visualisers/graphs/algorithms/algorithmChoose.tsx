@@ -2,8 +2,8 @@ import { cn } from "~/app/utils";
 
 import ButtonGroup from "~components/buttonGroup";
 
+import { useGraphContext } from "../graphContext";
 import { type AlgorithmType, algorithms } from "./algorithms";
-import { useGraphContext } from "./graphContext";
 
 export default function AlgorithmChooser() {
   return (

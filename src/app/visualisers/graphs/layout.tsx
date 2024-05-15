@@ -2,7 +2,7 @@ import { type Metadata } from "next";
 
 import dynamic from "next/dynamic";
 
-import AlgorithmContexts from "./algorithmContexts";
+import AlgorithmContexts from "./algorithms/algorithmContexts";
 import GraphContextProvider from "./graphContext";
 
 export const metadata: Metadata = {

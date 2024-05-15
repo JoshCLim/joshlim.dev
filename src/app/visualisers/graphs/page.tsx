@@ -2,10 +2,13 @@
 
 import { cn } from "~/app/utils";
 
-import AlgorithmChooser from "./algorithmChoose";
-import AlgorithmRun from "./algorithmRun";
-import AlgorithmStart from "./algorithmStart";
-import { algorithmStateComponent, algorithmToTitle } from "./algorithms";
+import AlgorithmChooser from "./algorithms/algorithmChoose";
+import AlgorithmRun from "./algorithms/algorithmRun";
+import AlgorithmStart from "./algorithms/algorithmStart";
+import {
+  algorithmStateComponent,
+  algorithmToTitle,
+} from "./algorithms/algorithms";
 import { MAX_VERTICES, useGraphContext } from "./graphContext";
 import GraphEditor from "./graphEditor";
 import GraphSettings from "./graphSettings";

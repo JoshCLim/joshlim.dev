@@ -1,4 +1,4 @@
-import DfsContextProvider from "./dfs/dfsContext";
+import DfsContextProvider from "../dfs/dfsContext";
 
 export default function AlgorithmContexts({
   children,

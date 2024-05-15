@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useRef, useState } from "react";
 
-import { type AlgorithmType } from "./algorithms";
+import { type AlgorithmType } from "./algorithms/algorithms";
 import {
   type Graph,
   graphAddVertex,

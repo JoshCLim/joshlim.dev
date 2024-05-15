@@ -4,8 +4,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { clamp, cn } from "~/app/utils";
 
-import { useDfsContext } from "./dfs/dfsContext";
-import { useGraphContext } from "./graphContext";
+import { useDfsContext } from "../dfs/dfsContext";
+import { useGraphContext } from "../graphContext";
 
 import { motion, useMotionValue, useMotionValueEvent } from "framer-motion";
 import {

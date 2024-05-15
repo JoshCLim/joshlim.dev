@@ -1,8 +1,8 @@
 import { cn } from "~/app/utils";
 
+import { useDfsContext } from "../dfs/dfsContext";
+import { useGraphContext } from "../graphContext";
 import { startingVertexAlgorithms } from "./algorithms";
-import { useDfsContext } from "./dfs/dfsContext";
-import { useGraphContext } from "./graphContext";
 
 import { motion } from "framer-motion";
 
