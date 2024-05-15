@@ -1,7 +1,10 @@
 import { cn } from "~/app/utils";
 
+import { useBfsContext } from "../bfs/bfsContext";
 import { useDfsContext } from "../dfs/dfsContext";
+import { useDijkstraContext } from "../dijkstra/dijkstraContext";
 import { useGraphContext } from "../graphContext";
+import { usePrimsContext } from "../prims/primsContext";
 import { startingVertexAlgorithms } from "./algorithms";
 
 import { motion } from "framer-motion";
@@ -9,21 +12,13 @@ import { motion } from "framer-motion";
 const validVertex = (v: number, nV: number) => !isNaN(v) && v >= 0 && v < nV;
 
 export default function AlgorithmStart() {
-  const {
-    graph,
-    running,
-    setRunning,
-    algorithm,
-
-    bfsStartingVertex,
-    setBfsStartingVertex,
-    dijkstraStartingVertex,
-    setDijkstraStartingVertex,
-    primStartingVertex,
-    setPrimStartingVertex,
-  } = useGraphContext();
+  const { graph, running, setRunning, algorithm } = useGraphContext();
 
   const { dfsStartingVertex, setDfsStartingVertex, dfsInit } = useDfsContext();
+  const { bfsStartingVertex, setBfsStartingVertex } = useBfsContext();
+  const { dijkstraStartingVertex, setDijkstraStartingVertex } =
+    useDijkstraContext();
+  const { primStartingVertex, setPrimStartingVertex } = usePrimsContext();
 
   return (
     <>

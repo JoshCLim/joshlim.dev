@@ -70,16 +70,6 @@ type GraphContextType = {
   // running
   running: boolean;
   setRunning: React.Dispatch<React.SetStateAction<boolean>>;
-
-  // bfs: starting vertex
-  bfsStartingVertex: number;
-  setBfsStartingVertex: React.Dispatch<React.SetStateAction<number>>;
-  // dijkstra's: starting vertex
-  dijkstraStartingVertex: number;
-  setDijkstraStartingVertex: React.Dispatch<React.SetStateAction<number>>;
-  // prims's: starting vertex
-  primStartingVertex: number;
-  setPrimStartingVertex: React.Dispatch<React.SetStateAction<number>>;
 };
 
 // facade pattern
@@ -135,17 +125,6 @@ export default function GraphContextProvider({
   const [running, setRunning] = useLocalStorage<boolean>(
     "graph-running",
     false,
-  );
-
-  const [bfsStartingVertex, setBfsStartingVertex] = useLocalStorage<number>(
-    "bfs-start-vertex",
-    NaN,
-  );
-  const [dijkstraStartingVertex, setDijkstraStartingVertex] =
-    useLocalStorage<number>("dijkstra-start-vertex", NaN);
-  const [primStartingVertex, setPrimStartingVertex] = useLocalStorage<number>(
-    "prim-start-vertex",
-    NaN,
   );
 
   const graphOperations: GraphOperations = {
@@ -220,16 +199,6 @@ export default function GraphContextProvider({
         // running
         running,
         setRunning,
-
-        // bfs: starting vertex
-        bfsStartingVertex,
-        setBfsStartingVertex,
-        // dijkstra's: starting vertex
-        dijkstraStartingVertex,
-        setDijkstraStartingVertex,
-        // prim's: starting vertex
-        primStartingVertex,
-        setPrimStartingVertex,
       }}
     >
       {children}
