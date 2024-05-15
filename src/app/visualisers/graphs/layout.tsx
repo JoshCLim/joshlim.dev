@@ -2,7 +2,7 @@ import { type Metadata } from "next";
 
 import dynamic from "next/dynamic";
 
-import DfsContextProvider from "./graphContext";
+import GraphContextProvider from "./graphContext";
 
 export const metadata: Metadata = {
   title: "Depth First Search | joshlim.dev",
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 function Layout({ children }: { children?: React.ReactNode }) {
-  return <DfsContextProvider>{children}</DfsContextProvider>;
+  return <GraphContextProvider>{children}</GraphContextProvider>;
 }
 
 // disable ssr for the whole page?

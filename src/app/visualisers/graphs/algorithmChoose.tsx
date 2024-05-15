@@ -1,20 +1,19 @@
 import { cn } from "~/app/utils";
 
-import {
-  type AlgorithmType,
-  algorithms,
-  useGraphContext,
-} from "./graphContext";
+import ButtonGroup from "~components/buttonGroup";
+
+import { type AlgorithmType, algorithms } from "./algorithms";
+import { useGraphContext } from "./graphContext";
 
 export default function AlgorithmChooser() {
   return (
     <>
       <h3 className="font-light">Choose an algorithm:</h3>
-      <div className="flex flex-row items-center justify-center overflow-hidden rounded-2xl text-white shadow-sm">
+      <ButtonGroup>
         {algorithms.map((algorithm) => (
           <Button key={algorithm} algorithm={algorithm} />
         ))}
-      </div>
+      </ButtonGroup>
     </>
   );
 }

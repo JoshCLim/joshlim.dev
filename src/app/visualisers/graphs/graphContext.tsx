@@ -8,7 +8,8 @@ import {
   useState,
 } from "react";
 
-import dfsGenerateSteps, { type DfsStep } from "./dfs";
+import { type AlgorithmType } from "./algorithms";
+import { type DfsStep, dfsGenerateSteps } from "./dfs";
 import {
   type Graph,
   graphAddVertex,
@@ -31,15 +32,6 @@ type GraphNodePositionType = {
 type GraphNodePositionsType = (GraphNodePositionType | null)[];
 
 export const MAX_VERTICES = 8;
-
-export const algorithms = [
-  "DFS",
-  "BFS",
-  "Dijkstra's",
-  "Kruskal's",
-  "Prim's",
-] as const;
-export type AlgorithmType = (typeof algorithms)[number];
 
 export const graphRepresentations = [
   "Adjacency Matrix",
@@ -89,6 +81,8 @@ type GraphContextType = {
   // dfs: starting vertex
   dfsStartingVertex: number;
   setDfsStartingVertex: React.Dispatch<React.SetStateAction<number>>;
+  dfsSimple: boolean;
+  setDfsSimple: React.Dispatch<React.SetStateAction<boolean>>;
   dfsInit: () => void;
   dfsSteps: DfsStep[] | null;
   setDfsSteps: React.Dispatch<React.SetStateAction<DfsStep[] | null>>;
@@ -179,6 +173,10 @@ export default function GraphContextProvider({
     NaN,
   );
 
+  const [dfsSimple, setDfsSimple] = useLocalStorage<boolean>(
+    "dfs-simple-mode",
+    false,
+  );
   const [dfsSteps, setDfsSteps] = useLocalStorage<DfsStep[] | null>(
     "dfs-steps",
     null,
@@ -188,9 +186,9 @@ export default function GraphContextProvider({
     0,
   );
   const dfsInit = useCallback(() => {
-    setDfsSteps(dfsGenerateSteps(graph, dfsStartingVertex));
+    setDfsSteps(dfsSimple ? [] : dfsGenerateSteps(graph, dfsStartingVertex));
     setDfsStepIndex(0);
-  }, [dfsStartingVertex, graph, setDfsStepIndex, setDfsSteps]);
+  }, [dfsSimple, dfsStartingVertex, graph, setDfsStepIndex, setDfsSteps]);
   const dfsNext = useCallback(() => {
     setDfsStepIndex((i) => Math.min(i + 1, (dfsSteps?.length ?? 0) - 1));
   }, [dfsSteps, setDfsStepIndex]);
@@ -279,6 +277,8 @@ export default function GraphContextProvider({
         // dfs
         dfsStartingVertex,
         setDfsStartingVertex,
+        dfsSimple,
+        setDfsSimple,
         dfsInit,
         dfsSteps,
         setDfsSteps,

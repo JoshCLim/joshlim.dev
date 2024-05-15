@@ -6,7 +6,7 @@ import { clamp, cn } from "~/app/utils";
 
 import { useGraphContext } from "./graphContext";
 
-import { AnimatePresence, motion, useMotionValue } from "framer-motion";
+import { motion, useMotionValue, useMotionValueEvent } from "framer-motion";
 import {
   FastArrowLeft,
   FastArrowRight,
@@ -94,9 +94,13 @@ export default function AlgorithmRun() {
 }
 
 function RunSlider() {
+  const showStepOfMilliseconds = 1000;
   const sliderRef = useRef<HTMLDivElement>(null);
 
   const [showStepOf, setShowStepOf] = useState(false);
+  const [showStepOfTimeout, setShowStepOfTimeout] =
+    useState<NodeJS.Timeout | null>(null);
+  const [dragging, setDragging] = useState(false);
 
   const { algorithm, dfsStepIndex, dfsSteps, setDfsStepIndex } =
     useGraphContext();
@@ -113,18 +117,40 @@ function RunSlider() {
   }, [dfsStepIndex, dfsSteps, algorithm, x]);
 
   const dfsUpdateStep = useCallback(
-    (x: number) => {
-      const len = dfsSteps?.length ?? 0;
-      setDfsStepIndex(
-        clamp(
-          0,
-          Math.floor((x / (sliderRef.current?.clientWidth ?? Infinity)) * len),
-          len - 1,
-        ),
+    (xVal: number) => {
+      const len = dfsSteps?.length ?? Infinity;
+      const newIndex = clamp(
+        0,
+        Math.floor((xVal / (sliderRef.current?.clientWidth ?? Infinity)) * len),
+        len - 1,
       );
+      setDfsStepIndex(newIndex);
+      x.set((newIndex / len) * (sliderRef.current?.clientWidth ?? 0));
     },
-    [dfsSteps?.length, setDfsStepIndex],
+    [dfsSteps?.length, setDfsStepIndex, x],
   );
+
+  useMotionValueEvent(x, "change", (latest) => {
+    setShowStepOf(true);
+    if (showStepOfTimeout) clearTimeout(showStepOfTimeout);
+    setShowStepOfTimeout(
+      setTimeout(() => setShowStepOf(false), showStepOfMilliseconds),
+    );
+
+    if (!dragging) return;
+
+    const len = dfsSteps?.length ?? Infinity;
+    const newIndex = clamp(
+      0,
+      Math.floor(
+        (latest / (sliderRef.current?.clientWidth ?? Infinity)) *
+          (dfsSteps?.length ?? 0),
+      ),
+      (dfsSteps?.length ?? 0) - 1,
+    );
+    setDfsStepIndex(newIndex);
+    x.set((newIndex / len) * (sliderRef.current?.clientWidth ?? 0));
+  });
 
   // don't render if the steps have not been calculated
   if (!dfsSteps && algorithm === "DFS") return <></>;
@@ -143,8 +169,17 @@ function RunSlider() {
         }
       }}
       ref={sliderRef}
-      onHoverStart={() => setShowStepOf(true)}
-      onHoverEnd={() => setShowStepOf(false)}
+      onHoverStart={() => {
+        setShowStepOf(true);
+        if (showStepOfTimeout) {
+          clearTimeout(showStepOfTimeout);
+        }
+      }}
+      onHoverEnd={() =>
+        setShowStepOfTimeout(
+          setTimeout(() => setShowStepOf(false), showStepOfMilliseconds),
+        )
+      }
     >
       <motion.button
         className="absolute top-[50%] h-5 w-5 cursor-move rounded-full bg-white shadow-lg"
@@ -157,32 +192,23 @@ function RunSlider() {
         dragMomentum={false}
         dragElastic={0}
         whileHover={{ scale: 1.3 }}
-        onDragEnd={() => {
-          switch (algorithm) {
-            case "DFS":
-              dfsUpdateStep(x.get());
-              break;
-          }
-        }}
+        onDragStart={() => setDragging(true)}
+        onDragEnd={() => setDragging(false)}
         onClick={(e) => e.stopPropagation()}
         onTap={(e) => e.stopPropagation()}
       >
-        <AnimatePresence>
-          {showStepOf && (
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute left-[50%] top-[100%] min-w-24 translate-x-[-50%] text-xs text-black"
-            >
-              {dfsSteps && algorithm === "DFS" && (
-                <>
-                  Step {dfsStepIndex + 1} of {dfsSteps.length}
-                </>
-              )}
-            </motion.p>
+        <p
+          className={cn(
+            "absolute left-[50%] top-[100%] min-w-24 translate-x-[-50%] text-xs text-black transition-opacity",
+            showStepOf ? "opacity-100" : "opacity-0",
           )}
-        </AnimatePresence>
+        >
+          {dfsSteps && algorithm === "DFS" && (
+            <>
+              Step {dfsStepIndex + 1} of {dfsSteps.length}
+            </>
+          )}
+        </p>
       </motion.button>
     </motion.div>
   );

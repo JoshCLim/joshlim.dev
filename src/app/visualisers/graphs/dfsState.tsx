@@ -3,7 +3,7 @@
 import usePrevious from "~/app/_hooks/usePrevious";
 import { cn } from "~/app/utils";
 
-import { dfsCode } from "./dfs";
+import dfsCode from "./dfsCode";
 import { useGraphContext } from "./graphContext";
 
 import { motion } from "framer-motion";

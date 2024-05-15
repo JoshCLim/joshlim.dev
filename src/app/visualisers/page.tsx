@@ -28,7 +28,7 @@ const sortingAlgs = [
     name: "bogosort",
     link: "/visualisers/sorting/bogosort",
   },
-];
+] as const;
 
 const treeAlgs = [
   {
@@ -43,7 +43,7 @@ const treeAlgs = [
   //     name: "red-black tree",
   //     link: "/visualisers/trees/redBlackTree",
   //   },
-];
+] as const;
 
 const graphAlgs = [
   {
@@ -66,7 +66,7 @@ const graphAlgs = [
     name: "prim's algorithm",
     link: "/visualisers/graphs",
   },
-];
+] as const;
 
 export default function Page() {
   return (

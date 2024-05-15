@@ -1,15 +1,9 @@
 import { cn } from "~/app/utils";
 
-import { type AlgorithmType, useGraphContext } from "./graphContext";
+import { startingVertexAlgorithms } from "./algorithms";
+import { useGraphContext } from "./graphContext";
 
 import { motion } from "framer-motion";
-
-const startingVertexAlgorithms: AlgorithmType[] = [
-  "DFS",
-  "BFS",
-  "Dijkstra's",
-  "Prim's",
-];
 
 const validVertex = (v: number, nV: number) => !isNaN(v) && v >= 0 && v < nV;
 

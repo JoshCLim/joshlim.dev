@@ -5,12 +5,8 @@ import { cn } from "~/app/utils";
 import AlgorithmChooser from "./algorithmChoose";
 import AlgorithmRun from "./algorithmRun";
 import AlgorithmStart from "./algorithmStart";
-import DfsAlgorithm from "./dfsState";
-import {
-  type AlgorithmType,
-  MAX_VERTICES,
-  useGraphContext,
-} from "./graphContext";
+import { algorithmStateComponent, algorithmToTitle } from "./algorithms";
+import { MAX_VERTICES, useGraphContext } from "./graphContext";
 import GraphEditor from "./graphEditor";
 import GraphSettings from "./graphSettings";
 import GraphWorkspace from "./graphWorkspace";
@@ -19,23 +15,6 @@ import PresetGraphChooser from "./presetGraphs";
 
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
-
-const algorithmToTitle = (algorithm: AlgorithmType | null) => {
-  if (!algorithm) return "select an algorithm...";
-
-  switch (algorithm) {
-    case "DFS":
-      return "depth-first search";
-    case "BFS":
-      return "breadth-first search";
-    case "Dijkstra's":
-      return "Dijkstra's algorithm (shortest path)";
-    case "Kruskal's":
-      return "Kruskal's algorithm (minimum spanning tree)";
-    case "Prim's":
-      return "Prim's algorithm (minimum spanning tree)";
-  }
-};
 
 export default function Page() {
   const { algorithm, running, graph } = useGraphContext();
@@ -118,7 +97,7 @@ export default function Page() {
                 running && "flex-1",
               )}
             >
-              {!running && (
+              {(!running || !algorithm) && (
                 <p className="font-light">
                   Select an algorithm and press{" "}
                   <span className="rounded-2xl bg-green-400 px-4 py-2 text-white">
@@ -127,7 +106,7 @@ export default function Page() {
                   to get started.
                 </p>
               )}
-              {running && algorithm === "DFS" && <DfsAlgorithm />}
+              {running && algorithm && algorithmStateComponent(algorithm)}
             </motion.div>
           </LayoutGroup>
         </Panel>
