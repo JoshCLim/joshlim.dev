@@ -1,4 +1,4 @@
-import { AngleTool, Home, RubikCube } from "iconoir-react";
+import { AngleTool, Home, Rocket, RubikCube } from "iconoir-react";
 
 const allPages = [
   {
@@ -20,6 +20,10 @@ const allPages = [
   {
     href: "/games",
     icon: <RubikCube />,
+  },
+  {
+    href: "/visualisers",
+    icon: <Rocket />,
   },
 ];
 
