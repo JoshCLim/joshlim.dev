@@ -50,12 +50,10 @@ export function graphSetEdge(
     throw new Error(`Invalid edge added between ${u} and ${v}`);
   }
 
-  // @ts-expect-error - not sure why typescript doesnt realise the graph.edges[u] cannot be null
-  graph.edges[u][v] = weight;
+  graph.edges[u]![v] = weight;
 
   if (!graph.directed) {
-    // @ts-expect-error - not sure why typescript doesnt realise the graph.edges[u] cannot be null
-    graph.edges[v][u] = weight;
+    graph.edges[v]![u] = weight;
   }
 
   return graph;
@@ -168,6 +166,11 @@ export function graphMoveHorizontal(
 export function graphSetWeighted(g: Graph, weighted: boolean): Graph {
   const graph = graphCopy(g);
   graph.weighted = weighted;
+  if (!weighted) {
+    graph.edges = graph.edges.map((row) =>
+      row.map((weight) => (weight === 0 ? 0 : 1)),
+    );
+  }
   return graph;
 }
 
