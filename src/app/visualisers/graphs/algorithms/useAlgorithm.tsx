@@ -1,6 +1,8 @@
 import React from "react";
 
+import { bfsEdgeHighlight, bfsVerticesHighlight } from "../bfs/bfs";
 import { useBfsContext } from "../bfs/bfsContext";
+import BfsState from "../bfs/bfsState";
 import { dfsEdgeHighlight, dfsVerticesHighlight } from "../dfs/dfs";
 import { useDfsContext } from "../dfs/dfsContext";
 import DfsState from "../dfs/dfsState";
@@ -8,8 +10,8 @@ import { useDijkstraContext } from "../dijkstra/dijkstraContext";
 import { usePrimsContext } from "../prims/primsContext";
 import {
   NOOP,
-  NOOP_FALSE,
   NOOP_HIGHLIGHT,
+  NOOP_NOT_READY,
   type UseAlgorithmReturnType,
 } from "./algorithmTypes";
 import { type AlgorithmType } from "./algorithmTypes";
@@ -62,21 +64,21 @@ export default function useAlgorithm(): UseAlgorithmReturnType {
 
         title: "breadth-first search",
 
-        stateComponent: null,
+        stateComponent: <BfsState />,
 
-        ready: NOOP_FALSE,
-        init: NOOP,
-        next: NOOP,
-        prev: NOOP,
-        start: NOOP,
-        end: NOOP,
+        ready: bfsContext.bfsReady,
+        init: bfsContext.bfsInit,
+        next: bfsContext.bfsNext,
+        prev: bfsContext.bfsPrev,
+        start: bfsContext.bfsStart,
+        end: bfsContext.bfsEnd,
 
-        verticesHighlight: NOOP_HIGHLIGHT,
-        edgeHighlight: NOOP_HIGHLIGHT,
+        verticesHighlight: bfsVerticesHighlight,
+        edgeHighlight: bfsEdgeHighlight,
 
-        steps: null,
-        stepIndex: 0,
-        setStepIndex: NOOP,
+        steps: bfsContext.bfsSteps,
+        stepIndex: bfsContext.bfsStepIndex,
+        setStepIndex: bfsContext.setBfsStepIndex,
 
         startingVertex: bfsContext.bfsStartingVertex,
         setStartingVertex: bfsContext.setBfsStartingVertex,
@@ -90,7 +92,7 @@ export default function useAlgorithm(): UseAlgorithmReturnType {
 
         stateComponent: null,
 
-        ready: NOOP_FALSE,
+        ready: NOOP_NOT_READY,
         init: NOOP,
         next: NOOP,
         prev: NOOP,
@@ -116,7 +118,7 @@ export default function useAlgorithm(): UseAlgorithmReturnType {
 
         stateComponent: null,
 
-        ready: NOOP_FALSE,
+        ready: NOOP_NOT_READY,
         init: NOOP,
         next: NOOP,
         prev: NOOP,
@@ -139,7 +141,7 @@ export default function useAlgorithm(): UseAlgorithmReturnType {
 
         stateComponent: null,
 
-        ready: NOOP_FALSE,
+        ready: NOOP_NOT_READY,
         init: NOOP,
         next: NOOP,
         prev: NOOP,

@@ -25,9 +25,10 @@ export default function AlgorithmStart() {
             : "bg-green-400 hover:bg-green-500"
         }
         onTap={() => {
-          if (!alg.algorithm) return; // TODO: show error message
+          if (!alg.algorithm) return; // TODO: show error message to choose an algorithm
 
-          if (!alg.ready(graph)) return;
+          const ready = alg.ready(graph);
+          if (ready.res === "error") return; // TODO: show error message in ready.reason
 
           alg.init(graph);
 

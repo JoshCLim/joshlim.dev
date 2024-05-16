@@ -2,6 +2,7 @@
 
 import { createContext, useCallback, useContext } from "react";
 
+import { type AlgorithmReadyReturn } from "../algorithms/algorithmTypes";
 import { type Graph } from "../graph";
 import { validVertex } from "../utils";
 import { type DfsStep, dfsGenerateSteps } from "./dfs";
@@ -14,7 +15,7 @@ type DfsContextType = {
   setDfsStartingVertex: React.Dispatch<React.SetStateAction<number>>;
 
   // function to initialise algorithm
-  dfsReady: (graph: Graph) => boolean;
+  dfsReady: (graph: Graph) => AlgorithmReadyReturn;
   dfsInit: (graph: Graph) => void;
 
   // array of steps
@@ -52,11 +53,14 @@ export default function DfsContextProvider({
     0,
   );
   const dfsReady = useCallback(
-    (graph: Graph) => {
+    (graph: Graph): AlgorithmReadyReturn => {
       if (!validVertex(dfsStartingVertex, graph.nV)) {
-        return false;
+        return {
+          res: "error",
+          reason: "Please select a valid starting vertex",
+        };
       }
-      return true;
+      return { res: "ready" };
     },
     [dfsStartingVertex],
   );
