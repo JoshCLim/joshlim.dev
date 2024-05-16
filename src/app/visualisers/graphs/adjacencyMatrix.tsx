@@ -2,12 +2,17 @@
 
 import { cn } from "~/app/utils";
 
+import useAlgorithm from "./algorithms/useAlgorithm";
 import { useGraphContext } from "./graphContext";
+import { type EdgesHighlight } from "./graphEdge";
+import { type VerticesHighlight } from "./graphNode";
+import { tryOrDefaultFunction } from "./utils";
 
 import { AnimatePresence, motion } from "framer-motion";
 
 export default function AdjacencyMatrix() {
   const { graph } = useGraphContext();
+  const alg = useAlgorithm();
 
   return (
     <>
@@ -29,6 +34,20 @@ export default function AdjacencyMatrix() {
                 </HeaderCell>
                 {graph.positions.map((_, v) => (
                   <HeaderCell
+                    highlight={
+                      alg.algorithm
+                        ? tryOrDefaultFunction(
+                            () =>
+                              alg.verticesHighlight(
+                                graph,
+                                // @ts-expect-error -- rip react
+                                alg.steps[alg.stepIndex]!,
+                                v,
+                              ),
+                            0,
+                          )
+                        : 0
+                    }
                     className="border-b border-slate-900 font-bold"
                     key={v}
                   >
@@ -38,7 +57,23 @@ export default function AdjacencyMatrix() {
               </Row>
               {graph.edges.map((row, u) => (
                 <Row key={u}>
-                  <HeaderCell className="border-r border-slate-900 font-bold">
+                  <HeaderCell
+                    highlight={
+                      alg.algorithm
+                        ? tryOrDefaultFunction(
+                            () =>
+                              alg.verticesHighlight(
+                                graph,
+                                // @ts-expect-error -- rip react
+                                alg.steps[alg.stepIndex]!,
+                                u,
+                              ),
+                            0,
+                          )
+                        : 0
+                    }
+                    className="border-r border-slate-900 font-bold"
+                  >
                     {u}
                   </HeaderCell>
                   {row.map((weight, v) =>
@@ -49,6 +84,21 @@ export default function AdjacencyMatrix() {
                         key={v}
                         weight={weight}
                         disabled={u === v}
+                        highlight={
+                          alg.algorithm
+                            ? tryOrDefaultFunction(
+                                () =>
+                                  alg.edgeHighlight(
+                                    graph,
+                                    // @ts-expect-error -- rip react
+                                    alg.steps[alg.stepIndex]!,
+                                    u,
+                                    v,
+                                  ),
+                                0,
+                              )
+                            : 0
+                        }
                       />
                     ) : (
                       <WeightedCell
@@ -57,6 +107,21 @@ export default function AdjacencyMatrix() {
                         key={v}
                         weight={weight}
                         disabled={u === v}
+                        highlight={
+                          alg.algorithm
+                            ? tryOrDefaultFunction(
+                                () =>
+                                  alg.edgeHighlight(
+                                    graph,
+                                    // @ts-expect-error -- rip react
+                                    alg.steps[alg.stepIndex]!,
+                                    u,
+                                    v,
+                                  ),
+                                0,
+                              )
+                            : 0
+                        }
                       />
                     ),
                   )}
@@ -99,14 +164,18 @@ function Row({ children }: { children?: React.ReactNode }) {
 function HeaderCell({
   children,
   className,
+  highlight = 0,
 }: {
   children?: React.ReactNode;
   className?: string;
+  highlight?: VerticesHighlight;
 }) {
   return (
     <div
       className={cn(
         "flex aspect-square h-12 items-center justify-center",
+        highlight === 1 && "bg-green-200",
+        highlight === 2 && "bg-red-200",
         className,
       )}
     >
@@ -121,12 +190,14 @@ function UnweightedCell({
   u,
   v,
   disabled = false,
+  highlight = 0,
 }: {
   disabled?: boolean;
   weight: number;
   className?: string;
   u: number;
   v: number;
+  highlight?: EdgesHighlight;
 }) {
   const { graphOperations, running, graph } = useGraphContext();
 
@@ -142,6 +213,7 @@ function UnweightedCell({
           u > v &&
           "cursor-not-allowed bg-gray-50 text-gray-500 hover:bg-gray-50",
         running && "cursor-not-allowed",
+        highlight === 1 && "bg-yellow-200",
         className,
       )}
       value={weight}
@@ -161,12 +233,14 @@ function WeightedCell({
   u,
   v,
   disabled = false,
+  highlight = 0,
 }: {
   disabled?: boolean;
   weight: number;
   className?: string;
   u: number;
   v: number;
+  highlight?: EdgesHighlight;
 }) {
   const { graphOperations, running, setEnableKeyboardArrows, graph } =
     useGraphContext();
@@ -183,6 +257,7 @@ function WeightedCell({
           u > v &&
           "cursor-not-allowed bg-gray-50 text-gray-500 hover:bg-gray-50",
         running && "cursor-not-allowed",
+        highlight === 1 && "bg-yellow-200",
         className,
       )}
       value={weight}
