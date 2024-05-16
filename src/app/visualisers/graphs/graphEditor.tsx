@@ -2,6 +2,7 @@
 
 import { cn } from "~/app/utils";
 
+import AdjacencyList from "./adjacencyList";
 import AdjacencyMatrix from "./adjacencyMatrix";
 import {
   type GraphRepresentationType,
@@ -28,6 +29,7 @@ export default function GraphEditor() {
           </div>
         </motion.div>
         {graphRep === "Adjacency Matrix" && <AdjacencyMatrix />}
+        {graphRep === "Adjacency List" && <AdjacencyList />}
       </LayoutGroup>
     </motion.div>
   );
