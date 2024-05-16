@@ -14,8 +14,14 @@ import { tryOrDefaultFunction } from "./utils";
 import { AnimatePresence, motion } from "framer-motion";
 
 export default function GraphWorkspace() {
-  const { graph, graphOperations, canvasRef, graphNodePositions, running } =
-    useGraphContext();
+  const {
+    graph,
+    graphOperations,
+    canvasRef,
+    graphNodePositions,
+    running,
+    enableKeyboardArrows,
+  } = useGraphContext();
   const alg = useAlgorithm();
 
   // whether a node is being dragged. prevents click-to-create-new-node from firing when dragging
@@ -33,21 +39,23 @@ export default function GraphWorkspace() {
       ) {
         graphOperations.removeVertex(selected);
         setSelected(null);
-      } else if (e.key === "ArrowUp") {
-        graphOperations.moveUp();
-      } else if (e.key === "ArrowDown") {
-        graphOperations.moveDown();
-      } else if (e.key === "ArrowLeft") {
-        graphOperations.moveLeft();
-      } else if (e.key === "ArrowRight") {
-        graphOperations.moveRight();
+      } else if (enableKeyboardArrows) {
+        if (e.key === "ArrowUp") {
+          graphOperations.moveUp();
+        } else if (e.key === "ArrowDown") {
+          graphOperations.moveDown();
+        } else if (e.key === "ArrowLeft") {
+          graphOperations.moveLeft();
+        } else if (e.key === "ArrowRight") {
+          graphOperations.moveRight();
+        }
       }
     };
 
     document.addEventListener("keydown", handleKeyDown);
 
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [graphOperations, running, selected]);
+  }, [enableKeyboardArrows, graphOperations, running, selected]);
 
   // calculate total weight of edges
   const totalWeight = useMemo(

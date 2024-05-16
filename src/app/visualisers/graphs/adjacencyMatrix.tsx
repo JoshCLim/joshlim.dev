@@ -40,22 +40,51 @@ export default function AdjacencyMatrix() {
                 <HeaderCell className="border-r border-slate-900 font-bold">
                   {u}
                 </HeaderCell>
-                {row.map(
-                  (weight, v) =>
-                    !graph.weighted && (
-                      <UnweightedCell
-                        u={u}
-                        v={v}
-                        key={v}
-                        weight={weight}
-                        disabled={u === v}
-                      />
-                    ),
+                {row.map((weight, v) =>
+                  !graph.weighted ? (
+                    <UnweightedCell
+                      u={u}
+                      v={v}
+                      key={v}
+                      weight={weight}
+                      disabled={u === v}
+                    />
+                  ) : (
+                    <WeightedCell
+                      u={u}
+                      v={v}
+                      key={v}
+                      weight={weight}
+                      disabled={u === v}
+                    />
+                  ),
                 )}
               </Row>
             ))}
           </div>
         </motion.div>
+      )}
+      {!graph.weighted ? (
+        <motion.p
+          layout
+          key="unweighted-adj-matrix-instruction"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-balance italic text-slate-500"
+        >
+          Click a the matrix cell to toggle the edge.
+        </motion.p>
+      ) : (
+        <motion.p
+          layout
+          key="weighted-adj-matrix-instruction"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-balance italic text-slate-500"
+        >
+          Click on a cell and type or use the up/down arrows to adjust the
+          weight.
+        </motion.p>
       )}
     </AnimatePresence>
   );
@@ -114,9 +143,49 @@ function UnweightedCell({
       readOnly={true}
       onClick={() => {
         if (disabled || running) return;
-        if (weight === 0) graphOperations.addEdge(u, v);
+        if (weight === 0) graphOperations.addEdge(u, v, 1);
         else graphOperations.removeEdge(u, v);
       }}
+    />
+  );
+}
+
+function WeightedCell({
+  weight,
+  className,
+  u,
+  v,
+  disabled = false,
+}: {
+  disabled?: boolean;
+  weight: number;
+  className?: string;
+  u: number;
+  v: number;
+}) {
+  const { graphOperations, running, setEnableKeyboardArrows } =
+    useGraphContext();
+
+  return (
+    <input
+      type="number"
+      disabled={disabled || running}
+      className={cn(
+        "flex aspect-square h-12 cursor-pointer items-center justify-center text-center outline-none transition-colors hover:bg-gray-100",
+        disabled &&
+          "cursor-not-allowed bg-gray-200 text-gray-500 hover:bg-gray-200",
+        running && "cursor-not-allowed",
+        className,
+      )}
+      value={weight}
+      onChange={(e) => {
+        if (disabled || running) return;
+        const newWeight = parseInt(e.target.value);
+        if (isNaN(newWeight) || newWeight < 0) return;
+        graphOperations.addEdge(u, v, newWeight);
+      }}
+      onFocus={() => setEnableKeyboardArrows(false)}
+      onBlur={() => setEnableKeyboardArrows(true)}
     />
   );
 }

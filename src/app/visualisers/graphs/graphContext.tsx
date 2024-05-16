@@ -58,9 +58,9 @@ type GraphContextType = {
     React.SetStateAction<GraphNodePositionsType>
   >;
 
-  // algorithm
-  // algorithm: AlgorithmType | null;
-  // setAlgorithm: React.Dispatch<React.SetStateAction<AlgorithmType | null>>;
+  // enable keyboard
+  enableKeyboardArrows: boolean;
+  setEnableKeyboardArrows: React.Dispatch<React.SetStateAction<boolean>>;
 
   // graph representation
   graphRep: GraphRepresentationType;
@@ -81,7 +81,7 @@ type GraphOperations = {
   // add/remove a vertex
   removeVertex: (v: number) => void;
   // add/remove an edge between two vertices
-  addEdge: (u: number, v: number) => void;
+  addEdge: (u: number, v: number, weight: number) => void;
   removeEdge: (u: number, v: number) => void;
   // modify the x and y position of a vertex
   setVertexPosition: (v: number, x: number, y: number) => void;
@@ -114,10 +114,8 @@ export default function GraphContextProvider({
   const [graphNodePositions, setGraphNodePositions] =
     useState<GraphNodePositionsType>(Array(graph.nV).fill(null));
 
-  // const [algorithm, setAlgorithm] = useLocalStorage<AlgorithmType | null>(
-  //   "graph-algorithm-type",
-  //   null,
-  // );
+  const [enableKeyboardArrows, setEnableKeyboardArrows] =
+    useState<boolean>(true);
 
   const [graphRep, setGraphRep] = useLocalStorage<GraphRepresentationType>(
     "graph-representation",
@@ -135,8 +133,8 @@ export default function GraphContextProvider({
     addVertex: (x: number, y: number) =>
       setGraph((g) => graphAddVertex(g, x, y)),
     removeVertex: (v: number) => setGraph((g) => graphRemoveVertex(g, v)),
-    addEdge: (u: number, v: number) =>
-      setGraph((g) => graphSetEdge(g, u, v, true)),
+    addEdge: (u: number, v: number, weight: number) =>
+      setGraph((g) => graphSetEdge(g, u, v, weight)),
     removeEdge: (u: number, v: number) =>
       setGraph((g) => graphSetEdge(g, u, v, false)),
     setVertexPosition: (v: number, x: number, y: number) =>
@@ -194,9 +192,9 @@ export default function GraphContextProvider({
         // node positions
         graphNodePositions,
         setGraphNodePositions,
-        // algorithm
-        // algorithm,
-        // setAlgorithm,
+        // enable keyboard
+        enableKeyboardArrows,
+        setEnableKeyboardArrows,
         // graph representation
         graphRep,
         setGraphRep,
