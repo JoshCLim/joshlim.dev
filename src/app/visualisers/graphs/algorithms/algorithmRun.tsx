@@ -4,6 +4,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { clamp, cn } from "~/app/utils";
 
+import useWindowSize from "~hooks/useWindowSize";
+
 import { type UseAlgorithmNotNull } from "./algorithmTypes";
 import useAlgorithm from "./useAlgorithm";
 
@@ -18,6 +20,8 @@ import {
 } from "iconoir-react";
 
 export default function AlgorithmRun() {
+  const windowSize = useWindowSize();
+
   const alg = useAlgorithm();
 
   const advanceAlgorithmInterval = useRef<NodeJS.Timeout | null>(null);
@@ -58,7 +62,10 @@ export default function AlgorithmRun() {
   if (!alg.algorithm) return <></>;
 
   return (
-    <motion.div layout className="space-y-5 py-10">
+    <motion.div
+      layout
+      className="flex flex-col items-center gap-5 rounded-2xl border border-slate-300 px-10 py-8"
+    >
       <motion.div
         layout
         transition={{ duration: 0.1, damping: 20, stiffness: 150 }}
@@ -129,7 +136,9 @@ export default function AlgorithmRun() {
           <FastArrowRight />
         </motion.button>
       </motion.div>
-      {alg.steps && <RunSlider alg={alg} />}
+      {alg.steps && (
+        <RunSlider key={`run-slider-${windowSize.width}`} alg={alg} />
+      )}
     </motion.div>
   );
 }
@@ -236,7 +245,7 @@ function RunSlider({ alg }: { alg: UseAlgorithmNotNull }) {
 
   return (
     <motion.div
-      className="relative h-2 w-full cursor-pointer rounded-full bg-slate-800"
+      className="relative mx-auto h-2 w-[90%] cursor-pointer rounded-full bg-slate-800"
       onClick={(e) => {
         algUpdateStep(
           e.clientX -
