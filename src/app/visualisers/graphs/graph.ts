@@ -165,17 +165,35 @@ export function graphMoveHorizontal(
 
 export function graphSetWeighted(g: Graph, weighted: boolean): Graph {
   const graph = graphCopy(g);
+
   graph.weighted = weighted;
+
   if (!weighted) {
     graph.edges = graph.edges.map((row) =>
       row.map((weight) => (weight === 0 ? 0 : 1)),
     );
   }
+
   return graph;
 }
 
 export function graphSetDirected(g: Graph, directed: boolean): Graph {
   const graph = graphCopy(g);
+
   graph.directed = directed;
+
+  if (!directed) {
+    for (let u = 0; u < graph.nV; u++) {
+      for (let v = u + 1; v < graph.nV; v++) {
+        if (graph.edges[u]![v] !== graph.edges[v]![u]) {
+          graph.edges[u]![v] = graph.edges[v]![u] = Math.max(
+            graph.edges[u]![v]!,
+            graph.edges[v]![u]!,
+          );
+        }
+      }
+    }
+  }
+
   return graph;
 }
