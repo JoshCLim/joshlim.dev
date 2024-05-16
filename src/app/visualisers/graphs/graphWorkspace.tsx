@@ -159,6 +159,9 @@ export default function GraphWorkspace() {
                             )
                           : 0
                       }
+                      curved={
+                        false // TODO: graph.directed && graph.edges[v]![u] !== 0
+                      }
                     />
                   ),
               ),

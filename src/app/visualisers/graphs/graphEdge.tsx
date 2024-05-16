@@ -21,6 +21,7 @@ export default function GraphEdge({
   uPos,
   vPos,
   highlight,
+  curved = false,
 }: {
   u: number;
   v: number;
@@ -28,6 +29,7 @@ export default function GraphEdge({
   uPos: { x: MotionValue<number>; y: MotionValue<number> };
   vPos: { x: MotionValue<number>; y: MotionValue<number> };
   highlight?: EdgesHighlight;
+  curved?: boolean;
 }) {
   const { graph } = useGraphContext();
 
@@ -60,23 +62,27 @@ export default function GraphEdge({
         y: uY,
         rotate: angle,
         width: length,
-        transformOrigin: "0 0",
+        transformOrigin: "center left",
       }}
       className={cn(
         "absolute left-0 top-0 -z-20 flex h-[2px] items-center justify-center bg-slate-400 text-blue-600",
         highlight === 1 && "bg-amber-500",
+        curved &&
+          "h-[10px] rounded-[10px/50%] border-b-2 border-slate-400 bg-transparent",
       )}
     >
       <AnimatePresence>
         {graph.weighted && (
           <>
             <motion.div
+              key="weight-bg"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="absolute left-[50%] top-[50%] -z-10 h-[150%] w-5 translate-x-[-50%] translate-y-[-50%] bg-slate-50"
             ></motion.div>
             <motion.span
+              key="weight"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -91,18 +97,20 @@ export default function GraphEdge({
         {graph.directed && (
           <>
             <motion.div
+              key={`${u}-${v}-arrowhead-1`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute left-[75%] top-[100%] h-[1px] w-4 rotate-[150deg] bg-slate-400"
-              style={{ transformOrigin: "0 0" }}
+              className="absolute left-[75%] top-[100%] h-[2px] w-4 rotate-[150deg] bg-slate-400"
+              style={{ transformOrigin: "top left" }}
             ></motion.div>
             <motion.div
+              key={`${u}-${v}-arrowhead-2`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute left-[75%] top-[100%] h-[1px] w-4 rotate-[-150deg] bg-slate-400"
-              style={{ transformOrigin: "0 0" }}
+              className="absolute left-[75%] top-[100%] h-[2px] w-4 rotate-[-150deg] bg-slate-400"
+              style={{ transformOrigin: "top left" }}
             ></motion.div>
           </>
         )}
