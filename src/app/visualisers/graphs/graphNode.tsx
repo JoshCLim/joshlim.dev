@@ -4,6 +4,8 @@ import { useEffect, useMemo } from "react";
 
 import { clamp, cn } from "~/app/utils";
 
+import useWindowSize from "~hooks/useWindowSize";
+
 import { useGraphContext } from "./graphContext";
 
 import { type MotionValue, motion, useSpring } from "framer-motion";
@@ -24,6 +26,8 @@ export default function GraphNode({
   setDragging: React.Dispatch<React.SetStateAction<number | null>>;
   v: number;
 }) {
+  const windowSize = useWindowSize();
+
   const { graph, graphOperations, canvasRef, setGraphNodePositions } =
     useGraphContext();
 
@@ -55,6 +59,7 @@ export default function GraphNode({
 
   return (
     <motion.div
+      key={`${v}-${windowSize.width}-${windowSize.height}`} // force re-render on window resize
       drag
       dragConstraints={canvasRef}
       dragMomentum={false}
