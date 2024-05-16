@@ -217,10 +217,11 @@ export function dfsVerticesHighlight(
  * what colour to highlight an edge (u,v) based on the current step
  */
 export function dfsEdgeHighlight(
-  _: Graph,
+  graph: Graph,
   step: DfsStep,
   u: number,
   v: number,
 ): EdgesHighlight {
-  return pairMatch(step.vertexV, step.vertexU, v, u) ? 1 : 0;
+  if (graph.directed) return step.vertexV === u && step.vertexU === v ? 1 : 0;
+  else return pairMatch(step.vertexV, step.vertexU, v, u) ? 1 : 0;
 }

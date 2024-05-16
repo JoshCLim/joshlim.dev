@@ -225,10 +225,11 @@ export function bfsVerticesHighlight(
  * what colour to highlight an edge (u,v) based on the current step
  */
 export function bfsEdgeHighlight(
-  _: Graph,
+  graph: Graph,
   step: BfsStep,
   u: number,
   v: number,
 ): EdgesHighlight {
-  return pairMatch(step.vertexV, step.vertexU, v, u) ? 1 : 0;
+  if (graph.directed) return step.vertexV === u && step.vertexU === v ? 1 : 0;
+  else return pairMatch(step.vertexV, step.vertexU, v, u) ? 1 : 0;
 }
