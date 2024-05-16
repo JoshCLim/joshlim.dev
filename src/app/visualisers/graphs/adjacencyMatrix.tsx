@@ -74,7 +74,7 @@ export default function AdjacencyMatrix() {
           animate={{ opacity: 1 }}
           className="min-h-16 text-balance text-slate-500"
         >
-          Click a the matrix cell to toggle the edge.
+          Click on a matrix cell to toggle the edge.
         </motion.p>
       ) : (
         <motion.p
