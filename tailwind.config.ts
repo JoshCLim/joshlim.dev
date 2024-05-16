@@ -122,6 +122,7 @@ export default {
       },
       zIndex: {
         infinity: "999999",
+        subinfinity: "999998",
       },
     },
   },

@@ -11,7 +11,7 @@ import { tryOrDefaultFunction } from "./utils";
 import { AnimatePresence, motion } from "framer-motion";
 
 export default function AdjacencyMatrix() {
-  const { graph } = useGraphContext();
+  const { graph, running } = useGraphContext();
   const alg = useAlgorithm();
 
   return (
@@ -131,27 +131,31 @@ export default function AdjacencyMatrix() {
           </motion.div>
         )}
       </AnimatePresence>
-      {!graph.weighted ? (
-        <motion.p
-          layout
-          key="unweighted-instruction"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="min-h-16 text-balance text-slate-500"
-        >
-          Click on a matrix cell to toggle the edge.
-        </motion.p>
-      ) : (
-        <motion.p
-          layout
-          key="weighted-instruction"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="min-h-16 text-balance text-slate-500"
-        >
-          Click on a cell and type or use the up/down arrows to adjust the
-          weight.
-        </motion.p>
+      {!running && (
+        <>
+          {!graph.weighted ? (
+            <motion.p
+              layout
+              key="unweighted-instruction"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="min-h-16 text-balance text-slate-500"
+            >
+              Click on a matrix cell to toggle the edge.
+            </motion.p>
+          ) : (
+            <motion.p
+              layout
+              key="weighted-instruction"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="min-h-16 text-balance text-slate-500"
+            >
+              Click on a cell and type or use the up/down arrows to adjust the
+              weight.
+            </motion.p>
+          )}
+        </>
       )}
     </>
   );
@@ -173,7 +177,7 @@ function HeaderCell({
   return (
     <div
       className={cn(
-        "flex aspect-square h-12 items-center justify-center",
+        "flex aspect-square h-10 items-center justify-center 2xl:h-12",
         highlight === 1 && "bg-green-200",
         highlight === 2 && "bg-red-200",
         className,
@@ -206,7 +210,7 @@ function UnweightedCell({
       type="number"
       disabled={disabled || running || (!graph.directed && u > v)}
       className={cn(
-        "flex aspect-square h-12 cursor-pointer items-center justify-center text-center outline-none transition-colors hover:bg-gray-100",
+        "flex aspect-square h-10 cursor-pointer items-center justify-center text-center outline-none transition-colors hover:bg-gray-100 2xl:h-12",
         disabled &&
           "cursor-not-allowed bg-gray-200 text-gray-500 hover:bg-gray-200",
         !graph.directed &&
@@ -250,7 +254,7 @@ function WeightedCell({
       type="number"
       disabled={disabled || running || (!graph.directed && u > v)}
       className={cn(
-        "flex aspect-square h-12 cursor-text items-center justify-center text-center outline-none transition-colors hover:bg-gray-100",
+        "flex aspect-square h-10 cursor-text items-center justify-center text-center outline-none transition-colors hover:bg-gray-100 2xl:h-12",
         disabled &&
           "cursor-not-allowed bg-gray-200 text-gray-500 hover:bg-gray-200",
         !graph.directed &&

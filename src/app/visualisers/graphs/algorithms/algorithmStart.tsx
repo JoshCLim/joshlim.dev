@@ -13,12 +13,8 @@ export default function AlgorithmStart() {
 
   return (
     <>
-      <motion.div
-        layout
-        className="flex flex-col items-center justify-center gap-10 py-5 text-black"
-      >
-        <AlgorithmSetStartVertex />
-      </motion.div>
+      <AlgorithmSetStartVertex />
+
       <div className="flex flex-col items-center gap-3">
         {!!runError && (
           <p className="text-balance px-10 text-center text-red-500">

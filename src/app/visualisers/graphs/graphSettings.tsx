@@ -13,9 +13,9 @@ export default function GraphSettings() {
   return (
     <motion.div
       layout
-      className="flex flex-col items-center justify-center gap-3 p-3"
+      className="flex flex-col items-center justify-center gap-3 rounded-2xl border border-slate-300 px-10 py-8"
     >
-      <h3 className="font-light text-black">Graph settings:</h3>
+      <h3 className="font-light text-black">Graph Settings</h3>
       <ButtonGroup>
         <button
           disabled={running}

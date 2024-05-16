@@ -50,14 +50,14 @@ export default function PresetGraphChooser() {
     <motion.div
       ref={presetChooserRef}
       key="adj-matrix"
-      className="fixed right-0 top-16 z-infinity aspect-square text-slate-800"
+      className="fixed right-0 top-16 z-subinfinity aspect-square text-slate-800"
       initial={{ x: "130%" }}
       animate={{ x: running ? "200%" : graphPreset.show ? "40px" : "100%" }}
       exit={{ x: "130%" }}
       transition={{ duration: 0.5, ease: "easeOut", type: "spring" }}
     >
       <button
-        className="absolute left-0 top-12 z-infinity translate-x-[-100%] rounded-l-2xl border-b border-l border-t border-black bg-gray-50 px-2 py-5 shadow-2xl transition-colors hover:bg-gray-200"
+        className="absolute left-0 top-12 z-subinfinity translate-x-[-100%] rounded-l-2xl border-b border-l border-t border-black bg-gray-50 px-2 py-5 shadow-2xl transition-colors hover:bg-gray-200"
         onClick={() => graphPreset.setShow((prev) => !prev)}
         title="Edit Graph Edges"
       >

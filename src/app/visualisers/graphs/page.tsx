@@ -1,5 +1,9 @@
 "use client";
 
+import Link from "next/link";
+
+import { useState } from "react";
+
 import { cn } from "~/app/utils";
 
 import AlgorithmChooser from "./algorithms/algorithmChoose";
@@ -22,11 +26,12 @@ export default function Page() {
 
   return (
     <>
+      <LazyResponsiveCover />
       <PageNavbar />
       <PresetGraphChooser />
       <PanelGroup direction="horizontal" className="w-screen flex-grow">
         <Panel
-          defaultSize={40}
+          defaultSize={30}
           minSize={20}
           className="flex min-h-screen flex-col border-r border-black bg-slate-50"
         >
@@ -41,7 +46,7 @@ export default function Page() {
               <motion.h3
                 key="algorithm-title"
                 layout="position"
-                className="text-lg font-light"
+                className="text-2xl font-light"
               >
                 {alg.title}
               </motion.h3>
@@ -84,7 +89,7 @@ export default function Page() {
               <GraphEditor />
               <motion.div
                 layout
-                className="flex flex-1 flex-col items-center justify-around"
+                className="flex flex-1 flex-col justify-center gap-10 pe-10"
               >
                 <GraphSettings />
                 <AlgorithmStart />
@@ -113,5 +118,31 @@ export default function Page() {
         </Panel>
       </PanelGroup>
     </>
+  );
+}
+
+function LazyResponsiveCover() {
+  const [forceShow, setForceShow] = useState(false);
+
+  if (forceShow) return <></>;
+
+  return (
+    <div
+      className={cn(
+        "fixed top-0 z-infinity flex h-screen w-screen flex-col items-center justify-center gap-3 bg-white text-black xl:hidden",
+      )}
+    >
+      <p className="w-[50%] min-w-72 text-balance text-center">
+        Unfortunately, right now, this visualiser requires your screen/window to
+        be at least 1280px wide (otherwise it looks odd). I promise I&apos;m
+        working on it...
+      </p>
+      <Link href="/visualisers" className="underline">
+        go back
+      </Link>
+      <button className="underline" onClick={() => setForceShow(true)}>
+        bruh I don&apos;t care, show me anyway
+      </button>
+    </div>
   );
 }
