@@ -21,7 +21,6 @@ export default function GraphEditor() {
     >
       <LayoutGroup>
         <motion.div layout className="flex flex-col items-center gap-3">
-          <h3 className="font-light">Choose a graph representation:</h3>
           <div className="flex flex-row items-center justify-center overflow-hidden rounded-2xl text-white shadow-sm">
             {graphRepresentations.map((representation) => (
               <Button key={representation} graphRep={representation} />

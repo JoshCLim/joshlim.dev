@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "~/app/utils";
 
 import ButtonGroup from "~components/buttonGroup";
@@ -8,14 +10,14 @@ import useAlgorithm from "./useAlgorithm";
 
 export default function AlgorithmChooser() {
   return (
-    <>
-      <h3 className="font-light">Choose an algorithm:</h3>
+    <div className="flex flex-row items-center gap-3">
+      <p className="text-slate-800">Choose an algorithm:</p>
       <ButtonGroup>
         {algorithms.map((algorithm) => (
           <Button key={algorithm} algorithm={algorithm} />
         ))}
       </ButtonGroup>
-    </>
+    </div>
   );
 }
 

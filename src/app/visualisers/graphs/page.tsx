@@ -71,7 +71,7 @@ export default function Page() {
             {!running && (
               <motion.div
                 layout
-                className="flex flex-col items-center justify-center gap-3 border-b border-black bg-slate-100 p-5 text-center text-black"
+                className="flex items-center justify-center border-b border-black bg-slate-100 p-5 text-center text-black"
               >
                 <AlgorithmChooser />
               </motion.div>
