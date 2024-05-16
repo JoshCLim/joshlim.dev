@@ -2,7 +2,7 @@ import { graphClampPositions, graphNew, graphRearrange } from "./graph";
 import { useGraphContext } from "./graphContext";
 import ToolbarButton from "./toolbarButton";
 
-import { Box, PathArrow, Trash } from "iconoir-react";
+import { FrameAltEmpty, PathArrow, Trash } from "iconoir-react";
 
 export default function Toolbar() {
   const { canvasRef, graphOperations, running } = useGraphContext();
@@ -21,7 +21,7 @@ export default function Toolbar() {
           )
         }
       >
-        <Box />
+        <FrameAltEmpty />
       </ToolbarButton>
       <ToolbarButton
         className="bg-[#acd4de]"
