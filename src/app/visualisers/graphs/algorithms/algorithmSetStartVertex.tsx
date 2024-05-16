@@ -29,11 +29,7 @@ export default function AlgorithmSetStartVertex() {
             "min-w-0 rounded-full border border-black bg-transparent bg-white px-4 py-2 text-center outline-transparent transition-all focus:outline-slate-950",
             running && "bg-slate-500 text-white",
           )}
-          value={
-            alg.startingVertex && !isNaN(alg.startingVertex)
-              ? alg.startingVertex
-              : ""
-          }
+          value={!isNaN(alg.startingVertex) ? alg.startingVertex : ""}
           onChange={(e) => {
             alg.setStartingVertex(parseInt(e.target.value));
             setRunError(null);
