@@ -10,83 +10,85 @@ export default function AdjacencyMatrix() {
   const { graph } = useGraphContext();
 
   return (
-    <AnimatePresence>
-      {graph.nV > 1 && (
-        <motion.div
-          key="adj-matrix"
-          className="relative aspect-square text-slate-800"
-          layout
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0 }}
-          style={{ transformOrigin: "top center" }}
-        >
-          <div className="overflow-hidden rounded-2xl border border-black bg-gray-50 ">
-            <Row>
-              <HeaderCell className="border-b border-r border-black text-center text-xs">
-                Adj Matrix
-              </HeaderCell>
-              {graph.positions.map((_, v) => (
-                <HeaderCell
-                  className="border-b border-slate-900 font-bold"
-                  key={v}
-                >
-                  {v}
+    <>
+      <AnimatePresence>
+        {graph.nV > 1 && (
+          <motion.div
+            key="adj-matrix"
+            className="relative aspect-square text-slate-800"
+            layout
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0 }}
+            style={{ transformOrigin: "top center" }}
+          >
+            <div className="overflow-hidden rounded-2xl border border-black bg-gray-50 ">
+              <Row>
+                <HeaderCell className="border-b border-r border-black text-center text-xs">
+                  Adj Matrix
                 </HeaderCell>
-              ))}
-            </Row>
-            {graph.edges.map((row, u) => (
-              <Row key={u}>
-                <HeaderCell className="border-r border-slate-900 font-bold">
-                  {u}
-                </HeaderCell>
-                {row.map((weight, v) =>
-                  !graph.weighted ? (
-                    <UnweightedCell
-                      u={u}
-                      v={v}
-                      key={v}
-                      weight={weight}
-                      disabled={u === v}
-                    />
-                  ) : (
-                    <WeightedCell
-                      u={u}
-                      v={v}
-                      key={v}
-                      weight={weight}
-                      disabled={u === v}
-                    />
-                  ),
-                )}
+                {graph.positions.map((_, v) => (
+                  <HeaderCell
+                    className="border-b border-slate-900 font-bold"
+                    key={v}
+                  >
+                    {v}
+                  </HeaderCell>
+                ))}
               </Row>
-            ))}
-          </div>
-        </motion.div>
-      )}
+              {graph.edges.map((row, u) => (
+                <Row key={u}>
+                  <HeaderCell className="border-r border-slate-900 font-bold">
+                    {u}
+                  </HeaderCell>
+                  {row.map((weight, v) =>
+                    !graph.weighted ? (
+                      <UnweightedCell
+                        u={u}
+                        v={v}
+                        key={v}
+                        weight={weight}
+                        disabled={u === v}
+                      />
+                    ) : (
+                      <WeightedCell
+                        u={u}
+                        v={v}
+                        key={v}
+                        weight={weight}
+                        disabled={u === v}
+                      />
+                    ),
+                  )}
+                </Row>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       {!graph.weighted ? (
         <motion.p
           layout
-          key="unweighted-adj-matrix-instruction"
+          key="unweighted-instruction"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="text-balance italic text-slate-500"
+          className="min-h-16 text-balance text-slate-500"
         >
           Click a the matrix cell to toggle the edge.
         </motion.p>
       ) : (
         <motion.p
           layout
-          key="weighted-adj-matrix-instruction"
+          key="weighted-instruction"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="text-balance italic text-slate-500"
+          className="min-h-16 text-balance text-slate-500"
         >
           Click on a cell and type or use the up/down arrows to adjust the
           weight.
         </motion.p>
       )}
-    </AnimatePresence>
+    </>
   );
 }
 
@@ -126,16 +128,19 @@ function UnweightedCell({
   u: number;
   v: number;
 }) {
-  const { graphOperations, running } = useGraphContext();
+  const { graphOperations, running, graph } = useGraphContext();
 
   return (
     <input
       type="number"
-      disabled={disabled || running}
+      disabled={disabled || running || (!graph.directed && u > v)}
       className={cn(
         "flex aspect-square h-12 cursor-pointer items-center justify-center text-center outline-none transition-colors hover:bg-gray-100",
         disabled &&
           "cursor-not-allowed bg-gray-200 text-gray-500 hover:bg-gray-200",
+        !graph.directed &&
+          u > v &&
+          "cursor-not-allowed bg-gray-50 text-gray-500 hover:bg-gray-50",
         running && "cursor-not-allowed",
         className,
       )}
@@ -163,17 +168,20 @@ function WeightedCell({
   u: number;
   v: number;
 }) {
-  const { graphOperations, running, setEnableKeyboardArrows } =
+  const { graphOperations, running, setEnableKeyboardArrows, graph } =
     useGraphContext();
 
   return (
     <input
       type="number"
-      disabled={disabled || running}
+      disabled={disabled || running || (!graph.directed && u > v)}
       className={cn(
-        "flex aspect-square h-12 cursor-pointer items-center justify-center text-center outline-none transition-colors hover:bg-gray-100",
+        "flex aspect-square h-12 cursor-text items-center justify-center text-center outline-none transition-colors hover:bg-gray-100",
         disabled &&
           "cursor-not-allowed bg-gray-200 text-gray-500 hover:bg-gray-200",
+        !graph.directed &&
+          u > v &&
+          "cursor-not-allowed bg-gray-50 text-gray-500 hover:bg-gray-50",
         running && "cursor-not-allowed",
         className,
       )}
