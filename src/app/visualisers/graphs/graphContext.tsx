@@ -69,6 +69,9 @@ type GraphContextType = {
   // running
   running: boolean;
   setRunning: React.Dispatch<React.SetStateAction<boolean>>;
+
+  runError: string | null;
+  setRunError: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
 // facade pattern
@@ -125,6 +128,8 @@ export default function GraphContextProvider({
     "graph-running",
     false,
   );
+
+  const [runError, setRunError] = useState<string | null>(null);
 
   const graphOperations: GraphOperations = {
     addVertex: (x: number, y: number) =>
@@ -198,6 +203,9 @@ export default function GraphContextProvider({
         // running
         running,
         setRunning,
+        // run error
+        runError,
+        setRunError,
       }}
     >
       {children}

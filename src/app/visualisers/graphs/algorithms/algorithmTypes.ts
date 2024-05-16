@@ -107,7 +107,7 @@ export const NOOP_HIGHLIGHT: () => 0 = () => 0;
 // function that just returns false
 export const NOOP_NOT_READY: () => AlgorithmReadyReturn = () => ({
   res: "error",
-  reason: "algorithm not implemented",
+  reason: "Algorithm not implemented. Please wait for a future update.",
 });
 
 // final type to group all non-null algorithm types

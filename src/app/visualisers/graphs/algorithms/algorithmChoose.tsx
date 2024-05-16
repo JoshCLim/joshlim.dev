@@ -2,6 +2,7 @@ import { cn } from "~/app/utils";
 
 import ButtonGroup from "~components/buttonGroup";
 
+import { useGraphContext } from "../graphContext";
 import { type AlgorithmType, algorithms } from "./algorithmTypes";
 import useAlgorithm from "./useAlgorithm";
 
@@ -19,6 +20,7 @@ export default function AlgorithmChooser() {
 }
 
 function Button({ algorithm }: { algorithm: AlgorithmType }) {
+  const { setRunError } = useGraphContext();
   const { algorithm: globalAlgorithm, setAlgorithm } = useAlgorithm();
 
   return (
@@ -30,6 +32,8 @@ function Button({ algorithm }: { algorithm: AlgorithmType }) {
       onClick={() => {
         if (algorithm === globalAlgorithm) setAlgorithm(null);
         else setAlgorithm(algorithm);
+
+        setRunError(null);
       }}
     >
       {algorithm}

@@ -57,7 +57,7 @@ export default function DfsContextProvider({
       if (!validVertex(dfsStartingVertex, graph.nV)) {
         return {
           res: "error",
-          reason: "Please select a valid starting vertex",
+          reason: "Please select a valid starting vertex.",
         };
       }
       return { res: "ready" };

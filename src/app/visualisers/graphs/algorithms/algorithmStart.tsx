@@ -7,7 +7,8 @@ import useAlgorithm from "./useAlgorithm";
 import { motion } from "framer-motion";
 
 export default function AlgorithmStart() {
-  const { graph, running, setRunning } = useGraphContext();
+  const { graph, running, setRunning, runError, setRunError } =
+    useGraphContext();
   const alg = useAlgorithm();
 
   return (
@@ -18,25 +19,37 @@ export default function AlgorithmStart() {
       >
         <AlgorithmSetStartVertex />
       </motion.div>
-      <Button
-        className={
-          running
-            ? "bg-amber-400 hover:bg-amber-500"
-            : "bg-green-400 hover:bg-green-500"
-        }
-        onTap={() => {
-          if (!alg.algorithm) return; // TODO: show error message to choose an algorithm
+      <div className="flex flex-col items-center gap-3">
+        {!!runError && (
+          <p className="max-w-48 text-center text-red-500">{runError}</p>
+        )}
+        <Button
+          className={
+            running
+              ? "bg-amber-400 hover:bg-amber-500"
+              : "bg-green-400 hover:bg-green-500"
+          }
+          onTap={() => {
+            if (!alg.algorithm) {
+              setRunError("Please choose an algorithm.");
+              return;
+            }
 
-          const ready = alg.ready(graph);
-          if (ready.res === "error") return; // TODO: show error message in ready.reason
+            const ready = alg.ready(graph);
+            if (ready.res === "error") {
+              setRunError(ready.reason);
+              return;
+            }
 
-          alg.init(graph);
+            alg.init(graph);
 
-          setRunning((prev) => !prev);
-        }}
-      >
-        {running ? <span>Running...</span> : <span>Run</span>}
-      </Button>
+            setRunning((prev) => !prev);
+            setRunError(null);
+          }}
+        >
+          {running ? <span>Running...</span> : <span>Run</span>}
+        </Button>
+      </div>
     </>
   );
 }

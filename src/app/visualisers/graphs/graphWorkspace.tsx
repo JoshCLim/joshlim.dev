@@ -9,6 +9,7 @@ import { MAX_VERTICES, useGraphContext } from "./graphContext";
 import GraphEdge from "./graphEdge";
 import GraphNode from "./graphNode";
 import Toolbar from "./toolbar";
+import { tryOrDefaultFunction } from "./utils";
 
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -25,7 +26,6 @@ export default function GraphWorkspace() {
   // handle keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      console.log(e.key);
       if (
         !running &&
         (e.key === "Backspace" || e.key === "Delete") &&
@@ -114,11 +114,15 @@ export default function GraphWorkspace() {
                 setSelected={setSelected}
                 highlight={
                   alg.algorithm && alg.steps
-                    ? alg.verticesHighlight(
-                        graph,
-                        // @ts-expect-error -- typescript too dumb to understand generics
-                        alg.steps[alg.stepIndex],
-                        v,
+                    ? tryOrDefaultFunction(
+                        () =>
+                          alg.verticesHighlight(
+                            graph,
+                            // @ts-expect-error -- rip react
+                            alg.steps[alg.stepIndex],
+                            v,
+                          ),
+                        0,
                       )
                     : 0
                 }
@@ -142,12 +146,16 @@ export default function GraphWorkspace() {
                       vPos={graphNodePositions[v]!}
                       highlight={
                         alg.algorithm && alg.steps
-                          ? alg.edgeHighlight(
-                              graph,
-                              // @ts-expect-error -- typescript too dumb to understand generics idk
-                              alg.steps[alg.stepIndex]!,
-                              u,
-                              v,
+                          ? tryOrDefaultFunction(
+                              () =>
+                                alg.edgeHighlight(
+                                  graph,
+                                  // @ts-expect-error -- rip react
+                                  alg.steps[alg.stepIndex]!,
+                                  u,
+                                  v,
+                                ),
+                              0,
                             )
                           : 0
                       }
