@@ -199,7 +199,7 @@ function GraphInfoChip({
       initial={{ opacity: 0, scale: 0 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0 }}
-      transition={{ delay, type: "spring", ease: "easeInOut", damping: 12 }}
+      transition={{ delay, type: "spring", ease: "easeInOut", damping: 15 }}
       className="rounded-full bg-slate-500 p-2 px-4"
     >
       {children}
