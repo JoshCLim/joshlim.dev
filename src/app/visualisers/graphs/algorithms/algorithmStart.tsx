@@ -21,7 +21,9 @@ export default function AlgorithmStart() {
       </motion.div>
       <div className="flex flex-col items-center gap-3">
         {!!runError && (
-          <p className="max-w-48 text-center text-red-500">{runError}</p>
+          <p className="text-balance px-10 text-center text-red-500">
+            {runError}
+          </p>
         )}
         <Button
           className={
