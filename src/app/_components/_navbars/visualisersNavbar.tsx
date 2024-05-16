@@ -27,48 +27,62 @@ export default function NavbarVisualisers({
   console.log(windowSize);
 
   return (
-    <motion.nav
-      drag={locked ? false : "x"}
-      dragConstraints={{
-        left: 0,
-        right: windowSize.width - (navRef.current?.offsetWidth ?? 0),
-      }}
-      whileDrag={{ cursor: "grabbing", backgroundColor: "#eeeeeeaa" }}
-      className="fixed left-0 top-0 z-50 flex h-screen max-w-56 flex-col items-start justify-start bg-white font-light text-black shadow-2xl"
-      ref={navRef}
-    >
-      <IconoirProvider iconProps={{ strokeWidth: 1 }}>
-        {allPages.map((page) => (
-          <NavLink
-            key={page.href}
-            href={page.href}
-            icon={page.icon}
-            highlight={page.href === `/${currPage}`}
-          />
-        ))}
-      </IconoirProvider>
-      {/* <h1 className="flex flex-grow flex-col justify-center text-wrap px-7 pb-24 text-center text-2xl">
+    <>
+      <motion.nav className="flex flex-row flex-wrap justify-stretch bg-[#eeeeeeaa] font-light text-black shadow-2xl sm:hidden">
+        <IconoirProvider iconProps={{ strokeWidth: 1 }}>
+          {allPages.map((page) => (
+            <NavLink
+              key={page.href}
+              href={page.href}
+              icon={page.icon}
+              highlight={page.href === `/${currPage}`}
+            />
+          ))}
+        </IconoirProvider>
+      </motion.nav>
+      <motion.nav
+        drag={locked ? false : "x"}
+        dragConstraints={{
+          left: 0,
+          right: windowSize.width - (navRef.current?.offsetWidth ?? 0),
+        }}
+        whileDrag={{ cursor: "grabbing", backgroundColor: "#eeeeeeaa" }}
+        className="fixed left-0 top-0 z-50 hidden h-screen max-w-56 flex-col items-start justify-start bg-white font-light text-black shadow-2xl sm:flex"
+        ref={navRef}
+      >
+        <IconoirProvider iconProps={{ strokeWidth: 1 }}>
+          {allPages.map((page) => (
+            <NavLink
+              key={page.href}
+              href={page.href}
+              icon={page.icon}
+              highlight={page.href === `/${currPage}`}
+            />
+          ))}
+        </IconoirProvider>
+        {/* <h1 className="flex flex-grow flex-col justify-center text-wrap px-7 pb-24 text-center text-2xl">
         Visualising Data Structures + Algorithms
       </h1> */}
-      {showUnlock && (
-        <button
-          className="absolute bottom-0 left-0 right-0 flex w-full items-center justify-center p-7"
-          onClick={() => setLocked((prev) => !prev)}
-        >
-          <AnimatePresence>
-            {locked ? (
-              <LockAnimationWrapper key={"lock"}>
-                <Lock />
-              </LockAnimationWrapper>
-            ) : (
-              <LockAnimationWrapper key={"unlock"}>
-                <LockSlash />
-              </LockAnimationWrapper>
-            )}
-          </AnimatePresence>
-        </button>
-      )}
-    </motion.nav>
+        {showUnlock && (
+          <button
+            className="absolute bottom-0 left-0 right-0 flex w-full items-center justify-center p-7"
+            onClick={() => setLocked((prev) => !prev)}
+          >
+            <AnimatePresence>
+              {locked ? (
+                <LockAnimationWrapper key={"lock"}>
+                  <Lock />
+                </LockAnimationWrapper>
+              ) : (
+                <LockAnimationWrapper key={"unlock"}>
+                  <LockSlash />
+                </LockAnimationWrapper>
+              )}
+            </AnimatePresence>
+          </button>
+        )}
+      </motion.nav>
+    </>
   );
 }
 
@@ -84,7 +98,7 @@ function NavLink({
   return (
     <Link
       className={cn(
-        "group flex w-full flex-row gap-3 p-8 pe-16",
+        "group flex flex-grow flex-row gap-3 px-5 py-3 sm:w-full sm:flex-grow-0 sm:p-8 sm:pe-16",
         highlight && "shadow-[inset_0_-2px_9px_rgba(0,0,0,0.1)] brightness-90",
       )}
       href={href}

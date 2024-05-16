@@ -146,7 +146,7 @@ function Section({
   return (
     <section
       className={cn(
-        "flex flex-grow flex-col justify-center gap-7 p-10 px-16 text-right",
+        "flex flex-grow flex-col justify-center gap-7 p-5 py-2 text-right sm:p-10 sm:px-16",
         className,
       )}
     >
@@ -165,7 +165,7 @@ function Subsection({
   return (
     <div
       className={cn(
-        "flex flex-row flex-wrap justify-end gap-x-10 gap-y-5 ps-52",
+        "flex flex-row flex-wrap justify-end gap-x-10 gap-y-5 sm:ps-52",
         className,
       )}
     >
@@ -187,7 +187,7 @@ function VisualiserLink({
     <Link
       href={hide ? "#" : link}
       className={cn(
-        "text-2xl font-[200] transition-all hover:underline",
+        "text-xl font-[200] transition-all hover:underline sm:text-2xl",
         hide && "blur-sm",
       )}
     >
@@ -197,5 +197,5 @@ function VisualiserLink({
 }
 
 function Heading3({ children }: { children?: React.ReactNode }) {
-  return <h3 className={"text-3xl font-light"}>{children}</h3>;
+  return <h3 className={"text-2xl font-light sm:text-3xl"}>{children}</h3>;
 }
