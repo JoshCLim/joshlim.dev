@@ -48,6 +48,11 @@ export default function AlgorithmRun() {
       if (advanceAlgorithmInterval.current)
         clearTimeout(advanceAlgorithmInterval.current);
     }
+
+    return () => {
+      if (advanceAlgorithmInterval.current)
+        clearTimeout(advanceAlgorithmInterval.current);
+    };
   }, [play, playDelay, playTimeoutCb]);
 
   if (!alg.algorithm) return <></>;
