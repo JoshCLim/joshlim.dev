@@ -19,3 +19,9 @@ export function CodeType({ children }: { children?: React.ReactNode }) {
 export function CodeNumber({ children }: { children?: React.ReactNode }) {
   return <span className="text-pink-300">{children}</span>;
 }
+export function CodeOther({ children }: { children?: React.ReactNode }) {
+  return <span className="text-purple-300">{children}</span>;
+}
+export function CodeOther2({ children }: { children?: React.ReactNode }) {
+  return <span className="text-orange-300">{children}</span>;
+}

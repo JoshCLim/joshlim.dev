@@ -18,6 +18,7 @@ export const algorithms = [
 ] as const;
 export type AlgorithmType = (typeof algorithms)[number];
 
+// null algorithm type
 type UseAlgorithmReturnNull = {
   algorithm: null;
   setAlgorithm: React.Dispatch<React.SetStateAction<AlgorithmType | null>>;
@@ -25,10 +26,12 @@ type UseAlgorithmReturnNull = {
   title: string;
 };
 
+// return type for the alg.ready function
 export type AlgorithmReadyReturn =
   | { res: "ready" }
   | { res: "error"; reason: string };
 
+// generic algorithm type that must be implemented for each algorithm
 type UseAlgorithmReturnAlg<T extends AlgorithmType, StepType, OtherType> = {
   algorithm: T;
   setAlgorithm: React.Dispatch<React.SetStateAction<AlgorithmType | null>>;
@@ -68,12 +71,11 @@ type UseAlgorithmReturnAlg<T extends AlgorithmType, StepType, OtherType> = {
 // 2. a list of algorithms that require that extra information
 // 3. the type representing the return type for useAlgorithm with that extra information
 
-// algorithms with a starting vertex required
+// a) algorithms with a starting vertex required
 type AlgorithmStartVertex = {
   startingVertex: number;
   setStartingVertex: React.Dispatch<React.SetStateAction<number>>;
 };
-// which algorithms require a starting vertex
 export const startingVertexAlgorithms = [
   "DFS",
   "BFS",
@@ -86,7 +88,7 @@ export type UseAlgorithmStartVertex =
   | UseAlgorithmReturnAlg<"Dijkstra's", DijkstraStep, AlgorithmStartVertex>
   | UseAlgorithmReturnAlg<"Prim's", PrimsStep, AlgorithmStartVertex>;
 
-// algorithms with no other information needed
+// b) algorithms with no other information needed
 type AlgorithmEmpty = Record<never, unknown>;
 export const emptyAlgorithms = [
   "Kruskal's",
