@@ -29,9 +29,9 @@ export default function GraphWorkspace() {
   // currently selected node
   const [selected, setSelected] = useState<number | null>(null);
 
-  useEffect(() => {
-    console.log(JSON.stringify(graph));
-  }, [graph]);
+  // useEffect(() => {
+  //   console.log(JSON.stringify(graph));
+  // }, [graph]);
 
   // handle keyboard shortcuts
   useEffect(() => {

@@ -22,8 +22,6 @@ export default function DijkstraState() {
     stepIndex: dijkstraStepIndex,
   } = alg;
 
-  console.log(dijkstraSteps[dijkstraStepIndex]!);
-
   return (
     <div className="flex flex-grow flex-row gap-10">
       <motion.div

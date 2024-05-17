@@ -24,8 +24,6 @@ export default function NavbarVisualisers({
   const windowSize = useWindowSize();
   const [locked, setLocked] = useState<boolean>(true);
 
-  console.log(windowSize);
-
   return (
     <>
       <motion.nav className="flex flex-row flex-wrap justify-stretch bg-[#eeeeeeaa] font-light text-black shadow-2xl sm:hidden">

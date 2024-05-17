@@ -158,8 +158,7 @@ function PlayDelaySlider({
 
   useMotionValueEvent(y, "change", (latest) => {
     if (!sliderRef.current) return;
-    console.log(latest, sliderRef.current.clientHeight);
-    console.log(latest / sliderRef.current.clientHeight);
+
     setPlayDelay(
       2000 * Math.pow(latest / sliderRef.current.clientHeight, 3) + 100,
     );
