@@ -9,7 +9,7 @@ import useAlgorithm from "./useAlgorithm";
 import { motion } from "framer-motion";
 
 export default function AlgorithmSetStartVertex() {
-  const { running, setRunError } = useGraphContext();
+  const { running, setRunError, setEnableKeyboardArrows } = useGraphContext();
   const alg = useAlgorithm();
 
   if (running || !alg.algorithm || !isStartingVertexAlgorithm(alg))
@@ -34,6 +34,8 @@ export default function AlgorithmSetStartVertex() {
             alg.setStartingVertex(parseInt(e.target.value));
             setRunError(null);
           }}
+          onFocus={() => setEnableKeyboardArrows(false)}
+          onBlur={() => setEnableKeyboardArrows(true)}
         />
       </form>
     </motion.div>
