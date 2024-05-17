@@ -29,9 +29,15 @@ export default function GraphWorkspace() {
   // currently selected node
   const [selected, setSelected] = useState<number | null>(null);
 
+  useEffect(() => {
+    console.log(JSON.stringify(graph));
+  }, [graph]);
+
   // handle keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (!enableKeyboardArrows) return;
+
       if (
         !running &&
         (e.key === "Backspace" || e.key === "Delete") &&
@@ -39,16 +45,14 @@ export default function GraphWorkspace() {
       ) {
         graphOperations.removeVertex(selected);
         setSelected(null);
-      } else if (enableKeyboardArrows) {
-        if (e.key === "ArrowUp") {
-          graphOperations.moveUp();
-        } else if (e.key === "ArrowDown") {
-          graphOperations.moveDown();
-        } else if (e.key === "ArrowLeft") {
-          graphOperations.moveLeft();
-        } else if (e.key === "ArrowRight") {
-          graphOperations.moveRight();
-        }
+      } else if (e.key === "ArrowUp") {
+        graphOperations.moveUp();
+      } else if (e.key === "ArrowDown") {
+        graphOperations.moveDown();
+      } else if (e.key === "ArrowLeft") {
+        graphOperations.moveLeft();
+      } else if (e.key === "ArrowRight") {
+        graphOperations.moveRight();
       }
     };
 
