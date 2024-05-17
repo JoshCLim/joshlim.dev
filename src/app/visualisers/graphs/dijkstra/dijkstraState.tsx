@@ -1,6 +1,5 @@
 "use client";
 
-import usePrevious from "~/app/_hooks/usePrevious";
 import { cn } from "~/app/utils";
 
 import dijkstraCode from "./dijkstraCode";
@@ -71,13 +70,33 @@ export default function DijkstraState() {
           <div className="flex flex-row border-b border-r border-black">
             <RowHeader>dist</RowHeader>
             {dijkstraSteps[dijkstraStepIndex]!.dist.map((dist, v) => (
-              <DistCell dist={dist} v={v} key={v} />
+              <DistCell
+                dist={dist}
+                v={v}
+                key={v}
+                highlight={
+                  dijkstraStepIndex > 0
+                    ? dijkstraSteps[dijkstraStepIndex - 1]!.dist[v] !==
+                      dijkstraSteps[dijkstraStepIndex]!.dist[v]
+                    : false
+                }
+              />
             ))}
           </div>
           <div className="flex flex-row border-b border-r border-black">
             <RowHeader>pred</RowHeader>
             {dijkstraSteps[dijkstraStepIndex]!.pred.map((pred, v) => (
-              <PredCell pred={pred} v={v} key={v} />
+              <PredCell
+                pred={pred}
+                v={v}
+                key={v}
+                highlight={
+                  dijkstraStepIndex > 0
+                    ? dijkstraSteps[dijkstraStepIndex - 1]!.pred[v] !==
+                      dijkstraSteps[dijkstraStepIndex]!.pred[v]
+                    : false
+                }
+              />
             ))}
           </div>
         </div>
@@ -142,16 +161,22 @@ function Code({
   );
 }
 
-function PredCell({ pred, v }: { pred: number; v: number }) {
-  const prevPred = usePrevious(pred);
-
+function PredCell({
+  pred,
+  v,
+  highlight = false,
+}: {
+  pred: number;
+  v: number;
+  highlight?: boolean;
+}) {
   return (
     <div
       className={cn(
         "flex aspect-square h-10 items-center justify-center transition-all",
         v % 2 === 1 && "bg-slate-200",
-        pred !== prevPred && v % 2 === 1 && "bg-red-300",
-        pred !== prevPred && v % 2 === 0 && "bg-red-200",
+        highlight && v % 2 === 1 && "bg-red-300",
+        highlight && v % 2 === 0 && "bg-red-200",
       )}
     >
       {pred}
@@ -159,16 +184,22 @@ function PredCell({ pred, v }: { pred: number; v: number }) {
   );
 }
 
-function DistCell({ dist, v }: { dist: number | null; v: number }) {
-  const prevDist = usePrevious(dist);
-
+function DistCell({
+  dist,
+  v,
+  highlight = false,
+}: {
+  dist: number | null;
+  v: number;
+  highlight?: boolean;
+}) {
   return (
     <div
       className={cn(
         "flex aspect-square h-10 items-center justify-center transition-all",
         v % 2 === 0 && "bg-slate-200",
-        dist !== prevDist && v % 2 === 0 && "bg-red-300",
-        dist !== prevDist && v % 2 === 1 && "bg-red-200",
+        highlight && v % 2 === 0 && "bg-red-300",
+        highlight && v % 2 === 1 && "bg-red-200",
       )}
     >
       {dist ?? <Infinite width="18" strokeWidth={2} />}
