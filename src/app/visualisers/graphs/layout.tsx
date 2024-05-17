@@ -6,8 +6,8 @@ import AlgorithmContexts from "./algorithms/algorithmContexts";
 import GraphContextProvider from "./graphContext";
 
 export const metadata: Metadata = {
-  title: "Depth First Search | joshlim.dev",
-  description: "Depth First Search",
+  title: "Graph Algorithm Visualisers | joshlim.dev",
+  description: "Graph Algorithm Visualisers",
   icons: [{ rel: "icon", url: "/pingu.jpg" }],
 };
 
