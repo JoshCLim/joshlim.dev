@@ -75,14 +75,14 @@ export default function GraphEdge({
         {graph.weighted && (
           <>
             <motion.div
-              key="weight-bg"
+              key={`${u}-${v}-weight-bg`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="absolute left-[50%] top-[50%] -z-10 h-[150%] w-5 translate-x-[-50%] translate-y-[-50%] bg-slate-50"
             ></motion.div>
             <motion.span
-              key="weight"
+              key={`${u}-${v}-weight`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -94,6 +94,8 @@ export default function GraphEdge({
             </motion.span>
           </>
         )}
+      </AnimatePresence>
+      <AnimatePresence>
         {graph.directed && (
           <>
             <motion.div
