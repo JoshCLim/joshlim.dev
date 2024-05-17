@@ -31,6 +31,8 @@ export const graphRepresentations = [
 ] as const;
 export type GraphRepresentationType = (typeof graphRepresentations)[number];
 
+export type GraphPresetType = { name: string; graph: Graph };
+
 type GraphContextType = {
   // immutable graph state
   graph: Graph;
@@ -57,6 +59,10 @@ type GraphContextType = {
   setGraphNodePositions: React.Dispatch<
     React.SetStateAction<GraphNodePositionsType>
   >;
+
+  // user preset graphs
+  graphPresets: GraphPresetType[];
+  setGraphPresets: React.Dispatch<React.SetStateAction<GraphPresetType[]>>;
 
   // enable keyboard
   enableKeyboardArrows: boolean;
@@ -113,6 +119,11 @@ export default function GraphContextProvider({
 
   const [graphNodePositions, setGraphNodePositions] =
     useState<GraphNodePositionsType>(Array(graph.nV).fill(null));
+
+  const [graphPresets, setGraphPresets] = useLocalStorage<GraphPresetType[]>(
+    "graph-presets",
+    [],
+  );
 
   const [enableKeyboardArrows, setEnableKeyboardArrows] =
     useState<boolean>(true);
@@ -192,6 +203,9 @@ export default function GraphContextProvider({
         // node positions
         graphNodePositions,
         setGraphNodePositions,
+        // user presets
+        graphPresets,
+        setGraphPresets,
         // enable keyboard
         enableKeyboardArrows,
         setEnableKeyboardArrows,

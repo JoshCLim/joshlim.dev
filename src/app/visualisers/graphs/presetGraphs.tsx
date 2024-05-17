@@ -1,14 +1,16 @@
 "use client";
 
 import useClickAway from "~/app/_hooks/useClickAway";
+import { cn } from "~/app/utils";
 
-import { type Graph } from "./graph";
-import { useGraphContext } from "./graphContext";
+import Divider from "~components/divider";
+
+import { type GraphPresetType, useGraphContext } from "./graphContext";
 
 import { motion } from "framer-motion";
-import { CurveArray, FastArrowRight } from "iconoir-react";
+import { CurveArray, FastArrowRight, Trash } from "iconoir-react";
 
-const presets: { name: string; graph: Graph }[] = [
+const presets = [
   {
     name: "comp2521-wk7-tut",
     graph: {
@@ -37,10 +39,45 @@ const presets: { name: string; graph: Graph }[] = [
       ],
     },
   },
-];
+  {
+    name: "comp2521-wk8-tut-dijkstra",
+    graph: {
+      nV: 8,
+      edges: [
+        [0, 5, 4, 6, 0, 0, 0, 0],
+        [5, 0, 8, 0, 0, 2, 7, 0],
+        [4, 8, 0, 1, 3, 7, 0, 0],
+        [6, 0, 1, 0, 6, 0, 0, 0],
+        [0, 0, 3, 6, 0, 3, 0, 8],
+        [0, 2, 7, 0, 3, 0, 3, 6],
+        [0, 7, 0, 0, 0, 3, 0, 5],
+        [0, 0, 0, 0, 8, 6, 5, 0],
+      ],
+      positions: [
+        { x: 44.28028091775902, y: 79.7421875 },
+        { x: 213.171875, y: 52.0859375 },
+        { x: 144.42578125, y: 214.7109375 },
+        { x: 46.94140625, y: 364.5390625 },
+        { x: 231.3203125, y: 351.7890625 },
+        { x: 325.6953125, y: 183.58203125 },
+        { x: 424.81640625, y: 73.86328125 },
+        { x: 420.44140625, y: 374.06640625 },
+      ],
+      directed: false,
+      weighted: true,
+    },
+  },
+] as const satisfies GraphPresetType[];
 
 export default function PresetGraphChooser() {
-  const { graphOperations, graphPreset, running } = useGraphContext();
+  const {
+    graph,
+    graphOperations,
+    graphPreset,
+    running,
+    graphPresets,
+    setGraphPresets,
+  } = useGraphContext();
 
   const presetChooserRef = useClickAway<HTMLDivElement>(() =>
     graphPreset.setShow(false),
@@ -70,33 +107,93 @@ export default function PresetGraphChooser() {
       <div className="overflow-hidden rounded-l-2xl border-b border-l border-t border-black bg-gray-50 pe-10 shadow-2xl">
         <div className="space-y-3 p-3 px-5">
           <h3 className="text-right text-xl font-light">Preset Graphs</h3>
-          <div className="space-y-3">
+          <div className="flex flex-col gap-3">
             {presets.map(({ name, graph }) => (
-              <motion.button
+              <PresetButton
                 key={name}
-                whileHover={{
-                  scale: 1.05,
-                  transition: { damping: 2, stiffness: 120 },
-                }}
-                whileTap={{
-                  scale: 0.9,
-                  transition: { damping: 2, stiffness: 120 },
-                }}
                 onTap={() => {
                   graphOperations.setGraph(graph);
                   graphPreset.setShow(false);
                 }}
-                className="rounded-md bg-yellow-200 p-2 px-4 text-gray-700 shadow-sm transition-[filter] hover:shadow-none hover:brightness-95"
-              >
-                {name}
-              </motion.button>
+                name={name}
+              />
             ))}
-            <p className="text-center italic text-slate-500">
+            {/* <p className="text-center italic text-slate-500">
               More coming soon!
-            </p>
+            </p> */}
+          </div>
+          <div className="flex flex-col items-center">
+            <Divider colour="black" />
+          </div>
+          <div className="flex flex-col gap-3">
+            <motion.button
+              className="rounded-md bg-purple-200 p-2 px-4 text-gray-700 shadow-sm transition-[filter] hover:shadow-none hover:brightness-95"
+              onTap={() =>
+                setGraphPresets((prev) => [
+                  ...prev,
+                  { name: `preset-${prev.length}`, graph },
+                ])
+              }
+            >
+              Save Current Graph
+            </motion.button>
+            {graphPresets.map(({ name, graph }, i) => (
+              <div key={name} className="flex flex-row gap-2">
+                <PresetButton
+                  onTap={() => {
+                    graphOperations.setGraph(graph);
+                    graphPreset.setShow(false);
+                  }}
+                  name={name}
+                  className="flex-grow bg-violet-200 text-gray-700"
+                />
+                <button
+                  className="rounded-md bg-red-400 px-3 transition-colors hover:bg-red-500"
+                  onClick={() => {
+                    setGraphPresets((prev) => {
+                      const newPresets = [...prev];
+                      newPresets.splice(i, 1);
+                      return newPresets;
+                    });
+                  }}
+                >
+                  <Trash color="#fff" />
+                </button>
+              </div>
+            ))}
           </div>
         </div>
       </div>
     </motion.div>
+  );
+}
+
+function PresetButton({
+  onTap,
+  className,
+  name,
+}: {
+  onTap: () => void;
+  className?: string;
+  name: string;
+}) {
+  return (
+    <motion.button
+      whileHover={{
+        scale: 1.05,
+        transition: { damping: 2, stiffness: 120 },
+      }}
+      whileTap={{
+        scale: 0.9,
+        transition: { damping: 2, stiffness: 120 },
+      }}
+      onTap={onTap}
+      className={cn(
+        "rounded-md bg-yellow-200 p-2 px-4 text-gray-700 shadow-sm transition-[filter] hover:shadow-none hover:brightness-95",
+        className,
+      )}
+    >
+      {name}
+    </motion.button>
   );
 }
