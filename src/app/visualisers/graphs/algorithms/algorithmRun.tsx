@@ -98,7 +98,12 @@ export default function AlgorithmRun() {
         <motion.button
           layout
           transition={{ duration: 0.1, damping: 20, stiffness: 150 }}
-          className="flex flex-row gap-1 bg-green-500 px-5 py-3 text-lg transition-colors hover:bg-green-600"
+          className={cn(
+            "flex flex-row gap-1 bg-green-500 px-5 py-3 text-lg transition-colors hover:bg-green-600",
+            alg.steps &&
+              alg.stepIndex >= alg.steps.length - 1 &&
+              "cursor-not-allowed bg-gray-400 hover:bg-gray-400",
+          )}
           onClick={() => {
             if (!alg.steps) return;
             if (alg.stepIndex >= alg.steps.length - 1) return;
