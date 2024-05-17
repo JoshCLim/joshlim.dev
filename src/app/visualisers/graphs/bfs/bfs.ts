@@ -40,7 +40,6 @@ export function bfsGenerateSteps(
 
   // each case has the logic for the next line in the algorithm
   while (res[stepNum]!.lineNumber != bfsCode.length - 1) {
-    console.log(res[stepNum]!.lineNumber);
     switch (res[stepNum]!.lineNumber) {
       case 0:
         res.push(

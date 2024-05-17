@@ -128,7 +128,7 @@ function Code({
   line: number;
 }) {
   return (
-    <div className="flex flex-row items-center gap-2">
+    <div className="flex flex-row items-center gap-2 whitespace-nowrap">
       <code className="block w-4 text-right font-mono">{line}</code>
       <code
         className={cn(
