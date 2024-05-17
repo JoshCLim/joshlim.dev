@@ -68,7 +68,7 @@ export default function Page() {
         </Panel>
         <PanelResizeHandle />
         <Panel
-          defaultSize={60}
+          defaultSize={70}
           minSize={60}
           className="flex min-h-screen flex-col"
         >
