@@ -101,7 +101,10 @@ export default function GraphEdge({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute left-[75%] top-[100%] h-[2px] w-4 rotate-[150deg] bg-slate-400"
+              className={cn(
+                "absolute left-[75%] top-[100%] h-[2px] w-4 rotate-[150deg] bg-slate-400",
+                highlight === 1 && "bg-amber-500",
+              )}
               style={{ transformOrigin: "top left" }}
             ></motion.div>
             <motion.div
@@ -109,7 +112,10 @@ export default function GraphEdge({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute left-[75%] top-[100%] h-[2px] w-4 rotate-[-150deg] bg-slate-400"
+              className={cn(
+                "absolute left-[75%] top-[100%] h-[2px] w-4 rotate-[-150deg] bg-slate-400",
+                highlight === 1 && "bg-amber-500",
+              )}
               style={{ transformOrigin: "top left" }}
             ></motion.div>
           </>
