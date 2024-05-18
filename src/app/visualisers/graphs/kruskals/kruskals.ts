@@ -50,11 +50,14 @@ export function kruskalGenerateSteps(graph: Graph): KruskalsStep[] {
         step.lineNumber = 5;
         step.mstEdges[step.uncheckedEdge![0]]![step.uncheckedEdge![1]] =
           step.uncheckedEdge![2];
+        step.mstEdges[step.uncheckedEdge![1]]![step.uncheckedEdge![0]] =
+          step.uncheckedEdge![2];
         break;
       case 5:
         if (kruskalHasCycle(step.mstEdges)) {
           step.lineNumber = 6;
           step.mstEdges[step.uncheckedEdge![0]]![step.uncheckedEdge![1]] = 0;
+          step.mstEdges[step.uncheckedEdge![1]]![step.uncheckedEdge![0]] = 0;
         } else {
           step.lineNumber = 7;
           step.mstNumEdges++;
@@ -97,7 +100,7 @@ function kruskalHasCycle(mstEdges: number[][]): boolean {
 
   for (let i = 0; i < nV; i++) {
     const visited = arrayCreate(nV, false);
-    if (!visited[i] && graphHasCycle(mstEdges, i, i, visited)) {
+    if (graphHasCycle(mstEdges, i, i, visited)) {
       return true;
     }
   }
