@@ -29,11 +29,11 @@ export default function KruskalContextProvider({
   children?: React.ReactNode;
 }) {
   const [steps, setSteps] = useLocalStorage<KruskalsStep[] | null>(
-    "dijkstra-steps",
+    "kruskal-steps",
     null,
   );
   const [stepIndex, setStepIndex] = useLocalStorage<number>(
-    "dijkstra-step-index",
+    "kruskal-step-index",
     0,
   );
 
