@@ -11,7 +11,7 @@ import {
   useTransform,
 } from "framer-motion";
 
-const edgesHighlights = [0, 1] as const;
+const edgesHighlights = [0, 1, 2, 3] as const;
 export type EdgesHighlight = (typeof edgesHighlights)[number];
 
 export default function GraphEdge({
@@ -67,6 +67,8 @@ export default function GraphEdge({
       className={cn(
         "absolute left-0 top-0 -z-20 flex h-[2px] items-center justify-center bg-slate-400 text-blue-600",
         highlight === 1 && "bg-amber-500",
+        highlight === 2 && "bg-green-500",
+        highlight === 3 && "bg-slate-200",
         curved &&
           "h-[10px] rounded-[10px/50%] border-b-2 border-slate-400 bg-transparent",
       )}
@@ -106,6 +108,8 @@ export default function GraphEdge({
               className={cn(
                 "absolute left-[75%] top-[100%] h-[2px] w-4 rotate-[150deg] bg-slate-400",
                 highlight === 1 && "bg-amber-500",
+                highlight === 2 && "bg-green-500",
+                highlight === 3 && "bg-slate-200",
               )}
               style={{ transformOrigin: "top left" }}
             ></motion.div>
@@ -117,6 +121,8 @@ export default function GraphEdge({
               className={cn(
                 "absolute left-[75%] top-[100%] h-[2px] w-4 rotate-[-150deg] bg-slate-400",
                 highlight === 1 && "bg-amber-500",
+                highlight === 2 && "bg-green-500",
+                highlight === 3 && "bg-slate-200",
               )}
               style={{ transformOrigin: "top left" }}
             ></motion.div>
