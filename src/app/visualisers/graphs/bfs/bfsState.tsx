@@ -2,6 +2,8 @@
 
 import { cn } from "~/app/utils";
 
+import { Code, CodeWrapper } from "~components/code";
+
 import dfsCode from "./bfsCode";
 import useBfs from "./useBfs";
 
@@ -22,12 +24,7 @@ export default function BfsState() {
 
   return (
     <div className="flex flex-grow flex-row gap-10">
-      <motion.div
-        className="flex-grow rounded-2xl border border-slate-600 bg-slate-800 p-3 px-4 text-left text-sm text-slate-400"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      >
+      <CodeWrapper>
         {dfsCode.map(({ tab, code, line }, i) => (
           <Code
             key={i}
@@ -38,7 +35,7 @@ export default function BfsState() {
             {code}
           </Code>
         ))}
-      </motion.div>
+      </CodeWrapper>
       <div className="flex flex-grow flex-col items-center justify-center gap-8 font-mono">
         <div className="flex flex-row justify-center text-xl text-white">
           <code className="rounded-l-full border-r border-white bg-teal-500 px-5 py-2 shadow-sm">
@@ -131,33 +128,6 @@ function RowHeader({ children }: { children?: React.ReactNode }) {
   return (
     <div className="flex w-24 items-center justify-center border-l border-r border-black px-4">
       {children}
-    </div>
-  );
-}
-
-function Code({
-  tab = 0,
-  children,
-  selected = false,
-  line,
-}: {
-  children?: React.ReactNode;
-  tab?: number;
-  selected?: boolean;
-  line: number;
-}) {
-  return (
-    <div className="flex flex-row items-center gap-2 whitespace-nowrap">
-      <code className="block w-4 text-right font-mono">{line}</code>
-      <code
-        className={cn(
-          "block flex-grow rounded-lg p-[1px] px-1 font-mono transition-colors",
-          selected && "bg-slate-600 bg-opacity-70",
-        )}
-        style={{ marginLeft: `${tab * 20}px` }}
-      >
-        {children}
-      </code>
     </div>
   );
 }

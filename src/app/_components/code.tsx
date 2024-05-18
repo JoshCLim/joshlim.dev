@@ -1,3 +1,47 @@
+import { cn } from "../utils";
+
+import { motion } from "framer-motion";
+
+export function CodeWrapper({ children }: { children?: React.ReactNode }) {
+  return (
+    <motion.div
+      className="flex-grow rounded-2xl border border-slate-600 bg-slate-800 p-3 px-4 text-left text-sm text-slate-400"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+export function Code({
+  tab = 0,
+  children,
+  selected = false,
+  line,
+}: {
+  children?: React.ReactNode;
+  tab?: number;
+  selected?: boolean;
+  line: number;
+}) {
+  return (
+    <div className="flex flex-row items-center gap-2 whitespace-nowrap">
+      <code className="block w-4 text-right font-mono">{line}</code>
+      <code
+        className={cn(
+          "block flex-grow rounded-lg p-[1px] px-1 font-mono transition-colors",
+          selected && "bg-slate-600 bg-opacity-70",
+        )}
+        style={{ marginLeft: `${tab * 20}px` }}
+      >
+        {children}
+      </code>
+    </div>
+  );
+}
+
 export function CodeName({ children }: { children?: React.ReactNode }) {
   return <span className="text-white">{children}</span>;
 }
