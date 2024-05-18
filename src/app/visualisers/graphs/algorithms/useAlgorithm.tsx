@@ -18,13 +18,10 @@ import {
   kruskalVerticesHighlight,
 } from "../kruskals/kruskals";
 import { useKruskalContext } from "../kruskals/kruskalsContext";
+import { primsEdgeHighlight, primsVertexHighlight } from "../prims/prims";
 import { usePrimsContext } from "../prims/primsContext";
-import {
-  NOOP,
-  NOOP_HIGHLIGHT,
-  NOOP_NOT_READY,
-  type UseAlgorithmReturnType,
-} from "./algorithmTypes";
+import PrimsState from "../prims/primsState";
+import { type UseAlgorithmReturnType } from "./algorithmTypes";
 import { type AlgorithmType } from "./algorithmTypes";
 
 import { useLocalStorage } from "usehooks-ts";
@@ -151,21 +148,21 @@ export default function useAlgorithm(): UseAlgorithmReturnType {
 
         title: "Prim's algorithm (minimum spanning tree)",
 
-        stateComponent: null,
+        stateComponent: <PrimsState />,
 
-        ready: NOOP_NOT_READY,
-        init: NOOP,
-        next: NOOP,
-        prev: NOOP,
-        start: NOOP,
-        end: NOOP,
+        ready: primContext.ready,
+        init: primContext.init,
+        next: primContext.next,
+        prev: primContext.prev,
+        start: primContext.start,
+        end: primContext.end,
 
-        verticesHighlight: NOOP_HIGHLIGHT,
-        edgeHighlight: NOOP_HIGHLIGHT,
+        verticesHighlight: primsVertexHighlight,
+        edgeHighlight: primsEdgeHighlight,
 
-        steps: null,
-        stepIndex: 0,
-        setStepIndex: NOOP,
+        steps: primContext.steps,
+        stepIndex: primContext.stepIndex,
+        setStepIndex: primContext.setStepIndex,
 
         startingVertex: primContext.primStartingVertex,
         setStartingVertex: primContext.setPrimStartingVertex,

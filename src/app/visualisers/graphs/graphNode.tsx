@@ -10,7 +10,7 @@ import { useGraphContext } from "./graphContext";
 
 import { type MotionValue, motion, useSpring } from "framer-motion";
 
-const verticesHighlights = [0, 1, 2, 3] as const;
+const verticesHighlights = [0, 1, 2, 3, 4] as const;
 export type VerticesHighlight = (typeof verticesHighlights)[number];
 
 export default function GraphNode({
@@ -134,6 +134,7 @@ export default function GraphNode({
           "bg-red-500 shadow-md shadow-red-200 hover:outline-red-800",
         highlight === 3 &&
           "bg-yellow-500 shadow-md shadow-yellow-200 hover:outline-yellow-800",
+        highlight === 4 && "bg-slate-500 hover:outline-slate-800",
       )}
       onClick={(e) => {
         e.preventDefault();
