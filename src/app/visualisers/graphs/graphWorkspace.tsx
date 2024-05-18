@@ -29,9 +29,9 @@ export default function GraphWorkspace() {
   // currently selected node
   const [selected, setSelected] = useState<number | null>(null);
 
-  useEffect(() => {
-    console.log(JSON.stringify(graph));
-  }, [graph]);
+  // useEffect(() => {
+  //   console.log(JSON.stringify(graph));
+  // }, [graph]);
 
   // handle keyboard shortcuts
   useEffect(() => {
@@ -125,7 +125,7 @@ export default function GraphWorkspace() {
                 selected={selected}
                 setSelected={setSelected}
                 highlight={
-                  alg.algorithm && alg.steps
+                  running && alg.algorithm && alg.steps
                     ? tryOrDefaultFunction(
                         () =>
                           alg.verticesHighlight(
@@ -157,7 +157,7 @@ export default function GraphWorkspace() {
                       uPos={graphNodePositions[u]!}
                       vPos={graphNodePositions[v]!}
                       highlight={
-                        alg.algorithm && alg.steps
+                        running && alg.algorithm && alg.steps
                           ? tryOrDefaultFunction(
                               () =>
                                 alg.edgeHighlight(

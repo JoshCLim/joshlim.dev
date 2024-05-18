@@ -96,7 +96,7 @@ const dfsCode = [
     tab: 1,
     code: (
       <>
-        <CodeType>for</CodeType> <CodeBracket>(</CodeBracket>
+        <CodeKeyword>for</CodeKeyword> <CodeBracket>(</CodeBracket>
         <CodeType>int</CodeType> <CodeName>u</CodeName>{" "}
         <CodeKeyword>=</CodeKeyword> <CodeName>g.nV</CodeName>{" "}
         <CodeKeyword>-</CodeKeyword> <CodeNumber>1</CodeNumber>

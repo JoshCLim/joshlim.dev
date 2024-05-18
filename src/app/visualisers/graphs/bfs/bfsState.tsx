@@ -1,6 +1,5 @@
 "use client";
 
-import usePrevious from "~/app/_hooks/usePrevious";
 import { cn } from "~/app/utils";
 
 import dfsCode from "./bfsCode";
@@ -70,13 +69,33 @@ export default function BfsState() {
           <div className="flex flex-row border-b border-r border-black">
             <RowHeader>visited</RowHeader>
             {bfsSteps[bfsStepIndex]!.visited.map((visited, v) => (
-              <VisitedCell visited={visited} v={v} key={v} />
+              <VisitedCell
+                visited={visited}
+                v={v}
+                key={v}
+                highlight={
+                  bfsStepIndex > 0
+                    ? bfsSteps[bfsStepIndex - 1]!.visited[v] !==
+                      bfsSteps[bfsStepIndex]!.visited[v]
+                    : false
+                }
+              />
             ))}
           </div>
           <div className="flex flex-row border-b border-r border-black">
             <RowHeader>pred</RowHeader>
             {bfsSteps[bfsStepIndex]!.pred.map((pred, v) => (
-              <PredCell pred={pred} v={v} key={v} />
+              <PredCell
+                pred={pred}
+                v={v}
+                key={v}
+                highlight={
+                  bfsStepIndex > 0
+                    ? bfsSteps[bfsStepIndex - 1]!.pred[v] !==
+                      bfsSteps[bfsStepIndex]!.pred[v]
+                    : false
+                }
+              />
             ))}
           </div>
         </div>
@@ -143,16 +162,22 @@ function Code({
   );
 }
 
-function PredCell({ pred, v }: { pred: number; v: number }) {
-  const prevPred = usePrevious(pred);
-
+function PredCell({
+  pred,
+  v,
+  highlight = false,
+}: {
+  pred: number;
+  v: number;
+  highlight?: boolean;
+}) {
   return (
     <div
       className={cn(
         "flex aspect-square h-10 items-center justify-center transition-all",
         v % 2 === 1 && "bg-slate-200",
-        pred !== prevPred && v % 2 === 1 && "bg-red-300",
-        pred !== prevPred && v % 2 === 0 && "bg-red-200",
+        highlight && v % 2 === 1 && "bg-red-300",
+        highlight && v % 2 === 0 && "bg-red-200",
       )}
     >
       {pred}
@@ -160,16 +185,22 @@ function PredCell({ pred, v }: { pred: number; v: number }) {
   );
 }
 
-function VisitedCell({ visited, v }: { visited: boolean; v: number }) {
-  const prevVisited = usePrevious(visited);
-
+function VisitedCell({
+  visited,
+  v,
+  highlight = false,
+}: {
+  visited: boolean;
+  v: number;
+  highlight?: boolean;
+}) {
   return (
     <div
       className={cn(
         "flex aspect-square h-10 items-center justify-center transition-all",
         v % 2 === 0 && "bg-slate-200",
-        visited !== prevVisited && v % 2 === 0 && "bg-red-300",
-        visited !== prevVisited && v % 2 === 1 && "bg-red-200",
+        highlight && v % 2 === 0 && "bg-red-300",
+        highlight && v % 2 === 1 && "bg-red-200",
       )}
     >
       {visited ? 1 : 0}

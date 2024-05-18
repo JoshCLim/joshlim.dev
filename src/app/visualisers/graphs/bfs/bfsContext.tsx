@@ -54,7 +54,6 @@ export default function BfsContextProvider({
   );
   const bfsReady = useCallback(
     (graph: Graph): AlgorithmReadyReturn => {
-      console.log(bfsStartingVertex);
       if (!validVertex(bfsStartingVertex, graph.nV)) {
         return {
           res: "error",

@@ -85,7 +85,7 @@ export default function AdjacencyMatrix() {
                         weight={weight}
                         disabled={u === v}
                         highlight={
-                          alg.algorithm
+                          running && alg.algorithm
                             ? tryOrDefaultFunction(
                                 () =>
                                   alg.edgeHighlight(
@@ -108,7 +108,7 @@ export default function AdjacencyMatrix() {
                         weight={weight}
                         disabled={u === v}
                         highlight={
-                          alg.algorithm
+                          running && alg.algorithm
                             ? tryOrDefaultFunction(
                                 () =>
                                   alg.edgeHighlight(

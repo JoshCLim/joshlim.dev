@@ -46,7 +46,7 @@ export default function Page() {
               <motion.h3
                 key="algorithm-title"
                 layout="position"
-                className="text-2xl font-light"
+                className="text-balance text-2xl font-light"
               >
                 {alg.title}
               </motion.h3>
@@ -68,7 +68,7 @@ export default function Page() {
         </Panel>
         <PanelResizeHandle />
         <Panel
-          defaultSize={60}
+          defaultSize={70}
           minSize={60}
           className="flex min-h-screen flex-col"
         >

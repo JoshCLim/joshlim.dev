@@ -6,7 +6,12 @@ import BfsState from "../bfs/bfsState";
 import { dfsEdgeHighlight, dfsVerticesHighlight } from "../dfs/dfs";
 import { useDfsContext } from "../dfs/dfsContext";
 import DfsState from "../dfs/dfsState";
+import {
+  dijkstraEdgeHighlight,
+  dijkstraVertexHighlight,
+} from "../dijkstra/dijkstra";
 import { useDijkstraContext } from "../dijkstra/dijkstraContext";
+import DijkstraState from "../dijkstra/dijkstraState";
 import { usePrimsContext } from "../prims/primsContext";
 import {
   NOOP,
@@ -90,21 +95,21 @@ export default function useAlgorithm(): UseAlgorithmReturnType {
 
         title: "Dijkstra's algorithm (shortest path)",
 
-        stateComponent: null,
+        stateComponent: <DijkstraState />,
 
-        ready: NOOP_NOT_READY,
-        init: NOOP,
-        next: NOOP,
-        prev: NOOP,
-        start: NOOP,
-        end: NOOP,
+        ready: dijkstraContext.ready,
+        init: dijkstraContext.init,
+        next: dijkstraContext.next,
+        prev: dijkstraContext.prev,
+        start: dijkstraContext.start,
+        end: dijkstraContext.end,
 
-        verticesHighlight: NOOP_HIGHLIGHT,
-        edgeHighlight: NOOP_HIGHLIGHT,
+        verticesHighlight: dijkstraVertexHighlight,
+        edgeHighlight: dijkstraEdgeHighlight,
 
-        steps: null,
-        stepIndex: 0,
-        setStepIndex: NOOP,
+        steps: dijkstraContext.steps,
+        stepIndex: dijkstraContext.stepIndex,
+        setStepIndex: dijkstraContext.setStepIndex,
 
         startingVertex: dijkstraContext.dijkstraStartingVertex,
         setStartingVertex: dijkstraContext.setDijkstraStartingVertex,

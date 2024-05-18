@@ -2,22 +2,23 @@
 
 import { cn } from "~/app/utils";
 
-import dfsCode from "./dfsCode";
-import useDfs from "./useDfs";
+import dijkstraCode from "./dijkstraCode";
+import useDijkstra from "./useDijkstra";
 
 import { motion } from "framer-motion";
+import { Infinite } from "iconoir-react";
 
-export default function DfsState() {
-  const alg = useDfs();
+export default function DijkstraState() {
+  const alg = useDijkstra();
 
   if (!alg) return <></>;
 
   if (!alg.steps) return <></>;
 
   const {
-    startingVertex: dfsStartingVertex,
-    steps: dfsSteps,
-    stepIndex: dfsStepIndex,
+    startingVertex: dijkstraStartingVertex,
+    steps: dijkstraSteps,
+    stepIndex: dijkstraStepIndex,
   } = alg;
 
   return (
@@ -28,12 +29,12 @@ export default function DfsState() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        {dfsCode.map(({ tab, code, line }, i) => (
+        {dijkstraCode.map(({ tab, code, line }, i) => (
           <Code
             key={i}
             line={line + 1}
             tab={tab}
-            selected={dfsSteps[dfsStepIndex]!.lineNumber === i}
+            selected={dijkstraSteps[dijkstraStepIndex]!.lineNumber === i}
           >
             {code}
           </Code>
@@ -42,19 +43,19 @@ export default function DfsState() {
       <div className="flex flex-grow flex-col items-center justify-center gap-8 font-mono">
         <div className="flex flex-row justify-center text-xl text-white">
           <code className="rounded-l-full border-r border-white bg-teal-500 px-5 py-2 shadow-sm">
-            src: {dfsStartingVertex}
+            src: {dijkstraStartingVertex}
           </code>
           <code className="bg-teal-500 px-5 py-2 shadow-sm">
-            v: {dfsSteps[dfsStepIndex]!.vertexV}
+            v: {dijkstraSteps[dijkstraStepIndex]!.vertexV}
           </code>
           <code className="rounded-r-full border-l border-white bg-teal-500 px-5 py-2 shadow-sm">
-            u: {dfsSteps[dfsStepIndex]!.vertexU}
+            w: {dijkstraSteps[dijkstraStepIndex]!.vertexW}
           </code>
         </div>
         <div className="font-light">
           <div className="flex flex-row border-b border-r border-t border-black">
             <RowHeader>vertices</RowHeader>
-            {dfsSteps[dfsStepIndex]!.visited.map((_, v) => (
+            {dijkstraSteps[dijkstraStepIndex]!.pred.map((_, v) => (
               <div
                 className={cn(
                   "flex aspect-square h-10 items-center justify-center",
@@ -67,16 +68,16 @@ export default function DfsState() {
             ))}
           </div>
           <div className="flex flex-row border-b border-r border-black">
-            <RowHeader>visited</RowHeader>
-            {dfsSteps[dfsStepIndex]!.visited.map((visited, v) => (
-              <VisitedCell
-                visited={visited}
+            <RowHeader>dist</RowHeader>
+            {dijkstraSteps[dijkstraStepIndex]!.dist.map((dist, v) => (
+              <DistCell
+                dist={dist}
                 v={v}
                 key={v}
                 highlight={
-                  dfsStepIndex > 0
-                    ? dfsSteps[dfsStepIndex - 1]!.visited[v] !==
-                      dfsSteps[dfsStepIndex]!.visited[v]
+                  dijkstraStepIndex > 0
+                    ? dijkstraSteps[dijkstraStepIndex - 1]!.dist[v] !==
+                      dijkstraSteps[dijkstraStepIndex]!.dist[v]
                     : false
                 }
               />
@@ -84,29 +85,29 @@ export default function DfsState() {
           </div>
           <div className="flex flex-row border-b border-r border-black">
             <RowHeader>pred</RowHeader>
-            {dfsSteps[dfsStepIndex]!.pred.map((pred, v) => (
+            {dijkstraSteps[dijkstraStepIndex]!.pred.map((pred, v) => (
               <PredCell
                 pred={pred}
                 v={v}
                 key={v}
                 highlight={
-                  dfsStepIndex > 0
-                    ? dfsSteps[dfsStepIndex - 1]!.pred[v] !==
-                      dfsSteps[dfsStepIndex]!.pred[v]
+                  dijkstraStepIndex > 0
+                    ? dijkstraSteps[dijkstraStepIndex - 1]!.pred[v] !==
+                      dijkstraSteps[dijkstraStepIndex]!.pred[v]
                     : false
                 }
               />
             ))}
           </div>
         </div>
-        <DfsStack />
+        <DijkstraVSet />
       </div>
     </div>
   );
 }
 
-function DfsStack() {
-  const alg = useDfs();
+function DijkstraVSet() {
+  const alg = useDijkstra();
 
   if (!alg || !alg.steps) return <></>;
 
@@ -115,14 +116,12 @@ function DfsStack() {
       layout
       className="text-md flex flex-row items-center justify-start overflow-hidden rounded-full border border-black"
     >
-      <p className="bg-black px-2 py-1 text-white">Stack</p>
-      <p className="bg-slate-700 px-2 py-1 text-white">Bottom</p>
-      {alg.steps[alg.stepIndex]!.stack.map((vertex, i) => (
+      <p className="bg-black px-2 py-1 text-white">vSet</p>
+      {alg.steps[alg.stepIndex]!.vSet.map((vertex, i) => (
         <p className={cn("px-3 py-1", i % 2 === 0 && "bg-white")} key={i}>
           {vertex}
         </p>
       ))}
-      <p className="bg-slate-700 px-2 py-1 text-white">Top</p>
     </motion.div>
   );
 }
@@ -165,7 +164,7 @@ function Code({
 function PredCell({
   pred,
   v,
-  highlight,
+  highlight = false,
 }: {
   pred: number;
   v: number;
@@ -185,12 +184,12 @@ function PredCell({
   );
 }
 
-function VisitedCell({
-  visited,
+function DistCell({
+  dist,
   v,
   highlight = false,
 }: {
-  visited: boolean;
+  dist: number | null;
   v: number;
   highlight?: boolean;
 }) {
@@ -203,7 +202,7 @@ function VisitedCell({
         highlight && v % 2 === 1 && "bg-red-200",
       )}
     >
-      {visited ? 1 : 0}
+      {dist ?? <Infinite width="18" strokeWidth={2} />}
     </div>
   );
 }
