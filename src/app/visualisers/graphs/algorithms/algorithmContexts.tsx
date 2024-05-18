@@ -1,6 +1,7 @@
 import BfsContextProvider from "../bfs/bfsContext";
 import DfsContextProvider from "../dfs/dfsContext";
 import DijkstraContextProvider from "../dijkstra/dijkstraContext";
+import KruskalContextProvider from "../kruskals/kruskalsContext";
 import PrimsContextProvider from "../prims/primsContext";
 
 export default function AlgorithmContexts({
@@ -12,7 +13,9 @@ export default function AlgorithmContexts({
     <DfsContextProvider>
       <BfsContextProvider>
         <DijkstraContextProvider>
-          <PrimsContextProvider>{children}</PrimsContextProvider>
+          <KruskalContextProvider>
+            <PrimsContextProvider>{children}</PrimsContextProvider>
+          </KruskalContextProvider>
         </DijkstraContextProvider>
       </BfsContextProvider>
     </DfsContextProvider>

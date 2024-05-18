@@ -12,6 +12,12 @@ import {
 } from "../dijkstra/dijkstra";
 import { useDijkstraContext } from "../dijkstra/dijkstraContext";
 import DijkstraState from "../dijkstra/dijkstraState";
+import KruskalState from "../kruskals/kruskalState";
+import {
+  kruskalEdgesHighlight,
+  kruskalVerticesHighlight,
+} from "../kruskals/kruskals";
+import { useKruskalContext } from "../kruskals/kruskalsContext";
 import { usePrimsContext } from "../prims/primsContext";
 import {
   NOOP,
@@ -33,6 +39,7 @@ export default function useAlgorithm(): UseAlgorithmReturnType {
   const dfsContext = useDfsContext();
   const bfsContext = useBfsContext();
   const dijkstraContext = useDijkstraContext();
+  const kruskalContext = useKruskalContext();
   const primContext = usePrimsContext();
 
   switch (algorithm) {
@@ -121,21 +128,21 @@ export default function useAlgorithm(): UseAlgorithmReturnType {
 
         title: "Kruskal's algorithm (minimum spanning tree)",
 
-        stateComponent: null,
+        stateComponent: <KruskalState />,
 
-        ready: NOOP_NOT_READY,
-        init: NOOP,
-        next: NOOP,
-        prev: NOOP,
-        start: NOOP,
-        end: NOOP,
+        ready: kruskalContext.ready,
+        init: kruskalContext.init,
+        next: kruskalContext.next,
+        prev: kruskalContext.prev,
+        start: kruskalContext.start,
+        end: kruskalContext.end,
 
-        verticesHighlight: NOOP_HIGHLIGHT,
-        edgeHighlight: NOOP_HIGHLIGHT,
+        verticesHighlight: kruskalVerticesHighlight,
+        edgeHighlight: kruskalEdgesHighlight,
 
-        steps: null,
-        stepIndex: 0,
-        setStepIndex: NOOP,
+        steps: kruskalContext.steps,
+        stepIndex: kruskalContext.stepIndex,
+        setStepIndex: kruskalContext.setStepIndex,
       };
     case "Prim's":
       return {
