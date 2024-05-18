@@ -2,10 +2,19 @@ import { cn } from "../utils";
 
 import { motion } from "framer-motion";
 
-export function CodeWrapper({ children }: { children?: React.ReactNode }) {
+export function CodeWrapper({
+  children,
+  className,
+}: {
+  children?: React.ReactNode;
+  className?: string;
+}) {
   return (
     <motion.div
-      className="flex-grow rounded-2xl border border-slate-600 bg-slate-800 p-3 px-4 text-left text-sm text-slate-400"
+      className={cn(
+        "flex-grow rounded-2xl border border-slate-600 bg-slate-800 p-3 px-4 text-left text-sm text-slate-400",
+        className,
+      )}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
