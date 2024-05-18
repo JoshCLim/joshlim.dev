@@ -7,7 +7,7 @@ import useAlgorithm from "./useAlgorithm";
 import { motion } from "framer-motion";
 
 export default function AlgorithmStart() {
-  const { graph, running, setRunning, runError, setRunError } =
+  const { graph, running, setRunning, runError, setRunError, setSelected } =
     useGraphContext();
   const alg = useAlgorithm();
 
@@ -41,6 +41,7 @@ export default function AlgorithmStart() {
 
             alg.init(graph);
 
+            if (!running) setSelected(null);
             setRunning((prev) => !prev);
             setRunError(null);
           }}

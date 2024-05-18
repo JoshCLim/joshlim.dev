@@ -21,17 +21,17 @@ export default function GraphWorkspace() {
     graphNodePositions,
     running,
     enableKeyboardArrows,
+    selected,
+    setSelected,
   } = useGraphContext();
   const alg = useAlgorithm();
 
   // whether a node is being dragged. prevents click-to-create-new-node from firing when dragging
   const [dragging, setDragging] = useState<number | null>(null);
-  // currently selected node
-  const [selected, setSelected] = useState<number | null>(null);
 
-  // useEffect(() => {
-  //   console.log(JSON.stringify(graph));
-  // }, [graph]);
+  useEffect(() => {
+    console.log(JSON.stringify(graph));
+  }, [graph]);
 
   // handle keyboard shortcuts
   useEffect(() => {
@@ -59,7 +59,7 @@ export default function GraphWorkspace() {
     document.addEventListener("keydown", handleKeyDown);
 
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [enableKeyboardArrows, graphOperations, running, selected]);
+  }, [enableKeyboardArrows, graphOperations, running, selected, setSelected]);
 
   // calculate total weight of edges
   const totalWeight = useMemo(
