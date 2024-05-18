@@ -68,6 +68,10 @@ type GraphContextType = {
   enableKeyboardArrows: boolean;
   setEnableKeyboardArrows: React.Dispatch<React.SetStateAction<boolean>>;
 
+  // selected node
+  selected: number | null;
+  setSelected: React.Dispatch<React.SetStateAction<number | null>>;
+
   // graph representation
   graphRep: GraphRepresentationType;
   setGraphRep: React.Dispatch<React.SetStateAction<GraphRepresentationType>>;
@@ -124,6 +128,8 @@ export default function GraphContextProvider({
     "graph-presets",
     [],
   );
+
+  const [selected, setSelected] = useState<number | null>(null);
 
   const [enableKeyboardArrows, setEnableKeyboardArrows] =
     useState<boolean>(true);
@@ -209,6 +215,9 @@ export default function GraphContextProvider({
         // enable keyboard
         enableKeyboardArrows,
         setEnableKeyboardArrows,
+        // selected node
+        selected,
+        setSelected,
         // graph representation
         graphRep,
         setGraphRep,
