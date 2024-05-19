@@ -46,12 +46,13 @@ export function dijkstraGenerateSteps(
       case 2:
         if (step.vSet.some((v) => step.dist[v] !== null)) {
           step.lineNumber = 3;
-          step.vertexV = step.vSet
-            .filter((v) => step.dist[v] !== null && step.vSet.includes(v))
-            .reduce(
-              (minV, v) => (step.dist[v]! < step.dist[minV]! ? v : minV),
-              step.vSet[0]!,
-            );
+          const finiteDistVertices = step.vSet.filter(
+            (v) => step.dist[v] !== null,
+          );
+          step.vertexV = finiteDistVertices.reduce(
+            (minV, v) => (step.dist[v]! < step.dist[minV]! ? v : minV),
+            finiteDistVertices[0]!,
+          );
         } else {
           step.lineNumber = 10;
           step.vertexV = -1;
