@@ -19,7 +19,8 @@ type Tags =
   | "shadcn"
   | "expressjs"
   | "drizzle"
-  | "nextui";
+  | "nextui"
+  | "framer-motion";
 
 type Project = {
   name: string;
@@ -35,12 +36,22 @@ const allProjects: Project[] = [
   {
     name: "joshlim.dev",
     description:
-      "My own portfolio site. Featuring this projects page, a guestbook and a games page (upcoming).",
+      "My own portfolio site. Featuring this projects page and a games page.",
     imageUrl: "/projects/joshlimdev.png",
-    // tags: ["Next.js", "Tailwind CSS", "tRPC", "Prisma", "NextAuth.js"],
     tagsIcons: ["nextjs", "tailwindcss", "trpc", "drizzle", "typescript"],
     url: "https://joshlim.dev",
     codeUrl: "https://github.com/JoshCLim/joshlim.dev",
+    codePublic: true,
+  },
+  {
+    name: "Graph Visualiser",
+    description:
+      "A tool I made to visualise graph algorithms. Currently supports DFS, BFS, Dijkstra's, Kruskal's and Prim's algorithms.",
+    imageUrl: "/projects/graphvisualiser.png",
+    tagsIcons: ["react", "tailwindcss", "framer-motion", "typescript"],
+    url: "https://www.joshlim.dev/visualisers/graphs",
+    codeUrl:
+      "https://github.com/JoshCLim/joshlim.dev/tree/main/src/app/visualisers",
     codePublic: true,
   },
   {
@@ -76,7 +87,6 @@ const allProjects: Project[] = [
       "A basic Twitter clone that I created while learning the T3 stack.",
     imageUrl: "/projects/chirp.png",
     tagsIcons: ["nextjs", "tailwindcss", "trpc", "prisma", "typescript"],
-    // url: "https://chirp-iota-six.vercel.app/",
     codeUrl: "https://github.com/JoshCLim/chirp",
     codePublic: true,
   },
@@ -85,7 +95,6 @@ const allProjects: Project[] = [
     description:
       "A website I made for a tutoring company my friends and I were thinking of starting. Currently in the process of adding a bookings feature.",
     imageUrl: "/projects/ibexpert.png",
-    // tags: ["React.js", "Bootstrap 5"],
     tagsIcons: ["react", "bootstrap", "typescript"],
     url: "https://ibexpert.web.app",
     codeUrl: "https://github.com/JoshCLim/ibtutoring",
@@ -96,7 +105,6 @@ const allProjects: Project[] = [
     description:
       "A web app I made to annotate Latin texts that we studied in IB. Users can highlight words based on their tense etc., link related words together and add comments. All changes are applied in real-time.",
     imageUrl: "/projects/annotationtool.png",
-    // tags: ["HTML", "CSS", "JS", "jQuery", "Firebase"],
     tagsIcons: ["html5", "css3", "javascript", "jquery", "firebase"],
     url: "https://joshclim.github.io/annotationTool/index.html",
     codeUrl:
@@ -108,7 +116,6 @@ const allProjects: Project[] = [
     description:
       "A study planner app that I made for my Year 10 personal project. Users can login and add information about their timetable, homework and more.",
     imageUrl: "/projects/myhandbook.png",
-    // tags: ["HTML", "CSS", "JS", "jQuery", "Firebase"],
     tagsIcons: ["html5", "css3", "javascript", "jquery", "firebase"],
     url: "https://joshclim.github.io/myHandbook/login.html",
     codeUrl:
@@ -119,7 +126,6 @@ const allProjects: Project[] = [
     name: "Minesweeper",
     description: "A clone of the classic game minesweeper.",
     imageUrl: "/projects/minesweeper.png",
-    // tags: ["HTML", "CSS", "JS"],
     tagsIcons: ["html5", "css3", "javascript"],
     url: "https://joshclim.github.io/minesweeper/index.html",
     codeUrl:
