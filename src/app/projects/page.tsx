@@ -9,7 +9,7 @@ export default function Projects() {
   return (
     <main className="no-scrollbars relative flex min-h-screen w-full flex-col items-center justify-center gap-5  bg-white pb-5 pe-5 ps-5 text-black">
       <ProjectsNavbar currPage="/projects" />
-      <h2 className="sticky left-0 top-0 z-10 mt-28 text-center text-2xl font-light">
+      <h2 className="sticky left-0 top-0 z-10 mt-28 text-balance text-center text-2xl font-light">
         A collection of code I&apos;ve written over the years.
       </h2>
       <Divider colour="black" height="1px" />
