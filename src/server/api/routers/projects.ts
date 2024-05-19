@@ -82,6 +82,16 @@ const allProjects: Project[] = [
     codePublic: true,
   },
   {
+    name: "Travlr",
+    description:
+      "A travel recommendations and sharing app, made in 48 hours for CSESoc's 2023 Flagship Hackathon",
+    imageUrl: "/projects/travlr.png",
+    tagsIcons: ["nextjs", "react", "tailwindcss", "typescript"],
+    url: "https://travlr.vercel.app/",
+    codeUrl: "https://github.com/JoshCLim/travlr-frontend/",
+    codePublic: true,
+  },
+  {
     name: "Chirp",
     description:
       "A basic Twitter clone that I created while learning the T3 stack.",
