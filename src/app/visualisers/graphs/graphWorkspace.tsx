@@ -29,10 +29,6 @@ export default function GraphWorkspace() {
   // whether a node is being dragged. prevents click-to-create-new-node from firing when dragging
   const [dragging, setDragging] = useState<number | null>(null);
 
-  useEffect(() => {
-    console.log(JSON.stringify(graph));
-  }, [graph]);
-
   // handle keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -98,13 +94,14 @@ export default function GraphWorkspace() {
         <div
           className={cn(
             "relative z-0 flex-grow-[2] cursor-pointer",
-            graph.nV >= MAX_VERTICES && "cursor-not-allowed",
+            (graph.nV >= MAX_VERTICES || running) && "cursor-not-allowed",
           )}
           ref={canvasRef}
           onClick={(e) => {
             if (dragging !== null) return;
 
             if (graph.nV >= MAX_VERTICES) return;
+            if (running) return;
 
             const rect = canvasRef.current?.getBoundingClientRect() ?? {
               x: 0,
