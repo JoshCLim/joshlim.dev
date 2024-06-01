@@ -4,7 +4,7 @@ import { cn } from "~/app/utils";
 
 import ButtonGroup from "~components/buttonGroup";
 
-import { useGraphContext } from "../graphContext";
+import { useGraphContext } from "../graph/graphContext";
 import { type AlgorithmType, algorithms } from "./algorithmTypes";
 import useAlgorithm from "./useAlgorithm";
 

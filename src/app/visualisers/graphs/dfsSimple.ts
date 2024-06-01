@@ -1,6 +1,6 @@
 import { arrayCreate } from "~/app/utils";
 
-import { type Graph } from "./graph";
+import { type Graph } from "./graph/graph";
 
 type DfsSimpleStep = {
   vertexV: number;

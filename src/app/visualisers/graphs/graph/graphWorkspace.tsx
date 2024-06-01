@@ -4,12 +4,12 @@ import { useEffect, useMemo, useState } from "react";
 
 import { cn } from "~/app/utils";
 
-import useAlgorithm from "./algorithms/useAlgorithm";
+import useAlgorithm from "../algorithms/useAlgorithm";
+import { tryOrDefaultFunction } from "../utils";
 import { MAX_VERTICES, useGraphContext } from "./graphContext";
 import GraphEdge from "./graphEdge";
 import GraphNode from "./graphNode";
 import Toolbar from "./toolbar";
-import { tryOrDefaultFunction } from "./utils";
 
 import { AnimatePresence, motion } from "framer-motion";
 

@@ -1,6 +1,6 @@
 import { cn } from "~/app/utils";
 
-import { useGraphContext } from "../graphContext";
+import { useGraphContext } from "../graph/graphContext";
 import AlgorithmSetStartVertex from "./algorithmSetStartVertex";
 import useAlgorithm from "./useAlgorithm";
 

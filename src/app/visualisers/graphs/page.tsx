@@ -10,12 +10,12 @@ import AlgorithmChooser from "./algorithms/algorithmChoose";
 import AlgorithmRun from "./algorithms/algorithmRun";
 import AlgorithmStart from "./algorithms/algorithmStart";
 import useAlgorithm from "./algorithms/useAlgorithm";
-import { MAX_VERTICES, useGraphContext } from "./graphContext";
-import GraphEditor from "./graphEditor";
-import GraphSettings from "./graphSettings";
-import GraphWorkspace from "./graphWorkspace";
+import { MAX_VERTICES, useGraphContext } from "./graph/graphContext";
+import GraphEditor from "./graph/graphEditor";
+import GraphSettings from "./graph/graphSettings";
+import GraphWorkspace from "./graph/graphWorkspace";
+import PresetGraphChooser from "./graph/presetGraphs";
 import PageNavbar from "./navbar";
-import PresetGraphChooser from "./presetGraphs";
 
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";

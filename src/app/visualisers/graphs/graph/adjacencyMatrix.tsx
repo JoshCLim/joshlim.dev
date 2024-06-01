@@ -2,11 +2,11 @@
 
 import { cn } from "~/app/utils";
 
-import useAlgorithm from "./algorithms/useAlgorithm";
+import useAlgorithm from "../algorithms/useAlgorithm";
+import { tryOrDefaultFunction } from "../utils";
 import { useGraphContext } from "./graphContext";
 import { type EdgesHighlight } from "./graphEdge";
 import { type VerticesHighlight } from "./graphNode";
-import { tryOrDefaultFunction } from "./utils";
 
 import { AnimatePresence, motion } from "framer-motion";
 

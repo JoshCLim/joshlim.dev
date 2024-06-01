@@ -1,9 +1,9 @@
 import { type BfsStep } from "../bfs/bfs";
 import { type DfsStep } from "../dfs/dfs";
 import { type DijkstraStep } from "../dijkstra/dijkstra";
-import { type Graph } from "../graph";
-import { type EdgesHighlight } from "../graphEdge";
-import { type VerticesHighlight } from "../graphNode";
+import { type Graph } from "../graph/graph";
+import { type EdgesHighlight } from "../graph/graphEdge";
+import { type VerticesHighlight } from "../graph/graphNode";
 import { type KruskalsStep } from "../kruskals/kruskals";
 import { type PrimsStep } from "../prims/prims";
 
