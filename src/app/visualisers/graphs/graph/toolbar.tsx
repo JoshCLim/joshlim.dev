@@ -25,7 +25,7 @@ export default function Toolbar() {
         <ToolbarButton
           tooltip="undo"
           className="rounded-r-none bg-[#696969]"
-          disabled={!graphOperations.canUndo}
+          disabled={!graphOperations.canUndo || running}
           onClick={graphOperations.undo}
         >
           <Undo />
@@ -33,7 +33,7 @@ export default function Toolbar() {
         <ToolbarButton
           tooltip="redo"
           className="rounded-l-none bg-[#808080]"
-          disabled={!graphOperations.canRedo}
+          disabled={!graphOperations.canRedo || running}
           onClick={graphOperations.redo}
         >
           <Redo />
