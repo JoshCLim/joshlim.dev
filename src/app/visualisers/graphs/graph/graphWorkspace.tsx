@@ -4,12 +4,12 @@ import { useEffect, useMemo, useState } from "react";
 
 import { cn } from "~/app/utils";
 
-import useAlgorithm from "./algorithms/useAlgorithm";
+import useAlgorithm from "../algorithms/useAlgorithm";
+import { tryOrDefaultFunction } from "../utils";
 import { MAX_VERTICES, useGraphContext } from "./graphContext";
 import GraphEdge from "./graphEdge";
 import GraphNode from "./graphNode";
 import Toolbar from "./toolbar";
-import { tryOrDefaultFunction } from "./utils";
 
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -50,6 +50,14 @@ export default function GraphWorkspace() {
       } else if (e.key === "ArrowRight") {
         graphOperations.moveRight();
       }
+      // else if (
+      //   (e.key === "y" && e.ctrlKey) ||
+      //   (e.key === "z" && e.metaKey && e.shiftKey)
+      // ) {
+      //   graphOperations.redo();
+      // } else if (e.key === "z" && (e.ctrlKey || e.metaKey)) {
+      //   graphOperations.undo();
+      // }
     };
 
     document.addEventListener("keydown", handleKeyDown);
@@ -201,7 +209,7 @@ function GraphInfoChip({
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0 }}
       transition={{ delay, type: "spring", ease: "easeInOut", damping: 15 }}
-      className="rounded-full bg-slate-500 p-2 px-4"
+      className="text-nowrap rounded-full bg-slate-500 p-2 px-4"
     >
       {children}
     </motion.p>

@@ -3,7 +3,7 @@ import { type Metadata } from "next";
 import dynamic from "next/dynamic";
 
 import AlgorithmContexts from "./algorithms/algorithmContexts";
-import GraphContextProvider from "./graphContext";
+import GraphContextProvider from "./graph/graphContext";
 
 export const metadata: Metadata = {
   title: "Graph Algorithm Visualisers | joshlim.dev",

@@ -12,17 +12,19 @@ export default function ToolbarButton({
   onClick,
   confirmation = false,
   disabled = false,
+  tooltip,
 }: {
   className: string;
   children: React.ReactNode;
   onClick?: () => void;
   confirmation?: boolean;
   disabled?: boolean;
+  tooltip: string;
 }) {
   const [showConfirmation, setShowConfirmation] = useState<boolean>(false);
 
   return (
-    <div className="relative">
+    <div className="group relative">
       <motion.button
         initial={{ opacity: 0, scale: 0 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -31,12 +33,12 @@ export default function ToolbarButton({
           ease: "easeInOut",
           stiffness: 70,
         }}
-        whileHover={{ scale: 1.05, transition: { delay: 0 } }}
-        whileTap={{ scale: 0.95, transition: { delay: 0 } }}
+        whileHover={{ scale: disabled ? 1 : 1.05, transition: { delay: 0 } }}
+        whileTap={{ scale: disabled ? 1 : 0.95, transition: { delay: 0 } }}
         className={cn(
           "rounded-md bg-green-700 p-2 px-4 shadow-sm transition-[filter,background-color] hover:brightness-95",
           className,
-          disabled && "cursor-not-allowed bg-gray-400",
+          disabled && "cursor-not-allowed bg-gray-400 hover:filter-none",
         )}
         onClick={
           confirmation ? () => setShowConfirmation((prev) => !prev) : onClick
@@ -45,6 +47,11 @@ export default function ToolbarButton({
       >
         {children}
       </motion.button>
+      {!showConfirmation && (
+        <div className="absolute left-[50%] top-[110%] min-w-full translate-x-[-50%] select-none rounded-xl bg-slate-400 px-2 py-1 text-center text-xs text-white opacity-0 shadow-md transition-opacity group-hover:opacity-100">
+          {tooltip}
+        </div>
+      )}
       <AnimatePresence>
         {showConfirmation && (
           <motion.div

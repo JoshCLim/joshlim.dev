@@ -1,8 +1,8 @@
 import { arrayCreate } from "~/app/utils";
 
-import { type Graph } from "../graph";
-import { type EdgesHighlight } from "../graphEdge";
-import { type VerticesHighlight } from "../graphNode";
+import { type Graph } from "../graph/graph";
+import { type EdgesHighlight } from "../graph/graphEdge";
+import { type VerticesHighlight } from "../graph/graphNode";
 import dijkstraCode from "./dijkstraCode";
 
 export type DijkstraStep = {

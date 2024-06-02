@@ -1,6 +1,13 @@
 "use client";
 
-import { createContext, useContext, useRef, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 import {
   type Graph,
@@ -24,6 +31,9 @@ type GraphNodePositionType = {
 type GraphNodePositionsType = (GraphNodePositionType | null)[];
 
 export const MAX_VERTICES = 8;
+
+// for undo/redo history
+const MAX_GRAPHS_STORED = 50;
 
 export const graphRepresentations = [
   "Adjacency Matrix",
@@ -103,6 +113,11 @@ type GraphOperations = {
   moveRight: () => void;
   // set graph state
   setGraph: React.Dispatch<React.SetStateAction<Graph>>;
+  // undo + redo
+  undo: () => void;
+  redo: () => void;
+  canUndo: boolean;
+  canRedo: boolean;
 };
 
 const GraphContext = createContext<GraphContextType | null>(null);
@@ -115,14 +130,43 @@ export default function GraphContextProvider({
   const [showAdjMatrix, setShowAdjMatrix] = useState<boolean>(false);
   const [showGraphPreset, setShowGraphPreset] = useState<boolean>(false);
 
-  const [graph, setGraph] = useLocalStorage<Graph>(
-    "graph",
+  const [graphs, setGraphs] = useLocalStorage<Graph[]>("graphs", [
     graphNew({ directed: false, weighted: false }),
+  ]);
+  const [graphCurrentIndex, setGraphCurrentIndex] = useLocalStorage<number>(
+    "graph-current-index",
+    0,
   );
+  const setGraph = useCallback(
+    (g: Graph | ((g: Graph) => Graph)) => {
+      setGraphs((graphs) => [
+        typeof g === "function" ? g(graphs[graphCurrentIndex]!) : g,
+        ...graphs.slice(graphCurrentIndex, MAX_GRAPHS_STORED),
+      ]);
+      setGraphCurrentIndex(0);
+    },
+    [graphCurrentIndex, setGraphCurrentIndex, setGraphs],
+  );
+  const canUndo = useMemo(
+    () => graphCurrentIndex < graphs.length - 1,
+    [graphCurrentIndex, graphs.length],
+  );
+  const canRedo = useMemo(() => graphCurrentIndex > 0, [graphCurrentIndex]);
+  const undo = useCallback(
+    () => setGraphCurrentIndex((i) => Math.min(graphs.length - 1, i + 1)),
+    [graphs.length, setGraphCurrentIndex],
+  );
+  const redo = useCallback(
+    () => setGraphCurrentIndex((i) => Math.max(0, i - 1)),
+    [setGraphCurrentIndex],
+  );
+
   const canvasRef = useRef<HTMLDivElement>(null);
 
   const [graphNodePositions, setGraphNodePositions] =
-    useState<GraphNodePositionsType>(Array(graph.nV).fill(null));
+    useState<GraphNodePositionsType>(
+      Array(graphs[graphCurrentIndex]!.nV).fill(null),
+    );
 
   const [graphPresets, setGraphPresets] = useLocalStorage<GraphPresetType[]>(
     "graph-presets",
@@ -188,12 +232,16 @@ export default function GraphContextProvider({
         ),
       ),
     setGraph,
+    undo,
+    redo,
+    canUndo,
+    canRedo,
   };
 
   return (
     <GraphContext.Provider
       value={{
-        graph,
+        graph: graphs[graphCurrentIndex]!,
         graphOperations,
         canvasRef,
         // adj matrix show/hide
@@ -238,7 +286,9 @@ export const useGraphContext = () => {
   const context = useContext(GraphContext);
 
   if (context === null) {
-    throw new Error("useGraphContext must be used within a DfsContextProvider");
+    throw new Error(
+      "useGraphContext must be used within a GraphContextProvider",
+    );
   }
 
   return context;

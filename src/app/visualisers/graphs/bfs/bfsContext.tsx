@@ -3,7 +3,7 @@
 import { createContext, useCallback, useContext } from "react";
 
 import { type AlgorithmReadyReturn } from "../algorithms/algorithmTypes";
-import { type Graph } from "../graph";
+import { type Graph } from "../graph/graph";
 import { validVertex } from "../utils";
 import { type BfsStep, bfsGenerateSteps } from "./bfs";
 
