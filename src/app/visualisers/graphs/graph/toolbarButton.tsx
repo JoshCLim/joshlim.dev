@@ -33,12 +33,12 @@ export default function ToolbarButton({
           ease: "easeInOut",
           stiffness: 70,
         }}
-        whileHover={{ scale: 1.05, transition: { delay: 0 } }}
-        whileTap={{ scale: 0.95, transition: { delay: 0 } }}
+        whileHover={{ scale: disabled ? 1 : 1.05, transition: { delay: 0 } }}
+        whileTap={{ scale: disabled ? 1 : 0.95, transition: { delay: 0 } }}
         className={cn(
           "rounded-md bg-green-700 p-2 px-4 shadow-sm transition-[filter,background-color] hover:brightness-95",
           className,
-          disabled && "cursor-not-allowed bg-gray-400",
+          disabled && "cursor-not-allowed bg-gray-400 hover:filter-none",
         )}
         onClick={
           confirmation ? () => setShowConfirmation((prev) => !prev) : onClick

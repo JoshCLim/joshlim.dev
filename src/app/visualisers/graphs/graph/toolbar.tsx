@@ -7,15 +7,40 @@ import {
 import { useGraphContext } from "./graphContext";
 import ToolbarButton from "./toolbarButton";
 
-import { CoinsSwap, Drag, FrameAltEmpty, Trash } from "iconoir-react";
+import {
+  CoinsSwap,
+  Drag,
+  FrameAltEmpty,
+  Redo,
+  Trash,
+  Undo,
+} from "iconoir-react";
 
 export default function Toolbar() {
   const { canvasRef, graphOperations, running } = useGraphContext();
 
   return (
     <div className="flex flex-row items-center justify-end gap-4 px-8 py-4 pe-4">
+      <div className="flex flex-row">
+        <ToolbarButton
+          tooltip="undo"
+          className="rounded-r-none bg-[#696969]"
+          disabled={!graphOperations.canUndo}
+          onClick={graphOperations.undo}
+        >
+          <Undo />
+        </ToolbarButton>
+        <ToolbarButton
+          tooltip="redo"
+          className="rounded-l-none bg-[#808080]"
+          disabled={!graphOperations.canRedo}
+          onClick={graphOperations.redo}
+        >
+          <Redo />
+        </ToolbarButton>
+      </div>
       <ToolbarButton
-        tooltip="Fit to frame"
+        tooltip="fit to frame"
         className="bg-[#dedaa2]"
         onClick={() =>
           graphOperations.setGraph((g) =>
@@ -30,7 +55,7 @@ export default function Toolbar() {
         <FrameAltEmpty />
       </ToolbarButton>
       <ToolbarButton
-        tooltip="Randomly rearrange"
+        tooltip="randomly rearrange"
         className="bg-[#acdeb9]"
         onClick={() =>
           graphOperations.setGraph((g) =>
@@ -45,7 +70,7 @@ export default function Toolbar() {
         <CoinsSwap />
       </ToolbarButton>
       <ToolbarButton
-        tooltip="Rearrange"
+        tooltip="rearrange"
         className="bg-[#acd4de]"
         onClick={() =>
           graphOperations.setGraph((g) =>
@@ -60,7 +85,7 @@ export default function Toolbar() {
         <Drag />
       </ToolbarButton>
       <ToolbarButton
-        tooltip="Clear"
+        tooltip="clear"
         confirmation={true}
         disabled={running}
         className="bg-[#f8b595]"
