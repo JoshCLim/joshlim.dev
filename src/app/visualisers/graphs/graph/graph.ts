@@ -105,15 +105,72 @@ export function graphSetVertexPosition(
   return graph;
 }
 
+export function graphRandomRearrange(
+  g: Graph,
+  width: number,
+  height: number,
+): Graph {
+  const graph = graphCopy(g);
+
+  // randomise node positions
+  graph.positions = graph.positions.map((_) => ({
+    x: Math.random() * width,
+    y: Math.random() * height,
+  }));
+
+  return graphRearrange(graph, width, height);
+}
+
 export function graphRearrange(g: Graph, width: number, height: number): Graph {
   const graph = graphCopy(g);
 
-  graph.positions = graph.positions.map((_, v) => ({
-    x: ((Math.floor(v / 2) + 1) * width) / (Math.ceil(graph.nV / 2) + 1),
-    y: v % 2 === 0 ? height / 3 : (2 * height) / 3,
-  }));
+  // run force-directed graph drawing algorithm
+  // https://cs.brown.edu/people/rtamassi/gdhandbook/chapters/force-directed.pdf
 
-  // TODO: run force-directed graph drawing algorithm
+  // algorithm parameters and utils
+  const [c1, c2, c3, c4, M] = [5, width / 2.5, width, 1, 1000] as const;
+  const dist = (graph: Graph, v: number, w: number) =>
+    Math.sqrt(
+      Math.pow(graph.positions[v]!.x - graph.positions[w]!.x, 2) +
+        Math.pow(graph.positions[v]!.y - graph.positions[w]!.y, 2),
+    );
+  const angle = (graph: Graph, v: number, w: number) =>
+    Math.atan2(
+      graph.positions[w]!.y - graph.positions[v]!.y,
+      graph.positions[w]!.x - graph.positions[v]!.x,
+    );
+
+  for (let i = 0; i < M; i++) {
+    const nextPos = graph.positions.map((curPos, v) => {
+      let xForceOnV = 0;
+      let yForceOnV = 0;
+
+      for (let w = 0; w < g.nV; w++) {
+        if (v == w) continue;
+
+        if (graph.edges[v]![w]! > 0 || graph.edges[w]![v]! > 0) {
+          // attractive force to pull connected vertices together by c1 * log(dist(v, w) / c2)
+          const force = c1 * Math.log(dist(graph, v, w) / c2);
+          const direction = angle(graph, v, w);
+          xForceOnV += force * Math.cos(direction);
+          yForceOnV += force * Math.sin(direction);
+        } else {
+          // repulsive force to push unconnected vertices apart by c3 / dist(v, w)^1.5
+          const force = c3 / Math.pow(dist(graph, v, w), 1.5);
+          const direction = angle(graph, v, w);
+          xForceOnV -= force * Math.cos(direction);
+          yForceOnV -= force * Math.sin(direction);
+        }
+      }
+
+      return {
+        x: clamp(width * 0.1, curPos.x + c4 * xForceOnV, width * 0.9),
+        y: clamp(height * 0.1, curPos.y + c4 * yForceOnV, height * 0.9),
+      };
+    });
+
+    graph.positions = nextPos;
+  }
 
   return graph;
 }

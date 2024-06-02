@@ -1,8 +1,13 @@
-import { graphClampPositions, graphNew, graphRearrange } from "./graph";
+import {
+  graphClampPositions,
+  graphNew,
+  graphRandomRearrange,
+  graphRearrange,
+} from "./graph";
 import { useGraphContext } from "./graphContext";
 import ToolbarButton from "./toolbarButton";
 
-import { FrameAltEmpty, PathArrow, Trash } from "iconoir-react";
+import { CoinsSwap, Drag, FrameAltEmpty, Trash } from "iconoir-react";
 
 export default function Toolbar() {
   const { canvasRef, graphOperations, running } = useGraphContext();
@@ -10,7 +15,7 @@ export default function Toolbar() {
   return (
     <div className="flex flex-row items-center justify-end gap-4 px-8 py-4 pe-4">
       <ToolbarButton
-        className="bg-[#acdeb9]"
+        className="bg-[#dedaa2]"
         onClick={() =>
           graphOperations.setGraph((g) =>
             graphClampPositions(
@@ -24,6 +29,20 @@ export default function Toolbar() {
         <FrameAltEmpty />
       </ToolbarButton>
       <ToolbarButton
+        className="bg-[#acdeb9]"
+        onClick={() =>
+          graphOperations.setGraph((g) =>
+            graphRandomRearrange(
+              g,
+              canvasRef.current?.offsetWidth ?? 0,
+              canvasRef.current?.offsetHeight ?? 0,
+            ),
+          )
+        }
+      >
+        <CoinsSwap />
+      </ToolbarButton>
+      <ToolbarButton
         className="bg-[#acd4de]"
         onClick={() =>
           graphOperations.setGraph((g) =>
@@ -35,7 +54,7 @@ export default function Toolbar() {
           )
         }
       >
-        <PathArrow />
+        <Drag />
       </ToolbarButton>
       <ToolbarButton
         confirmation={true}
