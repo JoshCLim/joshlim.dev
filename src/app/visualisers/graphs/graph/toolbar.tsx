@@ -15,6 +15,7 @@ export default function Toolbar() {
   return (
     <div className="flex flex-row items-center justify-end gap-4 px-8 py-4 pe-4">
       <ToolbarButton
+        tooltip="Fit to frame"
         className="bg-[#dedaa2]"
         onClick={() =>
           graphOperations.setGraph((g) =>
@@ -29,6 +30,7 @@ export default function Toolbar() {
         <FrameAltEmpty />
       </ToolbarButton>
       <ToolbarButton
+        tooltip="Randomly rearrange"
         className="bg-[#acdeb9]"
         onClick={() =>
           graphOperations.setGraph((g) =>
@@ -43,6 +45,7 @@ export default function Toolbar() {
         <CoinsSwap />
       </ToolbarButton>
       <ToolbarButton
+        tooltip="Rearrange"
         className="bg-[#acd4de]"
         onClick={() =>
           graphOperations.setGraph((g) =>
@@ -57,6 +60,7 @@ export default function Toolbar() {
         <Drag />
       </ToolbarButton>
       <ToolbarButton
+        tooltip="Clear"
         confirmation={true}
         disabled={running}
         className="bg-[#f8b595]"

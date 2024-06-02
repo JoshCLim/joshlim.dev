@@ -12,17 +12,19 @@ export default function ToolbarButton({
   onClick,
   confirmation = false,
   disabled = false,
+  tooltip,
 }: {
   className: string;
   children: React.ReactNode;
   onClick?: () => void;
   confirmation?: boolean;
   disabled?: boolean;
+  tooltip: string;
 }) {
   const [showConfirmation, setShowConfirmation] = useState<boolean>(false);
 
   return (
-    <div className="relative">
+    <div className="group relative">
       <motion.button
         initial={{ opacity: 0, scale: 0 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -45,6 +47,11 @@ export default function ToolbarButton({
       >
         {children}
       </motion.button>
+      {!showConfirmation && (
+        <div className="absolute left-[50%] top-[110%] min-w-full translate-x-[-50%] select-none rounded-xl bg-slate-400 px-2 py-1 text-center text-xs text-white opacity-0 shadow-md transition-opacity group-hover:opacity-100">
+          {tooltip}
+        </div>
+      )}
       <AnimatePresence>
         {showConfirmation && (
           <motion.div
