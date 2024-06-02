@@ -128,7 +128,7 @@ export function graphRearrange(g: Graph, width: number, height: number): Graph {
   // https://cs.brown.edu/people/rtamassi/gdhandbook/chapters/force-directed.pdf
 
   // algorithm parameters and utils
-  const [c1, c2, c3, c4, M] = [5, width / 2.5, width, 1, 1000] as const;
+  const [c1, c2, c3, c4, M] = [5, width / 2.5, width * 5, 1, 1000] as const;
   const dist = (graph: Graph, v: number, w: number) =>
     Math.sqrt(
       Math.pow(graph.positions[v]!.x - graph.positions[w]!.x, 2) +
