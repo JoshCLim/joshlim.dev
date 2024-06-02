@@ -131,7 +131,7 @@ export default function AdjacencyMatrix() {
           </motion.div>
         )}
       </AnimatePresence>
-      {!running && (
+      {graph.nV > 1 && !running && (
         <>
           {!graph.weighted ? (
             <motion.p
@@ -156,6 +156,17 @@ export default function AdjacencyMatrix() {
             </motion.p>
           )}
         </>
+      )}
+      {graph.nV <= 1 && (
+        <motion.p
+          layout
+          key="weighted-instruction"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="min-h-16 text-balance text-slate-500"
+        >
+          Add more vertices to see the adjacency matrix.
+        </motion.p>
       )}
     </>
   );
