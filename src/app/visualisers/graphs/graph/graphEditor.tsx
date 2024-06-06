@@ -18,7 +18,7 @@ export default function GraphEditor() {
   return (
     <motion.div
       layout
-      className="flex flex-1 flex-col items-center justify-center gap-5 px-5 py-10 text-center text-black"
+      className="flex flex-col items-center justify-center gap-5 text-center text-black"
     >
       <LayoutGroup>
         <motion.div layout className="flex flex-col items-center gap-3">
