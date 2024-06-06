@@ -84,12 +84,12 @@ export default function Page() {
             <motion.div
               layout
               initial={{ height: "70%" }}
-              className="flex flex-1 flex-row justify-around border-b border-black bg-slate-200"
+              className="flex flex-1 flex-col items-center justify-center gap-5 border-b border-black bg-slate-200 p-5 lg:flex-row lg:justify-around xl:p-10"
             >
               <GraphEditor />
               <motion.div
                 layout
-                className="flex flex-1 flex-col justify-center gap-10 pe-10"
+                className="flex flex-col justify-center gap-10"
               >
                 <GraphSettings />
                 <AlgorithmStart />

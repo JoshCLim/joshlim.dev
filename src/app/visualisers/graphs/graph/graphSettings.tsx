@@ -13,7 +13,10 @@ export default function GraphSettings() {
   return (
     <motion.div
       layout
-      className="flex flex-col items-center justify-center gap-3 rounded-2xl border border-slate-300 px-10 py-8"
+      className={cn(
+        "flex flex-col items-center justify-center gap-3 rounded-2xl border border-slate-300 px-10 py-8",
+        running && "hidden lg:flex",
+      )}
     >
       <h3 className="font-light text-black">Graph Settings</h3>
       <ButtonGroup>
