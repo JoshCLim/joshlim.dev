@@ -188,7 +188,7 @@ function HeaderCell({
   return (
     <div
       className={cn(
-        "flex aspect-square h-10 items-center justify-center 2xl:h-12",
+        "flex aspect-square h-10 w-10 items-center justify-center 2xl:h-12 2xl:w-12",
         highlight === 1 && "bg-green-200",
         highlight === 2 && "bg-red-200",
         className,
@@ -221,7 +221,7 @@ function UnweightedCell({
       type="number"
       disabled={disabled || running || (!graph.directed && u > v)}
       className={cn(
-        "flex aspect-square h-10 cursor-pointer items-center justify-center text-center outline-none transition-colors hover:bg-gray-100 2xl:h-12",
+        "flex aspect-square h-10 w-10 cursor-pointer items-center justify-center text-center outline-none transition-colors hover:bg-gray-100 2xl:h-12 2xl:w-12",
         disabled &&
           "cursor-not-allowed bg-gray-200 text-gray-500 hover:bg-gray-200",
         !graph.directed &&
@@ -265,7 +265,7 @@ function WeightedCell({
       type="number"
       disabled={disabled || running || (!graph.directed && u > v)}
       className={cn(
-        "flex aspect-square h-10 cursor-text items-center justify-center text-center outline-none transition-colors hover:bg-gray-100 2xl:h-12",
+        "flex aspect-square h-10 w-10 cursor-text items-center justify-center text-center outline-none transition-colors hover:bg-gray-100 2xl:h-12 2xl:w-12",
         disabled &&
           "cursor-not-allowed bg-gray-200 text-gray-500 hover:bg-gray-200",
         !graph.directed &&
