@@ -4,11 +4,15 @@ import {
   getServerSession,
 } from "next-auth";
 
-import { type Adapter } from "next-auth/adapters";
 import DiscordProvider from "next-auth/providers/discord";
 
 import { db } from "~/server/db";
-import { createTable } from "~/server/db/schema";
+import {
+  accounts,
+  sessions,
+  users,
+  verificationTokens,
+} from "~/server/db/schema";
 
 import { env } from "~/env";
 
@@ -50,7 +54,12 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   },
-  adapter: DrizzleAdapter(db, createTable) as Adapter,
+  adapter: DrizzleAdapter(db, {
+    usersTable: users,
+    accountsTable: accounts,
+    sessionsTable: sessions,
+    verificationTokensTable: verificationTokens,
+  }),
   providers: [
     DiscordProvider({
       clientId: env.DISCORD_CLIENT_ID,
