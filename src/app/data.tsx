@@ -1,8 +1,4 @@
-import {
-  DatabaseScript,
-  Github as GitHub,
-  Linkedin as LinkedIn,
-} from "iconoir-react";
+import { Github as GitHub, Linkedin as LinkedIn } from "iconoir-react";
 
 export const socials = [
   {
@@ -21,8 +17,8 @@ export const socials = [
   //   href: "https://www.facebook.com/profile.php?id=100023602025978",
   //   icon: <Facebook />,
   // },
-  {
-    href: "/joshLimCV.pdf",
-    icon: <DatabaseScript />,
-  },
+  // {
+  //   href: "/joshLimCV.pdf",
+  //   icon: <DatabaseScript />,
+  // },
 ];

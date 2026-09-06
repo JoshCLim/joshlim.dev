@@ -21,7 +21,11 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main className="fixed flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-[#0c102d] to-[#15162c]">
-      {/* <HomeNavbar currPage="" fixed /> */}
+      {/** note: temporarily hidden */}
+      <div className="hidden">
+        <HomeNavbar currPage="" fixed />
+      </div>
+
       <div className="flex flex-col items-center justify-center gap-7 px-10 sm:flex-row sm:gap-20">
         <HeroImage />
         <div className="flex flex-col gap-5 text-center sm:text-right">
