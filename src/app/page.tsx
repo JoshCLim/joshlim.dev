@@ -1,13 +1,9 @@
 import type { Metadata } from "next";
 
-import Image from "next/image";
-
 import FadeDown from "~components/_animations/fadeDown";
-import FadeIn from "~components/_animations/fadeIn";
 import FadeUp from "~components/_animations/fadeUp";
 import HomeNavbar from "~components/_navbars/homeNavbar";
 
-import BounceOnTap from "./_components/_animations/bounceOnTap";
 import { socials } from "./data";
 
 import { IconoirProvider } from "iconoir-react";
@@ -20,43 +16,26 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <main className="fixed flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-[#0c102d] to-[#15162c]">
+    <main className="w-full">
       {/** note: temporarily hidden */}
       <div className="hidden">
         <HomeNavbar currPage="" fixed />
       </div>
 
-      <div className="flex flex-col items-center justify-center gap-7 px-10 sm:flex-row sm:gap-20">
-        <HeroImage />
-        <div className="flex flex-col gap-5 text-center sm:text-right">
+      <section
+        aria-labelledby="hero-title"
+        className="flex min-h-screen items-center bg-gradient-to-b from-[#0c102d] to-[#15162c] px-6 py-16 sm:px-10"
+      >
+        <div className="mx-auto flex w-full max-w-5xl flex-col gap-5 text-left">
           <Greeting />
           <Description />
           <Socials />
         </div>
-      </div>
+      </section>
+      <Projects />
     </main>
   );
 }
-
-const HeroImage = () => {
-  return (
-    <BounceOnTap>
-      <FadeIn delay={100} duration={1500}>
-        <div className="relative h-[200px] w-[200px] md:h-[275px] md:w-[275px]">
-          <Image
-            draggable={false}
-            src="/pingu.jpg"
-            sizes="200px"
-            fill
-            priority
-            alt="profile-pic"
-            className="rounded-full border-8 border-white transition-all"
-          />
-        </div>
-      </FadeIn>
-    </BounceOnTap>
-  );
-};
 
 const Greeting = () => {
   return (
@@ -66,7 +45,8 @@ const Greeting = () => {
       </FadeDown>
       <FadeDown delay={50} duration={1000}>
         <h1
-          className="bg-clip-text text-6xl font-extrabold text-transparent md:text-7xl lg:text-8xl"
+          id="hero-title"
+          className="bg-clip-text text-6xl font-extrabold tracking-tight text-transparent md:text-7xl"
           style={{
             backgroundImage:
               "linear-gradient(to left, #BDCBF0, #C5F3FA, #BFE3D1, #CDFAC5, #EBF0B4)",
@@ -93,7 +73,7 @@ function Description() {
 function Socials() {
   return (
     <FadeUp delay={200} duration={1000}>
-      <div className="flex flex-row justify-center gap-3 sm:justify-end">
+      <div className="flex flex-row justify-start gap-3">
         <IconoirProvider iconProps={{ width: "2em", height: "2em" }}>
           {socials.map(({ href, icon }, index) => (
             <SocialLink key={index} href={href} icon={icon} />
@@ -101,6 +81,42 @@ function Socials() {
         </IconoirProvider>
       </div>
     </FadeUp>
+  );
+}
+
+function Projects() {
+  return (
+    <section
+      aria-labelledby="projects"
+      className="bg-white px-6 py-20 text-slate-900 sm:px-10 sm:py-24"
+    >
+      <div className="mx-auto w-full max-w-5xl">
+        <h2 id="projects" className="text-2xl font-light">
+          Projects
+        </h2>
+        <ul className="mt-6 list-none space-y-4 pl-0">
+          {[
+            { name: "Tandem Tertiary", href: "https://tandemtertiary.com.au" },
+            { name: "Graph Visualiser", href: "/visualisers/graphs" },
+          ].map(({ name, href }) => (
+            <li key={href}>
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-base text-slate-700 underline decoration-slate-300 underline-offset-4 transition-colors hover:text-slate-950 hover:decoration-slate-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-slate-900"
+              >
+                {name}
+                <span aria-hidden="true" className="shrink-0">
+                  ↗
+                </span>
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
   );
 }
 
