@@ -22,13 +22,13 @@ export default function Home() {
         <HomeNavbar currPage="" fixed />
       </div>
 
-      <div className="w-full max-w-2xl">
-        <div className="flex flex-col gap-5 text-left sm:text-right">
+      <div className="grid w-full max-w-5xl grid-cols-1 items-center gap-12 text-left md:grid-cols-2 md:gap-16">
+        <div className="flex flex-col gap-5">
           <Greeting />
           <Description />
           <Socials />
-          <CurrentProjects />
         </div>
+        <CurrentProjects />
       </div>
     </main>
   );
@@ -42,7 +42,7 @@ const Greeting = () => {
       </FadeDown>
       <FadeDown delay={50} duration={1000}>
         <h1
-          className="bg-clip-text text-6xl font-extrabold text-transparent md:text-7xl lg:text-8xl"
+          className="bg-clip-text text-6xl font-extrabold tracking-tight text-transparent md:text-7xl"
           style={{
             backgroundImage:
               "linear-gradient(to left, #BDCBF0, #C5F3FA, #BFE3D1, #CDFAC5, #EBF0B4)",
@@ -69,7 +69,7 @@ function Description() {
 function Socials() {
   return (
     <FadeUp delay={200} duration={1000}>
-      <div className="flex flex-row justify-start gap-3 sm:justify-end">
+      <div className="flex flex-row justify-start gap-3">
         <IconoirProvider iconProps={{ width: "2em", height: "2em" }}>
           {socials.map(({ href, icon }, index) => (
             <SocialLink key={index} href={href} icon={icon} />
@@ -83,11 +83,11 @@ function Socials() {
 function CurrentProjects() {
   return (
     <FadeUp delay={300} duration={1000}>
-      <section aria-labelledby="current-projects" className="mt-5">
+      <section aria-labelledby="current-projects">
         <h2 id="current-projects" className="text-2xl font-light">
           Current Projects
         </h2>
-        <ul className="mt-4 flex list-none flex-col items-start gap-3 pl-0 sm:items-end">
+        <ul className="mt-4 list-none divide-y divide-white/15 pl-0">
           {[
             { name: "Tandem Tertiary", href: "https://tandemtertiary.com.au" },
             { name: "Graph Visualiser", href: "/visualisers/graphs" },
@@ -97,10 +97,12 @@ function CurrentProjects() {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-sm text-lg text-[#aaaaee] underline decoration-white/30 underline-offset-4 transition-colors hover:text-white hover:decoration-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                className="flex w-full items-center justify-between gap-4 rounded-sm py-5 text-lg text-[#aaaaee] transition-colors hover:bg-white/5 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
               >
                 {name}
-                <span aria-hidden="true">↗</span>
+                <span aria-hidden="true" className="shrink-0">
+                  ↗
+                </span>
                 <span className="sr-only"> (opens in a new tab)</span>
               </a>
             </li>
