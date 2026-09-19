@@ -8,7 +8,6 @@ import GraphContextProvider from "./graph/graphContext";
 export const metadata: Metadata = {
   title: "Graph Algorithm Visualisers | joshlim.dev",
   description: "Graph Algorithm Visualisers",
-  icons: [{ rel: "icon", url: "/pingu.jpg" }],
 };
 
 function Layout({ children }: { children?: React.ReactNode }) {

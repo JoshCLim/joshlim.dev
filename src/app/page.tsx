@@ -1,13 +1,9 @@
 import type { Metadata } from "next";
 
-import Image from "next/image";
-
 import FadeDown from "~components/_animations/fadeDown";
-import FadeIn from "~components/_animations/fadeIn";
 import FadeUp from "~components/_animations/fadeUp";
 import HomeNavbar from "~components/_navbars/homeNavbar";
 
-import BounceOnTap from "./_components/_animations/bounceOnTap";
 import { socials } from "./data";
 
 import { IconoirProvider } from "iconoir-react";
@@ -27,8 +23,7 @@ export default function Home() {
       </div>
 
       <div className="flex flex-col items-center justify-center gap-7 px-10 sm:flex-row sm:gap-20">
-        <HeroImage />
-        <div className="flex flex-col gap-5 text-center sm:text-right">
+        <div className="flex flex-col gap-5 text-left sm:text-right">
           <Greeting />
           <Description />
           <Socials />
@@ -37,26 +32,6 @@ export default function Home() {
     </main>
   );
 }
-
-const HeroImage = () => {
-  return (
-    <BounceOnTap>
-      <FadeIn delay={100} duration={1500}>
-        <div className="relative h-[200px] w-[200px] md:h-[275px] md:w-[275px]">
-          <Image
-            draggable={false}
-            src="/pingu.jpg"
-            sizes="200px"
-            fill
-            priority
-            alt="profile-pic"
-            className="rounded-full border-8 border-white transition-all"
-          />
-        </div>
-      </FadeIn>
-    </BounceOnTap>
-  );
-};
 
 const Greeting = () => {
   return (
@@ -93,7 +68,7 @@ function Description() {
 function Socials() {
   return (
     <FadeUp delay={200} duration={1000}>
-      <div className="flex flex-row justify-center gap-3 sm:justify-end">
+      <div className="flex flex-row justify-start gap-3 sm:justify-end">
         <IconoirProvider iconProps={{ width: "2em", height: "2em" }}>
           {socials.map(({ href, icon }, index) => (
             <SocialLink key={index} href={href} icon={icon} />
