@@ -159,8 +159,8 @@ export default function GraphWorkspace() {
                       u={u}
                       v={v}
                       weight={edge}
-                      uPos={graphNodePositions[u]!}
-                      vPos={graphNodePositions[v]!}
+                      uPos={graphNodePositions[u]}
+                      vPos={graphNodePositions[v]}
                       highlight={
                         running && alg.algorithm && alg.steps
                           ? tryOrDefaultFunction(

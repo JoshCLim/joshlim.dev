@@ -105,7 +105,7 @@ export default function BfsState() {
 function BfsQueue() {
   const alg = useBfs();
 
-  if (!alg || !alg.steps) return <></>;
+  if (!alg?.steps) return <></>;
 
   return (
     <motion.div

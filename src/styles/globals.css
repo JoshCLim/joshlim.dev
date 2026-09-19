@@ -28,7 +28,7 @@ ul {
   list-style: circle;
 }
 
-// remove input spinners / arrows
+/* Remove input spinners / arrows */
 /* Chrome, Safari, Edge, Opera */
 .no-arrows::-webkit-outer-spin-button,
 .no-arrows::-webkit-inner-spin-button {

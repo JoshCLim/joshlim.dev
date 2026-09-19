@@ -2,7 +2,7 @@ import { type RefObject, useEffect, useLayoutEffect, useRef } from "react";
 
 export default function useClickAway<T extends HTMLElement>(
   cb: (e: Event) => void,
-): RefObject<T> {
+): RefObject<T | null> {
   const ref = useRef<T>(null);
   const refCb = useRef(cb);
 

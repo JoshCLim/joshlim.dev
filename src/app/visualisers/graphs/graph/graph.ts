@@ -50,10 +50,10 @@ export function graphSetEdge(
     throw new Error(`Invalid edge added between ${u} and ${v}`);
   }
 
-  graph.edges[u]![v] = weight;
+  graph.edges[u][v] = weight;
 
   if (!graph.directed) {
-    graph.edges[v]![u] = weight;
+    graph.edges[v][u] = weight;
   }
 
   return graph;

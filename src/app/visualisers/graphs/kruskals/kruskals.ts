@@ -151,8 +151,7 @@ export function kruskalEdgesHighlight(
   v: number,
 ): EdgesHighlight {
   if (
-    step.uncheckedEdge &&
-    step.uncheckedEdge[0] === u &&
+    step.uncheckedEdge?.[0] === u &&
     step.uncheckedEdge[1] === v
   ) {
     return 1;
