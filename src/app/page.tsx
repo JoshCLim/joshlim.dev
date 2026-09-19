@@ -16,17 +16,18 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <main className="fixed flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-[#0c102d] to-[#15162c]">
+    <main className="flex min-h-screen w-full flex-col items-center justify-center bg-gradient-to-b from-[#0c102d] to-[#15162c] px-6 py-16 sm:px-10">
       {/** note: temporarily hidden */}
       <div className="hidden">
         <HomeNavbar currPage="" fixed />
       </div>
 
-      <div className="flex flex-col items-center justify-center gap-7 px-10 sm:flex-row sm:gap-20">
+      <div className="w-full max-w-2xl">
         <div className="flex flex-col gap-5 text-left sm:text-right">
           <Greeting />
           <Description />
           <Socials />
+          <CurrentProjects />
         </div>
       </div>
     </main>
@@ -75,6 +76,37 @@ function Socials() {
           ))}
         </IconoirProvider>
       </div>
+    </FadeUp>
+  );
+}
+
+function CurrentProjects() {
+  return (
+    <FadeUp delay={300} duration={1000}>
+      <section aria-labelledby="current-projects" className="mt-5">
+        <h2 id="current-projects" className="text-2xl font-light">
+          Current Projects
+        </h2>
+        <ul className="mt-4 flex list-none flex-col items-start gap-3 pl-0 sm:items-end">
+          {[
+            { name: "Tandem Tertiary", href: "https://tandemtertiary.com.au" },
+            { name: "Graph Visualiser", href: "/visualisers/graphs" },
+          ].map(({ name, href }) => (
+            <li key={href}>
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-sm text-lg text-[#aaaaee] underline decoration-white/30 underline-offset-4 transition-colors hover:text-white hover:decoration-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+              >
+                {name}
+                <span aria-hidden="true">↗</span>
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
     </FadeUp>
   );
 }
