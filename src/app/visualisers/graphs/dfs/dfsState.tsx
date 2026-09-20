@@ -105,7 +105,7 @@ export default function DfsState() {
 function DfsStack() {
   const alg = useDfs();
 
-  if (!alg || !alg.steps) return <></>;
+  if (!alg?.steps) return <></>;
 
   return (
     <motion.div

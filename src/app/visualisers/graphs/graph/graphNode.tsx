@@ -8,7 +8,7 @@ import useWindowSize from "~hooks/useWindowSize";
 
 import { useGraphContext } from "./graphContext";
 
-import { type MotionValue, motion, useSpring } from "framer-motion";
+import { motion, useSpring } from "framer-motion";
 
 const verticesHighlights = [0, 1, 2, 3, 4] as const;
 export type VerticesHighlight = (typeof verticesHighlights)[number];
@@ -36,11 +36,11 @@ export default function GraphNode({
   const x = useSpring(pos?.x ?? 0, {
     stiffness: 800,
     damping: 100,
-  }) as MotionValue<number>;
+  });
   const y = useSpring(pos?.y ?? 0, {
     stiffness: 800,
     damping: 100,
-  }) as MotionValue<number>;
+  });
 
   useEffect(() => {
     setGraphNodePositions((prev) => {

@@ -106,7 +106,7 @@ export default function DijkstraState() {
 function DijkstraVSet() {
   const alg = useDijkstra();
 
-  if (!alg || !alg.steps) return <></>;
+  if (!alg?.steps) return <></>;
 
   return (
     <motion.div

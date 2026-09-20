@@ -50,7 +50,7 @@ type GraphContextType = {
   graphOperations: GraphOperations;
 
   // canvas reference
-  canvasRef: React.RefObject<HTMLDivElement>;
+  canvasRef: React.RefObject<HTMLDivElement | null>;
 
   // adj matrix
   adjMatrix: {
